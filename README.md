@@ -30,4 +30,16 @@ This project focuses on developing a Population Information Reporting System tha
 | First release created on GitHub                           | Medium     | Completed    |
 | Code of Conduct defined                                   | Medium     | Completed    |
 
-For a detailed breakdown, refer to the [GitHub Project Board](#).
+	•	🛠️ Tech Stack: Show which languages, frameworks, and tools are being used.
+	•	🔄 Changelog: Track version releases and changes.
+	•	📚 Documentation: Link to detailed docs or API references.
+
+## 🛠️ Built With
+- Java 11
+- Maven
+- Docker
+- MySQL
+
+© 2024 Group1 DevOps - This project is licensed under the Apache 2.0 License.
+
+These additions will make your README.md more comprehensive, user-friendly, and attractive.
