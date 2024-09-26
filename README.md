@@ -1,6 +1,6 @@
 # Population Information Reporting System
 
-![A workflow for Population Reporting System](https://img.shields.io/badge/A%20workflow%20for%20Population%20Reporting%20System-passing-brightgreen)
+![A workflow for Population Reporting System](https://img.shields.io/badge/A%20workflow%20for%20Population%20Reporting%20System-passing-brightgreen?logo=github&logoColor=white)
 
 ![Master build status](https://img.shields.io/badge/Master%20build-passing-brightgreen)
 ![Develop build status](https://img.shields.io/badge/Develop%20build-passing-brightgreen)
