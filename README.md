@@ -1,5 +1,7 @@
 # Population Information Reporting System
 
+![Master build status](https://img.shields.io/badge/Master%20build-passing-brightgreen)
+![Develop build status](https://img.shields.io/badge/Develop%20build-passing-brightgreen)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-brightgreen)](https://opensource.org/licenses/Apache-2.0)
 ![Release](https://img.shields.io/badge/release-no%20releases%20found-red)
 
