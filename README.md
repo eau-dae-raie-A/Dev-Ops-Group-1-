@@ -14,8 +14,15 @@ This project focuses on developing a Population Information Reporting System tha
 
 ## Product Backlog
 
-| Feature       | Priority  | Status   |
-|---------------|-----------|----------|
-|               |           |          |
+| Feature                                                   | Priority   | Status        |
+|-----------------------------------------------------------|------------|---------------|
+| GitHub project for coursework set-up                      | High       | In Progress   |
+| Product Backlog created                                   | High       | Completed     |
+| Project builds to self-contained JAR with Maven           | High       | In Progress   |
+| Dockerfile for project set-up and works                   | High       | Not Started   |
+| GitHub Actions for project set-up and build using JAR and Docker | Medium    | In Progress   |
+| Correct branches for GitFlow workflow created (master, develop, release) | High | Completed   |
+| First release created on GitHub                           | Medium     | Not Started   |
+| Code of Conduct defined                                   | Medium     | Not Started   |
 
 For a detailed breakdown, refer to the [GitHub Project Board](#).
