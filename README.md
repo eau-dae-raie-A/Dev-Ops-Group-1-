@@ -35,7 +35,7 @@ This project focuses on developing a Population Information Reporting System tha
 	•	📚 Documentation: Link to detailed docs or API references.
 
 ## 🛠️ Built With
-- Java 11
+- Java 23
 - Maven
 - Docker
 - MySQL
