@@ -1,7 +1,10 @@
 # Population Information Reporting System
 
+![A workflow for Population Reporting System](https://img.shields.io/badge/A%20workflow%20for%20Population%20Reporting%20System-passing-brightgreen)
+
 ![Master build status](https://img.shields.io/badge/Master%20build-passing-brightgreen)
 ![Develop build status](https://img.shields.io/badge/Develop%20build-passing-brightgreen)
+![Feature status](https://img.shields.io/badge/Feature-passing-brightgreen)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-brightgreen)](https://opensource.org/licenses/Apache-2.0)
 ![Release](https://img.shields.io/badge/release-no%20releases%20found-red)
 
@@ -18,13 +21,13 @@ This project focuses on developing a Population Information Reporting System tha
 
 | Feature                                                   | Priority   | Status        |
 |-----------------------------------------------------------|------------|---------------|
-| GitHub project for coursework set-up                      | High       | In Progress   |
+| GitHub project for coursework set-up                      | High       | Completed     |
 | Product Backlog created                                   | High       | Completed     |
-| Project builds to self-contained JAR with Maven           | High       | In Progress   |
-| Dockerfile for project set-up and works                   | High       | Not Started   |
-| GitHub Actions for project set-up and build using JAR and Docker | Medium    | In Progress   |
+| Project builds to self-contained JAR with Maven           | High       | Completed     |
+| Dockerfile for project set-up and works                   | High       | Completed     |
+| GitHub Actions for project set-up and build using JAR and Docker | Medium    | Completed    |
 | Correct branches for GitFlow workflow created (master, develop, release) | High | Completed   |
-| First release created on GitHub                           | Medium     | Not Started   |
-| Code of Conduct defined                                   | Medium     | Not Started   |
+| First release created on GitHub                           | Medium     | Completed    |
+| Code of Conduct defined                                   | Medium     | Completed    |
 
 For a detailed breakdown, refer to the [GitHub Project Board](#).
