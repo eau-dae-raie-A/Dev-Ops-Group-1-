@@ -35,9 +35,10 @@ This project focuses on developing a Population Information Reporting System tha
 	•	📚 Documentation: Link to detailed docs or API references.
 
 ## 🛠️ Built With
-- Java 23
+- Java version 23
 - Maven
 - Docker
+- MongoDB
 - MySQL
 
 © 2024 Group1 DevOps - This project is licensed under the Apache 2.0 License.
