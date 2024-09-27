@@ -38,9 +38,9 @@ This project focuses on developing a Population Information Reporting System tha
 - Java version 23
 - Maven
 - Docker
-- MongoDB
+- Mongo DB
 - MySQL
 
 © 2024 Group1 DevOps - This project is licensed under the Apache 2.0 License.
 
-These additions will make your README.md more comprehensive, user-friendly, and attractive.
+These additions will make your README.md more comprehension, user-friendly, and attractive.
