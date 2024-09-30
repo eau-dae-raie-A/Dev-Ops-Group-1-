@@ -7,6 +7,7 @@
 ![Feature status](https://img.shields.io/badge/Feature-passing-brightgreen)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-brightgreen)](https://opensource.org/licenses/Apache-2.0)
 [![Releases](https://img.shields.io/github/release/eau-dae-raie-A/Dev-Ops-Group-1-/all.svg?style=flat-square)](https://github.com/eau-dae-raie-A/Dev-Ops-Group-1-/releases)
+
 ## 📝 Project Overview
 
 This project focuses on developing a Population Information Reporting System that provides various reports based on population data. The system will allow the organization to generate reports on population statistics at different levels, including by country, region, or globally.
@@ -34,11 +35,12 @@ This project focuses on developing a Population Information Reporting System tha
 	•	📚 Documentation: Link to detailed docs or API references.
 
 ## 🛠️ Built With
-- Java 23
+- Java version 23
 - Maven
 - Docker
+- Mongo DB
 - MySQL
 
 © 2024 Group1 DevOps - This project is licensed under the Apache 2.0 License.
 
-These additions will make your README.md more comprehensive, user-friendly, and attractive.
+These additions will make your README.md more comprehension, user-friendly, and attractive.
