@@ -56,7 +56,7 @@ public class App {
     }
 
     /**
-     * Retrieve a list of countries ordered by population.
+     * Retrieve a list of countries ordered by population, including their capital city name.
      *
      * @return A list of Country objects
      */
@@ -65,7 +65,11 @@ public class App {
             // Create an SQL statement
             Statement stmt = con.createStatement();
             // Create string for SQL statement
-            String strSelect = "SELECT Name, Population FROM country ORDER BY Population DESC";
+            String strSelect = "SELECT country.Code, country.Name AS CountryName, country.Continent, " +
+                    "country.Region, country.Population, city.ID AS CityID, city.Name AS CapitalCityName, " +
+                    "city.District, city.Population AS CapitalPopulation " +
+                    "FROM country JOIN city ON country.Capital = city.ID " +
+                    "ORDER BY country.Population DESC";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
             // List to hold all countries
@@ -74,8 +78,23 @@ public class App {
             // Loop through the result set and add countries to the list
             while (rset.next()) {
                 Country country = new Country();
-                country.setName(rset.getString("Name")); // Populate name
+                country.setCode(rset.getString("Code")); // Populate country code
+                country.setName(rset.getString("CountryName")); // Populate country name
+                country.setContinent(rset.getString("Continent")); // Populate continent
+                country.setRegion(rset.getString("Region")); // Populate region
                 country.setPopulation(rset.getInt("Population")); // Populate population
+
+                // Create and populate a City object for the capital city
+                City capitalCity = new City();
+                capitalCity.setId(rset.getInt("CityID"));
+                capitalCity.setName(rset.getString("CapitalCityName"));
+                capitalCity.setDistrict(rset.getString("District"));
+                capitalCity.setPopulation(rset.getInt("CapitalPopulation"));
+
+                // Set the capital city in the Country object
+                country.setCapitalCity(capitalCity);
+
+                // Add the country to the list
                 countries.add(country);
             }
             return countries;
@@ -87,7 +106,7 @@ public class App {
     }
 
     /**
-     * Display the list of countries and their populations.
+     * Display the list of countries, their populations, and capital cities.
      *
      * @param countries A list of Country objects to display
      */
@@ -96,7 +115,11 @@ public class App {
             for (Country country : countries) {
                 System.out.println(
                         "Country: " + country.getName() + "\n" +
-                                "Population: " + country.getPopulation() + "\n"
+                                "Continent: " + country.getContinent() + "\n" +
+                                "Region: " + country.getRegion() + "\n" +
+                                "Population: " + country.getPopulation() + "\n" +
+                                "Capital City: " + country.getCapitalCity().getName() + "\n" +
+                                "Capital Population: " + country.getCapitalCity().getPopulation() + "\n"
                 );
             }
         } else {

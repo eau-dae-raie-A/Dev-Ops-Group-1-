@@ -81,6 +81,10 @@ public class Country {
 
     // Getters and Setters for all attributes
 
+    // Adding a City object to represent the capital city
+    private City capitalCity;
+
+
     public String getCode() {
         return code;
     }
@@ -199,6 +203,15 @@ public class Country {
 
     public void setCode2(String code2) {
         this.code2 = code2;
+    }
+
+    // Getters and setters for the capitalCity
+    public City getCapitalCity() {
+        return capitalCity;
+    }
+
+    public void setCapitalCity(City capitalCity) {
+        this.capitalCity = capitalCity;
     }
 
     @Override
