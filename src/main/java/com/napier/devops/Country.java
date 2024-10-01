@@ -19,6 +19,7 @@ public class Country {
      */
     private String continent;
 
+    private City capitalCity;
     /**
      * Country's region
      */
@@ -80,10 +81,6 @@ public class Country {
     private String code2;
 
     // Getters and Setters for all attributes
-
-    // Adding a City object to represent the capital city
-    private City capitalCity;
-
 
     public String getCode() {
         return code;
@@ -205,7 +202,6 @@ public class Country {
         this.code2 = code2;
     }
 
-    // Getters and setters for the capitalCity
     public City getCapitalCity() {
         return capitalCity;
     }
