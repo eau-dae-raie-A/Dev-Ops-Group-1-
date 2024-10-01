@@ -19,6 +19,7 @@ public class Country {
      */
     private String continent;
 
+    private City capitalCity;
     /**
      * Country's region
      */
@@ -199,6 +200,14 @@ public class Country {
 
     public void setCode2(String code2) {
         this.code2 = code2;
+    }
+
+    public City getCapitalCity() {
+        return capitalCity;
+    }
+
+    public void setCapitalCity(City capitalCity) {
+        this.capitalCity = capitalCity;
     }
 
     @Override
