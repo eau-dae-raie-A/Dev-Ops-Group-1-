@@ -1,13 +1,36 @@
 package com.napier.devops;
 
+/**
+ * Represents a country
+ */
 public class City {
-    // Attributes of the City class
-    private String name;       // City's name
-    private String country;    // Country where the city is located
-    private String district;   // District of the city
-    private int population;    // Population of the city
+    // Attributes corresponding to the columns in the City table
 
-    // Getter and setter for city's name
+    // ID - Primary Key, Auto-incremented
+    private int id;
+
+    // Name - City name, non-null, character field with max length 35
+    private String name;
+
+    // CountryCode - Index, non-null, character field with max length 3
+    private String countryCode;
+
+    // District - Name of the district, non-null, character field with max length 20
+    private String district;
+
+    // Population - Non-null, integer field
+    private int population;
+
+    // Getters and Setters for all attributes
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -16,16 +39,14 @@ public class City {
         this.name = name;
     }
 
-    // Getter and setter for city's country
-    public String getCountry() {
-        return country;
+    public String getCountryCode() {
+        return countryCode;
     }
 
-    public void setCountry(String country) {
-        this.country = country;
+    public void setCountryCode(String countryCode) {
+        this.countryCode = countryCode;
     }
 
-    // Getter and setter for city's district
     public String getDistrict() {
         return district;
     }
@@ -34,7 +55,6 @@ public class City {
         this.district = district;
     }
 
-    // Getter and setter for city's population
     public int getPopulation() {
         return population;
     }
@@ -42,4 +62,16 @@ public class City {
     public void setPopulation(int population) {
         this.population = population;
     }
+
+    @Override
+    public String toString() {
+        return "City{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", countryCode='" + countryCode + '\'' +
+                ", district='" + district + '\'' +
+                ", population=" + population +
+                '}';
+    }
 }
+
