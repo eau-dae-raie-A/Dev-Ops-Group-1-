@@ -3,8 +3,7 @@ package com.napier.devops;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-import com.github.freva.asciitable.AsciiTable;
-import com.github.freva.asciitable.Column;
+
 
 public class App {
     /**
@@ -280,6 +279,339 @@ public class App {
         }
     }
 
+    /**
+     * Retrieves the top N populated countries in a specific continent.
+     *
+     * @param continent The name of the continent to filter the countries.
+     * @param N The number of top populated countries to return.
+     * @return A list of Country objects representing the top N populated countries in the specified continent.
+     */
+    public List<Country> getTopPopulatedCountriesByContinent(String continent, int N) {
+        try {
+            // SQL query to select countries by continent, ordered by population, and limit the results to N.
+            String query = "SELECT country.Code, country.Name, country.Continent, country.Region, " +
+                    "country.Population, city.ID AS CityID, city.Name AS CapitalCityName, " +
+                    "city.District, city.Population AS CapitalPopulation " +
+                    "FROM country LEFT JOIN city ON country.Capital = city.ID " +
+                    "WHERE country.Continent = ? " +
+                    "ORDER BY country.Population DESC LIMIT ?";
+
+            // Prepared statement to avoid SQL injection, setting the continent and limit (N).
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setString(1, continent);  // Bind the continent parameter.
+            pstmt.setInt(2, N);  // Bind the N parameter.
+
+            // Execute the query and get the result set.
+            ResultSet rset = pstmt.executeQuery();
+            List<Country> countries = new ArrayList<>();
+
+            // Loop through the result set and map each row to a Country object.
+            while (rset.next()) {
+                Country country = new Country();
+                country.setCode(rset.getString("Code"));
+                country.setName(rset.getString("Name"));
+                country.setContinent(rset.getString("Continent"));
+                country.setRegion(rset.getString("Region"));
+                country.setPopulation(rset.getInt("Population"));
+
+                // Create and populate the City object for the capital city.
+                City capitalCity = new City();
+                capitalCity.setId(rset.getInt("CityID"));
+                capitalCity.setName(rset.getString("CapitalCityName"));
+                capitalCity.setDistrict(rset.getString("District"));
+                capitalCity.setPopulation(rset.getInt("CapitalPopulation"));
+
+                // Set the capital city for the country.
+                country.setCapitalCity(capitalCity);
+
+                // Add the country to the list of countries.
+                countries.add(country);
+            }
+            return countries;  // Return the list of top N populated countries.
+        } catch (SQLException e) {
+            System.out.println("Error fetching top populated countries by continent: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public void displayCountriesByContinent(List<Country> countries, String continent) {
+        if (countries != null && !countries.isEmpty()) {
+            // Print table headers
+            System.out.println("\nTop Countries by Population in Continent: " + continent);
+            System.out.println(String.format("%-20s %-15s %-20s %-15s %-20s %-20s", "Country", "Continent", "Region", "Population", "Capital City", "Capital Population"));
+            System.out.println("---------------------------------------------------------------------------------------------------------------------");
+
+            // Loop through each country and display its details
+            for (Country country : countries) {
+                System.out.println(String.format("%-20s %-15s %-20s %-15d %-20s %-20d",
+                        country.getName(),
+                        country.getContinent(),
+                        country.getRegion(),
+                        country.getPopulation(),
+                        country.getCapitalCity() != null ? country.getCapitalCity().getName() : "N/A",
+                        country.getCapitalCity() != null ? country.getCapitalCity().getPopulation() : 0
+                ));
+            }
+        } else {
+            System.out.println("No countries found for the continent: " + continent);
+        }
+    }
+    /**
+     * Retrieves the top N populated countries in a specific region.
+     *
+     * @param region The name of the region to filter the countries.
+     * @param N The number of top populated countries to return.
+     * @return A list of Country objects representing the top N populated countries in the specified region.
+     */
+    public List<Country> getTopPopulatedCountriesByRegion(String region, int N) {
+        try {
+            // SQL query to select countries by region, ordered by population, and limit the results to N.
+            String query = "SELECT country.Code, country.Name, country.Continent, country.Region, " +
+                    "country.Population, city.ID AS CityID, city.Name AS CapitalCityName, " +
+                    "city.District, city.Population AS CapitalPopulation " +
+                    "FROM country LEFT JOIN city ON country.Capital = city.ID " +
+                    "WHERE country.Region = ? " +
+                    "ORDER BY country.Population DESC LIMIT ?";
+
+            // Prepared statement to avoid SQL injection, setting the region and limit (N).
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setString(1, region);  // Bind the region parameter.
+            pstmt.setInt(2, N);  // Bind the N parameter.
+
+            // Execute the query and get the result set.
+            ResultSet rset = pstmt.executeQuery();
+            List<Country> countries = new ArrayList<>();
+
+            // Loop through the result set and map each row to a Country object.
+            while (rset.next()) {
+                Country country = new Country();
+                country.setCode(rset.getString("Code"));
+                country.setName(rset.getString("Name"));
+                country.setContinent(rset.getString("Continent"));
+                country.setRegion(rset.getString("Region"));
+                country.setPopulation(rset.getInt("Population"));
+
+                // Create and populate the City object for the capital city.
+                City capitalCity = new City();
+                capitalCity.setId(rset.getInt("CityID"));
+                capitalCity.setName(rset.getString("CapitalCityName"));
+                capitalCity.setDistrict(rset.getString("District"));
+                capitalCity.setPopulation(rset.getInt("CapitalPopulation"));
+
+                // Set the capital city for the country.
+                country.setCapitalCity(capitalCity);
+
+                // Add the country to the list of countries.
+                countries.add(country);
+            }
+            return countries;  // Return the list of top N populated countries.
+        } catch (SQLException e) {
+            System.out.println("Error fetching top populated countries by region: " + e.getMessage());
+            return null;
+        }
+    }
+    public void displayCountriesByRegion(List<Country> countries, String region) {
+        if (countries != null && !countries.isEmpty()) {
+            // Print table headers
+            System.out.println("\nTop Countries by Population in Region: " + region);
+            System.out.println(String.format("%-20s %-15s %-20s %-15s %-20s %-20s", "Country", "Continent", "Region", "Population", "Capital City", "Capital Population"));
+            System.out.println("---------------------------------------------------------------------------------------------------------------------");
+
+            // Loop through each country and display its details
+            for (Country country : countries) {
+                System.out.println(String.format("%-20s %-15s %-20s %-15d %-20s %-20d",
+                        country.getName(),
+                        country.getContinent(),
+                        country.getRegion(),
+                        country.getPopulation(),
+                        country.getCapitalCity() != null ? country.getCapitalCity().getName() : "N/A",
+                        country.getCapitalCity() != null ? country.getCapitalCity().getPopulation() : 0
+                ));
+            }
+        } else {
+            System.out.println("No countries found for the region: " + region);
+        }
+    }
+
+    /**
+     * Retrieves all cities in the world ordered by population from largest to smallest.
+     *
+     * @return A list of City objects representing all cities, ordered by population.
+     */
+    public List<City> getAllCitiesByPopulation() {
+        try {
+            // SQL query to select all cities, ordered by population.
+            String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
+                    "FROM city JOIN country ON city.CountryCode = country.Code " +
+                    "ORDER BY city.Population DESC";
+
+            // Create a statement to execute the query.
+            Statement stmt = con.createStatement();
+            // Execute the query and get the result set.
+            ResultSet rset = stmt.executeQuery(query);
+            List<City> cities = new ArrayList<>();
+
+            // Loop through the result set and map each row to a City object.
+            while (rset.next()) {
+                City city = new City();
+                city.setId(rset.getInt("ID"));
+                city.setName(rset.getString("Name"));
+                city.setCountryCode(rset.getString("CountryName"));  // The country name is mapped here.
+                city.setDistrict(rset.getString("District"));
+                city.setPopulation(rset.getInt("Population"));
+
+                // Add the city to the list of cities.
+                cities.add(city);
+            }
+            return cities;  // Return the list of cities ordered by population.
+        } catch (SQLException e) {
+            System.out.println("Error fetching cities by population: " + e.getMessage());
+            return null;
+        }
+    }
+    public void displayAllCitiesByPopulation(List<City> cities) {
+        if (cities != null && !cities.isEmpty()) {
+            // Print table headers
+            System.out.println("\nAll Cities by Population:");
+            System.out.println(String.format("%-20s %-20s %-20s %-15s", "City", "Country", "District", "Population"));
+            System.out.println("-------------------------------------------------------------------------------");
+
+            // Loop through each city and display its details
+            for (City city : cities) {
+                System.out.println(String.format("%-20s %-20s %-20s %-15d",
+                        city.getName(),
+                        city.getCountryCode(),
+                        city.getDistrict(),
+                        city.getPopulation()
+                ));
+            }
+        } else {
+            System.out.println("No cities found.");
+        }
+    }
+
+    /**
+     * Retrieves all cities in a specific continent ordered by population from largest to smallest.
+     *
+     * @param continent The name of the continent to filter the cities.
+     * @return A list of City objects representing all cities in the specified continent, ordered by population.
+     */
+    public List<City> getCitiesByContinent(String continent) {
+        try {
+            // SQL query to select all cities in a continent, ordered by population.
+            String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
+                    "FROM city JOIN country ON city.CountryCode = country.Code " +
+                    "WHERE country.Continent = ? " +
+                    "ORDER BY city.Population DESC";
+
+            // Prepared statement to avoid SQL injection, setting the continent.
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setString(1, continent);  // Bind the continent parameter.
+
+            // Execute the query and get the result set.
+            ResultSet rset = pstmt.executeQuery();
+            List<City> cities = new ArrayList<>();
+
+            // Loop through the result set and map each row to a City object.
+            while (rset.next()) {
+                City city = new City();
+                city.setId(rset.getInt("ID"));
+                city.setName(rset.getString("Name"));
+                city.setCountryCode(rset.getString("CountryName"));  // The country name is mapped here.
+                city.setDistrict(rset.getString("District"));
+                city.setPopulation(rset.getInt("Population"));
+
+                // Add the city to the list of cities.
+                cities.add(city);
+            }
+            return cities;  // Return the list of cities in the specified continent.
+        } catch (SQLException e) {
+            System.out.println("Error fetching cities by continent: " + e.getMessage());
+            return null;
+        }
+    }
+    public void displayCitiesByContinent(List<City> cities, String continent) {
+        if (cities != null && !cities.isEmpty()) {
+            // Print table headers
+            System.out.println("\nCities in Continent: " + continent);
+            System.out.println(String.format("%-20s %-20s %-20s %-15s", "City", "Country", "District", "Population"));
+            System.out.println("-------------------------------------------------------------------------------");
+
+            // Loop through each city and display its details
+            for (City city : cities) {
+                System.out.println(String.format("%-20s %-20s %-20s %-15d",
+                        city.getName(),
+                        city.getCountryCode(),
+                        city.getDistrict(),
+                        city.getPopulation()
+                ));
+            }
+        } else {
+            System.out.println("No cities found for the continent: " + continent);
+        }
+    }
+
+    /**
+     * Retrieves all cities in a specific region ordered by population from largest to smallest.
+     *
+     * @param region The name of the region to filter the cities.
+     * @return A list of City objects representing all cities in the specified region, ordered by population.
+     */
+    public List<City> getCitiesByRegion(String region) {
+        try {
+            // SQL query to select all cities in a region, ordered by population.
+            String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
+                    "FROM city JOIN country ON city.CountryCode = country.Code " +
+                    "WHERE country.Region = ? " +
+                    "ORDER BY city.Population DESC";
+
+            // Prepared statement to avoid SQL injection, setting the region.
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setString(1, region);  // Bind the region parameter.
+
+            // Execute the query and get the result set.
+            ResultSet rset = pstmt.executeQuery();
+            List<City> cities = new ArrayList<>();
+
+            // Loop through the result set and map each row to a City object.
+            while (rset.next()) {
+                City city = new City();
+                city.setId(rset.getInt("ID"));
+                city.setName(rset.getString("Name"));
+                city.setCountryCode(rset.getString("CountryName"));  // The country name is mapped here.
+                city.setDistrict(rset.getString("District"));
+                city.setPopulation(rset.getInt("Population"));
+
+                // Add the city to the list of cities.
+                cities.add(city);
+            }
+            return cities;  // Return the list of cities in the specified region.
+        } catch (SQLException e) {
+            System.out.println("Error fetching cities by region: " + e.getMessage());
+            return null;
+        }
+    }
+    public void displayCitiesByRegion(List<City> cities, String region) {
+        if (cities != null && !cities.isEmpty()) {
+            // Print table headers
+            System.out.println("\nCities in Region: " + region);
+            System.out.println(String.format("%-20s %-20s %-20s %-15s", "City", "Country", "District", "Population"));
+            System.out.println("-------------------------------------------------------------------------------");
+
+            // Loop through each city and display its details
+            for (City city : cities) {
+                System.out.println(String.format("%-20s %-20s %-20s %-15d",
+                        city.getName(),
+                        city.getCountryCode(),
+                        city.getDistrict(),
+                        city.getPopulation()
+                ));
+            }
+        } else {
+            System.out.println("No cities found for the region: " + region);
+        }
+    }
+
     public static void main(String[] args) {
         // Create new Application instance
         App a = new App();
@@ -307,6 +639,28 @@ public class App {
         List<Country> topPopulatedCountries = a.getTopPopulatedCountries(topN);
         System.out.println("\nTop " + topN + " Populated Countries in the World:");
         a.displayCountriesByPopulation(topPopulatedCountries);
+
+        // Retrieve and display top populated countries by continent
+        String continent = "Asia";
+        List<Country> topCountriesInContinent = a.getTopPopulatedCountriesByContinent(continent, 8);
+        a.displayCountriesByContinent(topCountriesInContinent, continent);
+
+        // Retrieve and display top populated countries by region
+        String region = "Western Europe";
+        List<Country> topCountriesInRegion = a.getTopPopulatedCountriesByRegion(region, 8);
+        a.displayCountriesByRegion(topCountriesInRegion, region);
+
+        // Retrieve and display all cities in the world by population
+        List<City> allCitiesByPopulation = a.getAllCitiesByPopulation();
+        a.displayAllCitiesByPopulation(allCitiesByPopulation);
+
+        // Retrieve and display cities in a specific continent by population
+        List<City> citiesInContinent = a.getCitiesByContinent(continent);
+        a.displayCitiesByContinent(citiesInContinent, continent);
+
+        // Retrieve and display cities in a specific region by population
+        List<City> citiesInRegion = a.getCitiesByRegion(region);
+        a.displayCitiesByRegion(citiesInRegion, region);
 
         // Disconnect from the database
         a.disconnect();
