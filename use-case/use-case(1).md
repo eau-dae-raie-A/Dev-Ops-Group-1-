@@ -29,8 +29,8 @@
 
 🛠 Main Success Scenario
 
-    •   A request is made for population data for all countries.
-	•   The system retrieves up-to-date population figures for all countries from the database.
+   	•	A request is made for population data for all countries.
+	•	The system retrieves up-to-date population figures for all countries from the database.
 	•	The system organizes the countries by population size, sorting them from largest to smallest.
 	•	The report is generated and delivered to the researcher for comparison and analysis.
 
