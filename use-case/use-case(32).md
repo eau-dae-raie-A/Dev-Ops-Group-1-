@@ -25,20 +25,20 @@
 	•       Data Analyst.
 	
     •       Trigger:
-	•       A request is made to retrieve data on the number of people who speak the five specified languages and their proportion of the world population for analysis.
+	•       A request from data analyst is made to retrieve data on the number of people who speak the five specified languages and their proportion of the world population for analysis.
 
 🛠 Main Success Scenario
 
-	•	A request is made for the number of speakers of Chinese, English, Hindi, Spanish, and Arabic, along with the total world population.
-	•	The system retrieves up-to-date language data and world population figures.
-	•	The data analyst calculates the percentage of the world population for each language.
-	•	The data is compiled into a report, showing the number of speakers for each language and their percentage of the world population.
-	•	The report is generated and delivered to the data analyst for analysis.
+	•	The system receives a request for the number of speakers of Chinese, English, Hindi, Spanish, and Arabic, along with the total world population.
+	•	The system retrieves up-to-date language data and world population figures from the database.
+	•	The system calculates the percentage of the world population for each language.
+	•	The system compiles the data into a report, showing the number of speakers for each language and their percentage of the world population.
+	•	The system generates the report and delivers it to the researcher for analysis.
 
 🚨 Extensions
 
 	•	If language data for some regions is missing:
-	•	The data analyst proceeds with available data and informs the requesting party of any missing entries in the final report.
+	•	The system proceeds with the available data.
 
 🔀 Sub-Variations
 

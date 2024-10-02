@@ -15,7 +15,7 @@
 	•       The database contains current and accurate global population figures.
 	
     •       Success End Condition:
-	•       A report showing the total population of the world is produced and delivered to the data analyst for analysis.
+	•       A report showing the total population of the world is produced and delivered to the researcher for analysis.
 	
     •       Failed End Condition:
 	•       No report is generated.
@@ -24,19 +24,19 @@
 	•       Data Analyst.
 	
     •       Trigger:
-	•       A request is made to retrieve the total population of the world for analysis.
+	•       A request from data analyst is made to retrieve the total population of the world for analysis.
 
 🛠 Main Success Scenario
 
-	•	A request is made for the total global population data.
-	•	The system retrieves up-to-date population figures for the entire world.
-	•	The data analyst organizes the data into a report showing the total global population.
-	•	The report is generated and delivered to the data analyst for analysis.
+	•	The system receives a request for the total global population data.
+	•	The system retrieves up-to-date population figures for the entire world from the database.
+	•	The system organizes the data into a report showing the total global population.
+	•	The system generates the report and delivers it to the researcher for analysis.
 
 🚨 Extensions
 
 	•	If global population data is incomplete or missing:
-	•	The data analyst proceeds with available data and informs the requesting party of any missing entries in the final report.
+	•	The system proceeds with the available data.
 
 🔀 Sub-Variations
 
