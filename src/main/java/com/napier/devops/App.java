@@ -591,6 +591,75 @@ public class App {
             return null;
         }
     }
+
+    /**
+     * Retrieve all cities in a specific country ordered by population from largest to smallest.
+     *
+     * @param countryCode The code of the country to filter the cities.
+     * @return A list of City objects representing all cities in the specified country, ordered by population.
+     */
+    public List<City> getCitiesByCountry(String countryCode) {
+        try {
+            // SQL query to select all cities in a country, ordered by population.
+            String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
+                    "FROM city JOIN country ON city.CountryCode = country.Code " +
+                    "WHERE country.Code = ? " +  // Filter by country code
+                    "ORDER BY city.Population DESC";
+
+            // Prepared statement to avoid SQL injection, setting the country code.
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setString(1, countryCode);  // Bind the country code parameter.
+
+            // Execute the query and get the result set.
+            ResultSet rset = pstmt.executeQuery();
+            List<City> cities = new ArrayList<>();
+
+            // Loop through the result set and map each row to a City object.
+            while (rset.next()) {
+                City city = new City();
+                city.setId(rset.getInt("ID"));
+                city.setName(rset.getString("Name"));
+                city.setCountryCode(rset.getString("CountryName"));  // The country name is mapped here.
+                city.setDistrict(rset.getString("District"));
+                city.setPopulation(rset.getInt("Population"));
+
+                // Add the city to the list of cities.
+                cities.add(city);
+            }
+            return cities;  // Return the list of cities in the specified country.
+        } catch (SQLException e) {
+            System.out.println("Error fetching cities by country: " + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+     * Display all cities in a specific country ordered by population.
+     *
+     * @param cities A list of City objects to display.
+     * @param countryName The name of the country for display purposes.
+     */
+    public void displayCitiesByCountry(List<City> cities, String countryName) {
+        if (cities != null && !cities.isEmpty()) {
+            // Print table headers
+            System.out.println("\nCities in Country: " + countryName);
+            System.out.println(String.format("%-20s %-20s %-20s %-15s", "City", "Country", "District", "Population"));
+            System.out.println("-------------------------------------------------------------------------------");
+
+            // Loop through each city and display its details
+            for (City city : cities) {
+                System.out.println(String.format("%-20s %-20s %-20s %-15d",
+                        city.getName(),
+                        city.getCountryCode(),
+                        city.getDistrict(),
+                        city.getPopulation()
+                ));
+            }
+        } else {
+            System.out.println("No cities found for the country: " + countryName);
+        }
+    }
+
     public void displayCitiesByRegion(List<City> cities, String region) {
         if (cities != null && !cities.isEmpty()) {
             // Print table headers
@@ -611,6 +680,75 @@ public class App {
             System.out.println("No cities found for the region: " + region);
         }
     }
+
+    /**
+     * Retrieve all cities in a specific district ordered by population from largest to smallest.
+     *
+     * @param district The name of the district to filter the cities.
+     * @return A list of City objects representing all cities in the specified district, ordered by population.
+     */
+    public List<City> getCitiesByDistrict(String district) {
+        try {
+            // SQL query to select all cities in a district, ordered by population.
+            String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
+                    "FROM city JOIN country ON city.CountryCode = country.Code " +
+                    "WHERE city.District = ? " +  // Filter by district
+                    "ORDER BY city.Population DESC";
+
+            // Prepared statement to avoid SQL injection, setting the district name.
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setString(1, district);  // Bind the district parameter.
+
+            // Execute the query and get the result set.
+            ResultSet rset = pstmt.executeQuery();
+            List<City> cities = new ArrayList<>();
+
+            // Loop through the result set and map each row to a City object.
+            while (rset.next()) {
+                City city = new City();
+                city.setId(rset.getInt("ID"));
+                city.setName(rset.getString("Name"));
+                city.setCountryCode(rset.getString("CountryName"));  // The country name is mapped here.
+                city.setDistrict(rset.getString("District"));
+                city.setPopulation(rset.getInt("Population"));
+
+                // Add the city to the list of cities.
+                cities.add(city);
+            }
+            return cities;  // Return the list of cities in the specified district.
+        } catch (SQLException e) {
+            System.out.println("Error fetching cities by district: " + e.getMessage());
+            return null;
+        }
+    }
+
+    /**
+            * Display all cities in a specific district ordered by population.
+            *
+            * @param cities A list of City objects to display.
+            * @param district The name of the district for display purposes.
+            */
+    public void displayCitiesByDistrict(List<City> cities, String district) {
+        if (cities != null && !cities.isEmpty()) {
+            // Print table headers
+            System.out.println("\nCities in District: " + district);
+            System.out.println(String.format("%-20s %-20s %-20s %-15s", "City", "Country", "District", "Population"));
+            System.out.println("-------------------------------------------------------------------------------");
+
+            // Loop through each city and display its details
+            for (City city : cities) {
+                System.out.println(String.format("%-20s %-20s %-20s %-15d",
+                        city.getName(),
+                        city.getCountryCode(),
+                        city.getDistrict(),
+                        city.getPopulation()
+                ));
+            }
+        } else {
+            System.out.println("No cities found for the district: " + district);
+        }
+    }
+
 
     public static void main(String[] args) {
         // Create new Application instance
@@ -661,6 +799,16 @@ public class App {
         // Retrieve and display cities in a specific region by population
         List<City> citiesInRegion = a.getCitiesByRegion(region);
         a.displayCitiesByRegion(citiesInRegion, region);
+
+        // Example: Retrieve and display cities in a specific country (e.g., "USA")
+        String countryCode = "USA";  // Use the appropriate country code for the query
+        List<City> citiesInCountry = a.getCitiesByCountry(countryCode);
+        a.displayCitiesByCountry(citiesInCountry, "United States");
+
+        // Example: Retrieve and display cities in a specific district (e.g., "New York")
+        String district = "New York";  // Use the appropriate district name for the query
+        List<City> citiesInDistrict = a.getCitiesByDistrict(district);
+        a.displayCitiesByDistrict(citiesInDistrict, district);
 
         // Disconnect from the database
         a.disconnect();
