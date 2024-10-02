@@ -17,7 +17,7 @@ This project focuses on developing a Population Information Reporting System tha
 - **Top N Reports**: Retrieve the Top N populated countries or cities globally, by continent, or by region, as defined by the user.
 - **CI/CD Integration**: Set up CI pipelines for testing and building with Maven and Docker.
 
-## 📋 Product Backlog
+## 📋 Product Backlog (Week - 1)
 
 | Feature                                                   | Priority   | Status        |
 |-----------------------------------------------------------|------------|---------------|
@@ -29,6 +29,18 @@ This project focuses on developing a Population Information Reporting System tha
 | Correct branches for GitFlow workflow created (master, develop, release) | High | Completed   |
 | First release created on GitHub                           | Medium     | Completed    |
 | Code of Conduct defined                                   | Medium     | Completed    |
+
+## 📋 Product Backlog (Week - 2)
+
+| Feature                                                   | Priority   | Status        |
+|-----------------------------------------------------------|------------|---------------|
+| Issues being used on GitHub                               | High       | Completed     |
+| Tasks defined as user stories                             | High       | Completed     |
+| Project integrated with Zube.io                           | Medium     | Completed 	 |
+| Kanban/Project Board being used                           | Medium     | Completed     |
+| Sprint Boards being used                                  | Medium     | Completed     |
+| Full use cases defined                                    | High       | Completed	 |
+| Use case diagram created                                  | High       | Completed     |
 
 	•	🛠️ Tech Stack: Show which languages, frameworks, and tools are being used.
 	•	🔄 Changelog: Track version releases and changes.
