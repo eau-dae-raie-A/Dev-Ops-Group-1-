@@ -149,7 +149,7 @@ public class DatabaseService {
         return executeCountryQuery(query, continent);
     }
 
-    // Query to get countries by region
+    // Query to get countries by the region
     public List<Country> getCountriesByRegion(String region) {
         String query = "SELECT country.Code, country.Name AS CountryName, country.Continent, " +
                 "country.Region, country.Population, city.ID AS CityID, city.Name AS CapitalCityName, " +
@@ -194,7 +194,7 @@ public class DatabaseService {
     }
 
 
-    // Query to get all cities by population
+    // Query to get all cities by the population
     public List<City> getAllCitiesByPopulation() {
         String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
                 "FROM city JOIN country ON city.CountryCode = country.Code " +
@@ -202,7 +202,7 @@ public class DatabaseService {
         return executeCityQuery(query);
     }
 
-    // Query to get cities by continent
+    // Query to get cities by the continent
     public List<City> getCitiesByContinent(String continent) {
         String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
                 "FROM city JOIN country ON city.CountryCode = country.Code " +
