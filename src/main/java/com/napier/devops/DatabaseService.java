@@ -183,7 +183,7 @@ public class DatabaseService {
 
     // Retrieves the top N populated countries in a specific region
     public List<Country> getTopPopulatedCountriesByRegion(String region, int N) {
-        String query = "SELECT country.Code, country.Name, country.Continent, country.Region, " +
+        String query = "SELECT country.Code, country.Name AS CountryName, country.Continent, country.Region, " +
                 "country.Population, city.ID AS CityID, city.Name AS CapitalCityName, " +
                 "city.District, city.Population AS CapitalPopulation " +
                 "FROM country LEFT JOIN city ON country.Capital = city.ID " +
@@ -220,39 +220,69 @@ public class DatabaseService {
         return executeCityQuery(query, region);
     }
 
-    // Display country results in a tabular format
+    // Query to get cities by country
+    public List<City> getCitiesByCountry(String countryCode) {
+        String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
+                "FROM city JOIN country ON city.CountryCode = country.Code " +
+                "WHERE country.Code = ? " +
+                "ORDER BY city.Population DESC";
+        return executeCityQuery(query, countryCode);
+    }
+
+    // Query to get cities by district
+    public List<City> getCitiesByDistrict(String district) {
+        String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
+                "FROM city JOIN country ON city.CountryCode = country.Code " +
+                "WHERE city.District = ? " +
+                "ORDER BY city.Population DESC";
+        return executeCityQuery(query, district);
+    }
+
+    // Display country results in a tabular format with clearer borders
     public void displayCountries(List<Country> countries) {
         if (countries != null && !countries.isEmpty()) {
-            System.out.printf("%-20s %-15s %-20s %-15s %-20s %-20s%n", "Country", "Continent", "Region", "Population", "Capital City", "Capital Population");
-            System.out.println("--------------------------------------------------------------------------------------------------------------------");
+            // Column headers with clear formatting
+            System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.printf("%-15s | %-35s | %-20s | %-25s | %-30s | %-15s |%n",
+                    "Country Code", "Country", "Continent", "Region", "Capital City", "Population");
+            // Separator line for clarity
+            System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
             for (Country country : countries) {
-                System.out.printf("%-20s %-15s %-20s %-15d %-20s %-20d%n",
+                // Print each country’s details in table format
+                System.out.printf("%-15s | %-35s | %-20s | %-25s | %-30s | %-15d |%n",
+                        country.getCode(),
                         country.getName(),
                         country.getContinent(),
                         country.getRegion(),
-                        country.getPopulation(),
                         country.getCapitalCity().getName(),
-                        country.getCapitalCity().getPopulation());
+                        country.getPopulation());
             }
+            System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------");
+
         } else {
             System.out.println("No countries found.");
         }
     }
 
-    // Display city results in a tabular format
+    // Display city results in a tabular format with clearer borders
     public void displayCities(List<City> cities) {
         if (cities != null && !cities.isEmpty()) {
-            System.out.printf("%-20s %-20s %-20s %-15s%n", "City", "Country", "District", "Population");
-            System.out.println("-------------------------------------------------------------------------------");
 
+            System.out.println("------------------------------------------------------------------------------------------------------");
+            // Column headers with clear formatting
+            System.out.printf("%-30s | %-30s | %-20s | %-12s |%n", "City", "Country", "District", "Population");
+            // Separator line for clarity
+            System.out.println("------------------------------------------------------------------------------------------------------");
             for (City city : cities) {
-                System.out.printf("%-20s %-20s %-20s %-15d%n",
+                // Print each city’s details in table format
+                System.out.printf("%-30s | %-30s | %-20s | %-12d |%n",
                         city.getName(),
                         city.getCountryCode(),
                         city.getDistrict(),
                         city.getPopulation());
             }
+            System.out.println("------------------------------------------------------------------------------------------------------");
         } else {
             System.out.println("No cities found.");
         }
