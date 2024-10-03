@@ -1,7 +1,7 @@
 package com.napier.devops;
 
 /**
- * Represents a country
+ * Represents a city
  */
 public class City {
     // Attributes corresponding to the columns in the City table
@@ -9,16 +9,16 @@ public class City {
     // ID - Primary Key, Auto-incremented
     private int id;
 
-    // Name - City name, non-null, character field with max length 35
+    // Name - City name
     private String name;
 
-    // CountryCode - Index, non-null, character field with max length 3
+    // CountryCode
     private String countryCode;
 
-    // District - Name of the district, non-null, character field with max length 20
+    // District
     private String district;
 
-    // Population - Non-null, integer field
+    // Population
     private int population;
 
     // Getters and Setters for all attributes

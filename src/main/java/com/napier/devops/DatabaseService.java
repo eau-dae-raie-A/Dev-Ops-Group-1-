@@ -122,7 +122,7 @@ public class DatabaseService {
         City city = new City();
         city.setId(rset.getInt("ID"));
         city.setName(rset.getString("Name"));
-        city.setCountryCode(rset.getString("CountryName"));  // Assuming you want the country name
+        city.setCountryCode(rset.getString("CountryName"));
         city.setDistrict(rset.getString("District"));
         city.setPopulation(rset.getInt("Population"));
         return city;
@@ -238,7 +238,7 @@ public class DatabaseService {
         return executeCityQuery(query, district);
     }
 
-    // Display country results in a tabular format with clearer borders
+    // Display country results
     public void displayCountries(List<Country> countries) {
         if (countries != null && !countries.isEmpty()) {
             // Column headers with clear formatting
@@ -265,7 +265,7 @@ public class DatabaseService {
         }
     }
 
-    // Display city results in a tabular format with clearer borders
+    // Display city results
     public void displayCities(List<City> cities) {
         if (cities != null && !cities.isEmpty()) {
 

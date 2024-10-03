@@ -5,12 +5,12 @@ package com.napier.devops;
  */
 public class CountryLanguage {
     /**
-     * Country code (Primary key and Foreign key)
+     * Country code
      */
     private String countryCode;
 
     /**
-     * Language (Primary key)
+     * Language
      */
     private String language;
 
