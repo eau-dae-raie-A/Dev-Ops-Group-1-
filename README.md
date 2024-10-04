@@ -71,5 +71,3 @@ Stay updated with our [version releases](https://github.com/eau-dae-raie-A/Dev-O
 ---
 
 © 2024 Group1 DevOps - This project is licensed under the Apache 2.0 License.
-
-These additions will make your README.md more comprehension, user-friendly, and attractive.
