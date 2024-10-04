@@ -58,7 +58,6 @@ Each team member brings their unique expertise to ensure that our project is exe
 
 	•	🛠️ Tech Stack: Show which languages, frameworks, and tools are being used.
 	•	🔄 Changelog: Track version releases and changes.
-	•	📚 Documentation: Link to detailed docs or API references.
 
 ## 🛠️ Tech Stack
 - **Languages**: Java (Version 23)
@@ -69,12 +68,7 @@ Each team member brings their unique expertise to ensure that our project is exe
 ## 🔄 Changelog
 Stay updated with our [version releases](https://github.com/eau-dae-raie-A/Dev-Ops-Group-1-/releases).
 
-## 📚 Documentation
-For detailed documentation, check out our [Wiki](https://github.com/eau-dae-raie-A/Dev-Ops-Group-1-/wiki).
-
 ---
-
-© 2024 Group1 DevOps - This project is licensed under the [Apache 2.0 License](https://opensource.org/licenses/Apache-2.0).
 
 © 2024 Group1 DevOps - This project is licensed under the Apache 2.0 License.
 
