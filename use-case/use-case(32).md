@@ -12,7 +12,7 @@
 	•       Primary task.
 	
     •       Preconditions:
-	•       The database contains current and accurate data on the number of speakers for Chinese, English, Hindi, Spanish, and Arabic.
+	•       The database contains accurate data on the number of speakers for Chinese, English, Hindi, Spanish, and Arabic.
 	•       The total world population figure is available for percentage calculations.
 	
     •       Success End Condition:
@@ -30,7 +30,7 @@
 🛠 Main Success Scenario
 
 	•	The system receives a request for the number of speakers of Chinese, English, Hindi, Spanish, and Arabic, along with the total world population.
-	•	The system retrieves up-to-date language data and world population figures from the database.
+	•	The system retrieves given dataset and world population figures from the database.
 	•	The system calculates the percentage of the world population for each language.
 	•	The system compiles the data into a report, showing the number of speakers for each language and their percentage of the world population.
 	•	The system generates the report and delivers it to the researcher for analysis.
