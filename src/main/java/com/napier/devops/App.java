@@ -18,13 +18,13 @@ public class App {
 
         // 2. Retrieve and display countries by continent (Asia)
         String continent = "Asia";
-        System.out.println("\nCountries in the " + continent + " by Population:");
+        System.out.println("\nCountries in the Continent ( " + continent + " ) by Population:");
         List<Country> asianCountries = dbService.getCountriesByContinent(continent);
         dbService.displayCountries(asianCountries);
 
         // 3. Retrieve and display countries by region (Middle East)
         String region = "Middle East";
-        System.out.println("\nCountries in the " + region + " by Population:");
+        System.out.println("\nCountries in the Region ( " + region + " ) by Population:");
         List<Country> middleEastCountries = dbService.getCountriesByRegion(region);
         dbService.displayCountries(middleEastCountries);
 
@@ -36,13 +36,13 @@ public class App {
 
         // 5. Retrieve and display the top N populated countries in a specific continent (e.g., Europe)
         continent="Europe";
-        System.out.println("\nTop " + topN + " Populated Countries in " +continent+ ":");
+        System.out.println("\nTop " + topN + " Populated Countries in the Continent ( " +continent+ " ):");
         List<Country> topCountriesInContinent = dbService.getTopPopulatedCountriesByContinent(continent, topN);
         dbService.displayCountries(topCountriesInContinent);
 
         // 6. Retrieve and display the top N populated countries in a specific region (e.g., Polynesia)
         region="Polynesia";
-        System.out.println("\nTop " + topN + " Populated Countries in " +region+ ":");
+        System.out.println("\nTop " + topN + " Populated Countries in the Region ( " +region+ ") :");
         List<Country> topCountriesInRegion = dbService.getTopPopulatedCountriesByRegion(region, topN);
         dbService.displayCountries(topCountriesInRegion);
 
@@ -53,13 +53,13 @@ public class App {
 
         // 8. Retrieve and display cities by continent (e.g., North America)
         continent="North America";
-        System.out.println("\nCities in "+continent+" by Population:");
+        System.out.println("\nCities in the Continent ( "+continent+" ) by Population:");
         List<City> citiesInContinent = dbService.getCitiesByContinent(continent);
         dbService.displayCities(citiesInContinent);
 
         // 9. Retrieve and display cities by region (e.g., Caribbean)
         region = "Caribbean";
-        System.out.println("\nCities in "+region+" by Population:");
+        System.out.println("\nCities in the Region ( "+region+" ) by Population:");
         List<City> citiesInRegion = dbService.getCitiesByRegion(region);
         dbService.displayCities(citiesInRegion);
 
