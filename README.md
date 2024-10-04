@@ -6,7 +6,7 @@
 ![Develop build status](https://img.shields.io/badge/Develop%20build-passing-brightgreen)
 ![Feature status](https://img.shields.io/badge/Feature-passing-brightgreen)
 [![License: Apache-2.0](https://img.shields.io/badge/license-Apache--2.0-brightgreen)](https://opensource.org/licenses/Apache-2.0)
-![Release](https://img.shields.io/badge/release-found-brightgreen)
+[![Releases](https://img.shields.io/github/release/eau-dae-raie-A/Dev-Ops-Group-1-/all.svg?style=flat-square)](https://github.com/eau-dae-raie-A/Dev-Ops-Group-1-/releases)
 
 ## 📝 Project Overview
 
@@ -17,7 +17,7 @@ This project focuses on developing a Population Information Reporting System tha
 - **Top N Reports**: Retrieve the Top N populated countries or cities globally, by continent, or by region, as defined by the user.
 - **CI/CD Integration**: Set up CI pipelines for testing and building with Maven and Docker.
 
-## 📋 Product Backlog
+## 📋 Product Backlog (Week - 1)
 
 | Feature                                                   | Priority   | Status        |
 |-----------------------------------------------------------|------------|---------------|
@@ -30,16 +30,29 @@ This project focuses on developing a Population Information Reporting System tha
 | First release created on GitHub                           | Medium     | Completed    |
 | Code of Conduct defined                                   | Medium     | Completed    |
 
+## 📋 Product Backlog (Week - 2)
+
+| Feature                                                   | Priority   | Status        |
+|-----------------------------------------------------------|------------|---------------|
+| Issues being used on GitHub                               | High       | Completed     |
+| Tasks defined as user stories                             | High       | Completed     |
+| Project integrated with Zube.io                           | Medium     | Completed 	 |
+| Kanban/Project Board being used                           | Medium     | Completed     |
+| Sprint Boards being used                                  | Medium     | Completed     |
+| Full use cases defined                                    | High       | Completed	 |
+| Use case diagram created                                  | High       | Completed     |
+
 	•	🛠️ Tech Stack: Show which languages, frameworks, and tools are being used.
 	•	🔄 Changelog: Track version releases and changes.
 	•	📚 Documentation: Link to detailed docs or API references.
 
 ## 🛠️ Built With
-- Java 23
+- Java version 23
 - Maven
 - Docker
+- Mongo DB
 - MySQL
 
 © 2024 Group1 DevOps - This project is licensed under the Apache 2.0 License.
 
-These additions will make your README.md more comprehensive, user-friendly, and attractive.
+These additions will make your README.md more comprehension, user-friendly, and attractive.
