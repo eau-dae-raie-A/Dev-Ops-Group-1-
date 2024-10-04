@@ -26,7 +26,7 @@ We are **Group 1** and are working as a Scrum team to bring this project to life
 | **Win Min Thaw**         | Project Manager         |
 | **Htet Myat Kyaw**       | Project Coordinator     |
 | **Shine Lin Ko**         | Project Analyst         |
-| **Nay Chi Myat Noe Aung**| Code Conductor          |
+| **Nay Chi Myat Noe Aung**| Code Developer          |
 | **Wai Yan Lin**          | Code Developer          |
 
 Each team member brings their unique expertise to ensure that our project is executed smoothly, meets deadlines, and adheres to Scrum principles.
