@@ -310,6 +310,31 @@ public class DatabaseService {
         return executeCityQuery(query, region);
     }
 
+    // Method to retrieve the top N populated capital cities in the world
+    public List<City> getTopPopulatedCapitalCities(int n) {
+        String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
+                "FROM city JOIN country ON city.ID = country.Capital " +
+                "ORDER BY city.Population DESC LIMIT ?";
+        return executeCityQuery(query, n);
+    }
+
+    // Method to retrieve the top N populated capital cities in a continent
+    public List<City> getTopPopulatedCapitalCitiesByContinent(String continent, int n) {
+        String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
+                "FROM city JOIN country ON city.ID = country.Capital " +
+                "WHERE country.Continent = ? " +
+                "ORDER BY city.Population DESC LIMIT ?";
+        return executeCityQuery(query, continent, n);
+    }
+
+    // Method to retrieve the top N populated capital cities in a region
+    public List<City> getTopPopulatedCapitalCitiesByRegion(String region, int n) {
+        String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
+                "FROM city JOIN country ON city.ID = country.Capital " +
+                "WHERE country.Region = ? " +
+                "ORDER BY city.Population DESC LIMIT ?";
+        return executeCityQuery(query, region, n);
+    }
 
     // Display country results in a tabular format with clearer borders
     public void displayCountries(List<Country> countries) {

@@ -121,6 +121,23 @@ public class App {
         List<City> capitalCitiesRegion = dbService.getCapitalCitiesByRegion(region);
         dbService.displayCities(capitalCitiesRegion);
 
+        // 20. Retrieve and display the top N populated capital cities in the world
+        System.out.println("\nTop " + topN + " Populated Capital Cities in the World:");
+        List<City> topCapitalCitiesWorld = dbService.getTopPopulatedCapitalCities(topN);
+        dbService.displayCities(topCapitalCitiesWorld);
+
+        // 21. Retrieve and display the top N populated capital cities in a continent
+        continent = "Asia";
+        System.out.println("\nTop " + topN + " Populated Capital Cities in " + continent + ":");
+        List<City> topCapitalCitiesContinent = dbService.getTopPopulatedCapitalCitiesByContinent(continent, topN);
+        dbService.displayCities(topCapitalCitiesContinent);
+
+        // 22. Retrieve and display the top N populated capital cities in a region
+        region = "Western Europe";
+        System.out.println("\nTop " + topN + " Populated Capital Cities in " + region + ":");
+        List<City> topCapitalCitiesRegion = dbService.getTopPopulatedCapitalCitiesByRegion(region, topN);
+        dbService.displayCities(topCapitalCitiesRegion);
+
         // Disconnect from the database
         dbService.disconnect();
     }
