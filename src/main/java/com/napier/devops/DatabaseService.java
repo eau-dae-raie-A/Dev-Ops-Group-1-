@@ -284,6 +284,32 @@ public class DatabaseService {
         return executeCityQuery(query, district, n);
     }
 
+    // Method to retrieve all capital cities in the world by population
+    public List<City> getCapitalCitiesByPopulation() {
+        String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
+                "FROM city JOIN country ON city.ID = country.Capital " +
+                "ORDER BY city.Population DESC";
+        return executeCityQuery(query);
+    }
+
+    // Method to retrieve capital cities in a continent by population
+    public List<City> getCapitalCitiesByContinent(String continent) {
+        String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
+                "FROM city JOIN country ON city.ID = country.Capital " +
+                "WHERE country.Continent = ? " +
+                "ORDER BY city.Population DESC";
+        return executeCityQuery(query, continent);
+    }
+
+    // Method to retrieve capital cities in a region by population
+    public List<City> getCapitalCitiesByRegion(String region) {
+        String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
+                "FROM city JOIN country ON city.ID = country.Capital " +
+                "WHERE country.Region = ? " +
+                "ORDER BY city.Population DESC";
+        return executeCityQuery(query, region);
+    }
+
 
     // Display country results in a tabular format with clearer borders
     public void displayCountries(List<Country> countries) {

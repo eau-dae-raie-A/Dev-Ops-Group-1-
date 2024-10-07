@@ -104,6 +104,23 @@ public class App {
         List<City> topCitiesInDistrict = dbService.getTopPopulatedCitiesByDistrict(district, topN);
         dbService.displayCities(topCitiesInDistrict);
 
+        // 17. Retrieve and display all capital cities in the world by population
+        System.out.println("\nAll Capital Cities in the World by Population:");
+        List<City> capitalCitiesWorld = dbService.getCapitalCitiesByPopulation();
+        dbService.displayCities(capitalCitiesWorld);
+
+        // 18. Retrieve and display capital cities in a continent by population
+        continent = "Asia";
+        System.out.println("\nCapital Cities in " + continent + " by Population:");
+        List<City> capitalCitiesContinent = dbService.getCapitalCitiesByContinent(continent);
+        dbService.displayCities(capitalCitiesContinent);
+
+        // 19. Retrieve and display capital cities in a region by population
+        region = "Middle East";
+        System.out.println("\nCapital Cities in " + region + " by Population:");
+        List<City> capitalCitiesRegion = dbService.getCapitalCitiesByRegion(region);
+        dbService.displayCities(capitalCitiesRegion);
+
         // Disconnect from the database
         dbService.disconnect();
     }
