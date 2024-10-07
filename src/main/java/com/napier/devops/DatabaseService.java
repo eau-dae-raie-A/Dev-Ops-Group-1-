@@ -3,6 +3,8 @@ package com.napier.devops;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 public class DatabaseService {
 
@@ -238,9 +240,57 @@ public class DatabaseService {
         return executeCityQuery(query, district);
     }
 
+    // Method to retrieve top N populated cities globally
+    public List<City> getTopPopulatedCities(int n) {
+        String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
+                "FROM city JOIN country ON city.CountryCode = country.Code " +
+                "ORDER BY city.Population DESC LIMIT ?";
+        return executeCityQuery(query, n);
+    }
+
+    // Method to retrieve top N populated cities in a continent
+    public List<City> getTopPopulatedCitiesByContinent(String continent, int n) {
+        String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
+                "FROM city JOIN country ON city.CountryCode = country.Code " +
+                "WHERE country.Continent = ? " +
+                "ORDER BY city.Population DESC LIMIT ?";
+        return executeCityQuery(query, continent, n);
+    }
+
+    // Method to retrieve top N populated cities in a region
+    public List<City> getTopPopulatedCitiesByRegion(String region, int n) {
+        String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
+                "FROM city JOIN country ON city.CountryCode = country.Code " +
+                "WHERE country.Region = ? " +
+                "ORDER BY city.Population DESC LIMIT ?";
+        return executeCityQuery(query, region, n);
+    }
+
+    // Method to retrieve top N populated cities in a country
+    public List<City> getTopPopulatedCitiesByCountry(String countryCode, int n) {
+        String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
+                "FROM city JOIN country ON city.CountryCode = country.Code " +
+                "WHERE country.Code = ? " +
+                "ORDER BY city.Population DESC LIMIT ?";
+        return executeCityQuery(query, countryCode, n);
+    }
+
+    // Method to retrieve top N populated cities in a district
+    public List<City> getTopPopulatedCitiesByDistrict(String district, int n) {
+        String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
+                "FROM city JOIN country ON city.CountryCode = country.Code " +
+                "WHERE city.District = ? " +
+                "ORDER BY city.Population DESC LIMIT ?";
+        return executeCityQuery(query, district, n);
+    }
+
+
     // Display country results in a tabular format with clearer borders
     public void displayCountries(List<Country> countries) {
         if (countries != null && !countries.isEmpty()) {
+            // Formatter for comma-separated numbers
+            NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+
             // Column headers with clear formatting
             System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------");
             System.out.printf("%-15s | %-35s | %-20s | %-25s | %-30s | %-15s |%n",
@@ -249,14 +299,14 @@ public class DatabaseService {
             System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
             for (Country country : countries) {
-                // Print each country’s details in table format
-                System.out.printf("%-15s | %-35s | %-20s | %-25s | %-30s | %-15d |%n",
+                // Print each country’s details with formatted population
+                System.out.printf("%-15s | %-35s | %-20s | %-25s | %-30s | %-15s |%n",
                         country.getCode(),
                         country.getName(),
                         country.getContinent(),
                         country.getRegion(),
                         country.getCapitalCity().getName(),
-                        country.getPopulation());
+                        numberFormat.format(country.getPopulation()));
             }
             System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
@@ -268,19 +318,22 @@ public class DatabaseService {
     // Display city results in a tabular format with clearer borders
     public void displayCities(List<City> cities) {
         if (cities != null && !cities.isEmpty()) {
+            // Formatter for comma-separated numbers
+            NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
 
             System.out.println("------------------------------------------------------------------------------------------------------");
             // Column headers with clear formatting
             System.out.printf("%-30s | %-30s | %-20s | %-12s |%n", "City", "Country", "District", "Population");
             // Separator line for clarity
             System.out.println("------------------------------------------------------------------------------------------------------");
+
             for (City city : cities) {
-                // Print each city’s details in table format
-                System.out.printf("%-30s | %-30s | %-20s | %-12d |%n",
+                // Print each city’s details with formatted population
+                System.out.printf("%-30s | %-30s | %-20s | %-12s |%n",
                         city.getName(),
                         city.getCountryCode(),
                         city.getDistrict(),
-                        city.getPopulation());
+                        numberFormat.format(city.getPopulation()));
             }
             System.out.println("------------------------------------------------------------------------------------------------------");
         } else {

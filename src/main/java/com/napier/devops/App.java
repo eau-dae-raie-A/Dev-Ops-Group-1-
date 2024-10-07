@@ -75,6 +75,35 @@ public class App {
         List<City> citiesInDistrict = dbService.getCitiesByDistrict(district);
         dbService.displayCities(citiesInDistrict);
 
+        // 12. Retrieve and display the top N populated cities in the world
+        System.out.println("\nTop " + topN + " Populated Cities in the World:");
+        List<City> topPopulatedCities = dbService.getTopPopulatedCities(topN);
+        dbService.displayCities(topPopulatedCities);
+
+        // 13. Top N Populated Cities in a Continent
+        continent = "Asia";
+        System.out.println("\nTop " + topN + " Populated Cities in " + continent + ":");
+        List<City> topCitiesInContinent = dbService.getTopPopulatedCitiesByContinent(continent, topN);
+        dbService.displayCities(topCitiesInContinent);
+
+        // 14. Top N Populated Cities in a Region
+        region = "Western Europe";
+        System.out.println("\nTop " + topN + " Populated Cities in " + region + ":");
+        List<City> topCitiesInRegion = dbService.getTopPopulatedCitiesByRegion(region, topN);
+        dbService.displayCities(topCitiesInRegion);
+
+        // 15. Top N Populated Cities in a Country
+        countryCode = "USA";
+        System.out.println("\nTop " + topN + " Populated Cities in Country " + countryCode + ":");
+        List<City> topCitiesInCountry = dbService.getTopPopulatedCitiesByCountry(countryCode, topN);
+        dbService.displayCities(topCitiesInCountry);
+
+        // 16. Top N Populated Cities in a District
+        district = "California";
+        System.out.println("\nTop " + topN + " Populated Cities in District " + district + ":");
+        List<City> topCitiesInDistrict = dbService.getTopPopulatedCitiesByDistrict(district, topN);
+        dbService.displayCities(topCitiesInDistrict);
+
         // Disconnect from the database
         dbService.disconnect();
     }
