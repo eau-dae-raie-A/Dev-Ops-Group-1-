@@ -454,6 +454,34 @@ public class DatabaseService {
         return population;
     }
 
+    public List<LanguageReport> getLanguageSpeakers() {
+        String query = "SELECT cl.Language, " +
+                "SUM(c.Population * cl.Percentage / 100) AS Speakers, " +
+                "(SUM(c.Population * cl.Percentage / 100) / (SELECT SUM(Population) FROM country) * 100) AS WorldPercentage " +
+                "FROM countrylanguage cl " +
+                "JOIN country c ON cl.CountryCode = c.Code " +
+                "WHERE cl.Language IN ('Chinese', 'English', 'Hindi', 'Spanish', 'Arabic') " +
+                "GROUP BY cl.Language " +
+                "ORDER BY Speakers DESC";
+
+        List<LanguageReport> languageReports = new ArrayList<>();
+        try (PreparedStatement pstmt = con.prepareStatement(query);
+             ResultSet rset = pstmt.executeQuery()) {
+
+            while (rset.next()) {
+                LanguageReport report = new LanguageReport();
+                report.setLanguage(rset.getString("Language"));
+                report.setSpeakers(rset.getLong("Speakers"));
+                report.setWorldPercentage(rset.getDouble("WorldPercentage"));
+                languageReports.add(report);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return languageReports;
+    }
+
+
     // Display country results in a tabular format with clearer borders
     public void displayCountries(List<Country> countries) {
         if (countries != null && !countries.isEmpty()) {
@@ -530,6 +558,25 @@ public class DatabaseService {
             System.out.println("---------------------------------------------------------------------------------------------------------------------");
         } else {
             System.out.println("No data found.");
+        }
+    }
+
+    public void displayLanguageReports(List<LanguageReport> reports) {
+        if (reports != null && !reports.isEmpty()) {
+            System.out.println("-------------------------------------------------------------");
+            System.out.printf("%-10s | %-20s | %-10s%n", "Language", "Speakers", "World %");
+            System.out.println("-------------------------------------------------------------");
+
+            NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+            for (LanguageReport report : reports) {
+                System.out.printf("%-10s | %-20s | %-6.2f%%%n",
+                        report.getLanguage(),
+                        numberFormat.format(report.getSpeakers()),
+                        report.getWorldPercentage());
+            }
+            System.out.println("-------------------------------------------------------------");
+        } else {
+            System.out.println("No language data found.");
         }
     }
 

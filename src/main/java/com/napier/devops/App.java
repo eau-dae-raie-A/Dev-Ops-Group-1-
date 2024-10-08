@@ -182,6 +182,10 @@ public class App {
         String cityName = "Los Angeles";
         System.out.println("Population of " + cityName + ": " + numberFormat.format(dbService.getCityPopulation(cityName)));
 
+        // 32. Display language report
+        List<LanguageReport> languageReports = dbService.getLanguageSpeakers();
+        dbService.displayLanguageReports(languageReports);
+
         // Disconnect from the database
         dbService.disconnect();
     }
