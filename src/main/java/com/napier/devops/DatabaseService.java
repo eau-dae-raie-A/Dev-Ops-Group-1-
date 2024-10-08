@@ -336,59 +336,123 @@ public class DatabaseService {
         return executeCityQuery(query, region, n);
     }
 
-    // Method to retrieve the population of people, people living in cities, and people not living in cities in each continent
-    public List<PopulationData> getPopulationByContinent() {
-        String query = "SELECT country.Continent, " +
+    // Method to retrieve population by continent with percentages
+    public List<PopulationReport> getPopulationByContinent() {
+        String query = "SELECT country.Continent AS Name, " +
                 "SUM(country.Population) AS TotalPopulation, " +
                 "SUM(city.Population) AS CityPopulation, " +
-                "(SUM(country.Population) - SUM(city.Population)) AS NonCityPopulation " +
-                "FROM country LEFT JOIN city ON country.Code = city.CountryCode " +
+                "(1.0 * SUM(city.Population) / SUM(country.Population)) * 100 AS CityPopulationPercentage, " +
+                "(SUM(country.Population) - SUM(city.Population)) AS NonCityPopulation, " +
+                "(1.0 * (SUM(country.Population) - SUM(city.Population)) / SUM(country.Population)) * 100 AS NonCityPopulationPercentage " +
+                "FROM country " +
+                "LEFT JOIN city ON country.Code = city.CountryCode " +
                 "GROUP BY country.Continent";
-        return executePopulationQuery(query, "Continent");
+        return executePopulationReportQuery(query);
     }
 
-    // Method to retrieve the population of people, people living in cities, and people not living in cities in each region
-    public List<PopulationData> getPopulationByRegion() {
-        String query = "SELECT country.Region, " +
+    // Method to retrieve population by region with percentages
+    public List<PopulationReport> getPopulationByRegion() {
+        String query = "SELECT country.Region AS Name, " +
                 "SUM(country.Population) AS TotalPopulation, " +
                 "SUM(city.Population) AS CityPopulation, " +
-                "(SUM(country.Population) - SUM(city.Population)) AS NonCityPopulation " +
-                "FROM country LEFT JOIN city ON country.Code = city.CountryCode " +
+                "(1.0 * SUM(city.Population) / SUM(country.Population)) * 100 AS CityPopulationPercentage, " +
+                "(SUM(country.Population) - SUM(city.Population)) AS NonCityPopulation, " +
+                "(1.0 * (SUM(country.Population) - SUM(city.Population)) / SUM(country.Population)) * 100 AS NonCityPopulationPercentage " +
+                "FROM country " +
+                "LEFT JOIN city ON country.Code = city.CountryCode " +
                 "GROUP BY country.Region";
-        return executePopulationQuery(query, "Region");
+        return executePopulationReportQuery(query);
     }
 
-    // Method to retrieve the population of people, people living in cities, and people not living in cities in each country
-    public List<PopulationData> getPopulationByCountry() {
-        String query = "SELECT country.Name AS Country, " +
+    // Method to retrieve population by country with percentages
+    public List<PopulationReport> getPopulationByCountry() {
+        String query = "SELECT country.Name AS Name, " +
                 "SUM(country.Population) AS TotalPopulation, " +
                 "SUM(city.Population) AS CityPopulation, " +
-                "(SUM(country.Population) - SUM(city.Population)) AS NonCityPopulation " +
-                "FROM country LEFT JOIN city ON country.Code = city.CountryCode " +
+                "(1.0 * SUM(city.Population) / SUM(country.Population)) * 100 AS CityPopulationPercentage, " +
+                "(SUM(country.Population) - SUM(city.Population)) AS NonCityPopulation, " +
+                "(1.0 * (SUM(country.Population) - SUM(city.Population)) / SUM(country.Population)) * 100 AS NonCityPopulationPercentage " +
+                "FROM country " +
+                "LEFT JOIN city ON country.Code = city.CountryCode " +
                 "GROUP BY country.Name";
-        return executePopulationQuery(query, "Country");
+        return executePopulationReportQuery(query);
     }
 
-    // Generic method to execute population-related queries
-    private List<PopulationData> executePopulationQuery(String query, String fieldName) {
-        List<PopulationData> populationDataList = new ArrayList<>();
+    // Generic method to execute population-related queries with percentage calculations
+    private List<PopulationReport> executePopulationReportQuery(String query) {
+        List<PopulationReport> reportDataList = new ArrayList<>();
         try (PreparedStatement pstmt = con.prepareStatement(query);
              ResultSet rset = pstmt.executeQuery()) {
 
             while (rset.next()) {
-                PopulationData data = new PopulationData();
-                data.setName(rset.getString(fieldName));
-                data.setTotalPopulation(rset.getLong("TotalPopulation"));
-                data.setCityPopulation(rset.getLong("CityPopulation"));
-                data.setNonCityPopulation(rset.getLong("NonCityPopulation"));
-                populationDataList.add(data);
+                PopulationReport report = new PopulationReport();
+                report.setName(rset.getString("Name"));
+                report.setTotalPopulation(rset.getLong("TotalPopulation"));
+                report.setCityPopulation(rset.getLong("CityPopulation"));
+                report.setCityPopulationPercentage(rset.getDouble("CityPopulationPercentage"));
+                report.setNonCityPopulation(rset.getLong("NonCityPopulation"));
+                report.setNonCityPopulationPercentage(rset.getDouble("NonCityPopulationPercentage"));
+                reportDataList.add(report);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return populationDataList;
+        return reportDataList;
     }
 
+    // Method to get the world population
+    public long getWorldPopulation() {
+        String query = "SELECT SUM(Population) AS WorldPopulation FROM country";
+        return executeSinglePopulationQuery(query);
+    }
+
+    // Method to get population by continent
+    public long getContinentPopulation(String continent) {
+        String query = "SELECT SUM(Population) AS ContinentPopulation FROM country WHERE Continent = ?";
+        return executeSinglePopulationQuery(query, continent);
+    }
+
+    // Method to get population by region
+    public long getRegionPopulation(String region) {
+        String query = "SELECT SUM(Population) AS RegionPopulation FROM country WHERE Region = ?";
+        return executeSinglePopulationQuery(query, region);
+    }
+
+    // Method to get population by country
+    public long getCountryPopulation(String countryCode) {
+        String query = "SELECT Population AS CountryPopulation FROM country WHERE Code = ?";
+        return executeSinglePopulationQuery(query, countryCode);
+    }
+
+    // Method to get population by district
+    public long getDistrictPopulation(String district) {
+        String query = "SELECT SUM(Population) AS DistrictPopulation FROM city WHERE District = ?";
+        return executeSinglePopulationQuery(query, district);
+    }
+
+    // Method to get population by city
+    public long getCityPopulation(String cityName) {
+        String query = "SELECT Population AS CityPopulation FROM city WHERE Name = ?";
+        return executeSinglePopulationQuery(query, cityName);
+    }
+
+    // Helper method to execute a single population query and return a long
+    private long executeSinglePopulationQuery(String query, Object... params) {
+        long population = 0;
+        try (PreparedStatement pstmt = con.prepareStatement(query)) {
+            for (int i = 0; i < params.length; i++) {
+                pstmt.setString(i + 1, (String) params[i]);
+            }
+            try (ResultSet rset = pstmt.executeQuery()) {
+                if (rset.next()) {
+                    population = rset.getLong(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return population;
+    }
 
     // Display country results in a tabular format with clearer borders
     public void displayCountries(List<Country> countries) {
@@ -446,24 +510,29 @@ public class DatabaseService {
         }
     }
 
-    public void displayPopulationData(List<PopulationData> dataList) {
+    public void displayPopulationData(List<PopulationReport> dataList) {
         if (dataList != null && !dataList.isEmpty()) {
-            System.out.println("----------------------------------------------------------------------------------------");
-            System.out.printf("%-20s | %-20s | %-20s | %-20s |%n", "Continent", "Total Population", "City Population", "Non-City Population");
-            System.out.println("----------------------------------------------------------------------------------------");
+            System.out.println("---------------------------------------------------------------------------------------------------------------------");
+            System.out.printf("%-36s | %-20s | %-20s | %-10s | %-20s | %-10s%n",
+                    "Name", "Total Population", "City Population", "City %", "Non-City Population", "Non-City %");
+            System.out.println("---------------------------------------------------------------------------------------------------------------------");
 
             NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
-            for (PopulationData data : dataList) {
-                System.out.printf("%-20s | %-20s | %-20s | %-20s |%n",
-                        data.getName(),
-                        numberFormat.format(data.getTotalPopulation()),
-                        numberFormat.format(data.getCityPopulation()),
-                        numberFormat.format(data.getNonCityPopulation()));
+            for (PopulationReport report : dataList) {
+                System.out.printf("%-36s | %-20s | %-20s | %-6.2f%% | %-20s | %-6.2f%%%n",
+                        report.getName(),
+                        numberFormat.format(report.getTotalPopulation()),
+                        numberFormat.format(report.getCityPopulation()),
+                        report.getCityPopulationPercentage(),
+                        numberFormat.format(report.getNonCityPopulation()),
+                        report.getNonCityPopulationPercentage());
             }
-            System.out.println("----------------------------------------------------------------------------------------");
+            System.out.println("---------------------------------------------------------------------------------------------------------------------");
         } else {
             System.out.println("No data found.");
         }
     }
+
+
 
 }
