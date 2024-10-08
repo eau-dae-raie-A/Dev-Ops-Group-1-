@@ -12,7 +12,11 @@ public class App {
         DatabaseService dbService = new DatabaseService();
 
         // Connect to the database
-        dbService.connect();
+        if(args.length < 1){
+            dbService.connect("localhost:33060", 30000);
+        }else{
+            dbService.connect(args[0], Integer.parseInt(args[1]));
+        }
 
         // Create a NumberFormat instance for formatting population numbers with commas
         NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
@@ -158,29 +162,6 @@ public class App {
         System.out.println("\nPopulation Data by Country:");
         List<PopulationReport> countryPopulationData = dbService.getPopulationByCountry();
         dbService.displayPopulationData(countryPopulationData);
-
-        // 26. Display world population
-        System.out.println("\nWorld Population: " + numberFormat.format(dbService.getWorldPopulation()));
-
-        // 27. Display population of a specific continent
-        continent = "Asia";
-        System.out.println("Population of " + continent + ": " + numberFormat.format(dbService.getContinentPopulation(continent)));
-
-        // 28. Display population of a specific region
-        region = "Western Europe";
-        System.out.println("Population of " + region + ": " + numberFormat.format(dbService.getRegionPopulation(region)));
-
-        // 29. Display population of a specific country
-        countryCode = "USA";
-        System.out.println("Population of " + countryCode + ": " + numberFormat.format(dbService.getCountryPopulation(countryCode)));
-
-        // 30. Display population of a specific district
-        district = "California";
-        System.out.println("Population of " + district + ": " + numberFormat.format(dbService.getDistrictPopulation(district)));
-
-        // 31. Display population of a specific city
-        String cityName = "Los Angeles";
-        System.out.println("Population of " + cityName + ": " + numberFormat.format(dbService.getCityPopulation(cityName)));
 
         // Disconnect from the database
         dbService.disconnect();
