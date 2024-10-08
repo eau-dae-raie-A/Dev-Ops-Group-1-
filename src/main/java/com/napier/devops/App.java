@@ -14,6 +14,9 @@ public class App {
         // Connect to the database
         dbService.connect();
 
+        // Create a NumberFormat instance for formatting population numbers with commas
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+
         // 1. Retrieve and display all countries by population (Global)
         System.out.println("All Countries by Population:");
         List<Country> countries = dbService.getCountriesByPopulation();
@@ -143,23 +146,21 @@ public class App {
 
         // 23. Retrieve and display population data by continent
         System.out.println("\nPopulation Data by Continent:");
-        List<PopulationData> continentPopulationData = dbService.getPopulationByContinent();
+        List<PopulationReport> continentPopulationData = dbService.getPopulationByContinent();
         dbService.displayPopulationData(continentPopulationData);
 
-        // 24. Retrieve and display the population data by region
+        // 24. Retrieve and display population data by region
         System.out.println("\nPopulation Data by Region:");
-        List<PopulationData> regionPopulationData = dbService.getPopulationByRegion();
+        List<PopulationReport> regionPopulationData = dbService.getPopulationByRegion();
         dbService.displayPopulationData(regionPopulationData);
 
-        // 25. Retrieve and display the population data by country
+        // 25. Retrieve and display population data by country
         System.out.println("\nPopulation Data by Country:");
-        List<PopulationData> countryPopulationData = dbService.getPopulationByCountry();
+        List<PopulationReport> countryPopulationData = dbService.getPopulationByCountry();
         dbService.displayPopulationData(countryPopulationData);
 
-        //  Create a NumberFormat instance for formatting population numbers with commas
-        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
         // 26. Display world population
-        System.out.println("World Population: " + numberFormat.format(dbService.getWorldPopulation()));
+        System.out.println("\nWorld Population: " + numberFormat.format(dbService.getWorldPopulation()));
 
         // 27. Display population of a specific continent
         continent = "Asia";
