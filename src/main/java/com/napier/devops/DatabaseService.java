@@ -347,6 +347,28 @@ public class DatabaseService {
         return executePopulationQuery(query, "Continent");
     }
 
+    // Method to retrieve the population of people, people living in cities, and people not living in cities in each region
+    public List<PopulationData> getPopulationByRegion() {
+        String query = "SELECT country.Region, " +
+                "SUM(country.Population) AS TotalPopulation, " +
+                "SUM(city.Population) AS CityPopulation, " +
+                "(SUM(country.Population) - SUM(city.Population)) AS NonCityPopulation " +
+                "FROM country LEFT JOIN city ON country.Code = city.CountryCode " +
+                "GROUP BY country.Region";
+        return executePopulationQuery(query, "Region");
+    }
+
+    // Method to retrieve the population of people, people living in cities, and people not living in cities in each country
+    public List<PopulationData> getPopulationByCountry() {
+        String query = "SELECT country.Name AS Country, " +
+                "SUM(country.Population) AS TotalPopulation, " +
+                "SUM(city.Population) AS CityPopulation, " +
+                "(SUM(country.Population) - SUM(city.Population)) AS NonCityPopulation " +
+                "FROM country LEFT JOIN city ON country.Code = city.CountryCode " +
+                "GROUP BY country.Name";
+        return executePopulationQuery(query, "Country");
+    }
+
     // Generic method to execute population-related queries
     private List<PopulationData> executePopulationQuery(String query, String fieldName) {
         List<PopulationData> populationDataList = new ArrayList<>();

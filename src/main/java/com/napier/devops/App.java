@@ -143,6 +143,15 @@ public class App {
         List<PopulationData> continentPopulationData = dbService.getPopulationByContinent();
         dbService.displayPopulationData(continentPopulationData);
 
+        // 24. Retrieve and display the population data by region
+        System.out.println("\nPopulation Data by Region:");
+        List<PopulationData> regionPopulationData = dbService.getPopulationByRegion();
+        dbService.displayPopulationData(regionPopulationData);
+
+        // 25. Retrieve and display the population data by country
+        System.out.println("\nPopulation Data by Country:");
+        List<PopulationData> countryPopulationData = dbService.getPopulationByCountry();
+        dbService.displayPopulationData(countryPopulationData);
 
         // Disconnect from the database
         dbService.disconnect();
