@@ -1,6 +1,9 @@
 package com.napier.devops;
 
 import java.util.List;
+import java.text.NumberFormat;
+import java.util.Locale;
+
 
 public class App {
 
@@ -152,6 +155,32 @@ public class App {
         System.out.println("\nPopulation Data by Country:");
         List<PopulationData> countryPopulationData = dbService.getPopulationByCountry();
         dbService.displayPopulationData(countryPopulationData);
+
+        //  Create a NumberFormat instance for formatting population numbers with commas
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+        // 26. Display world population
+        System.out.println("World Population: " + numberFormat.format(dbService.getWorldPopulation()));
+
+        // 27. Display population of a specific continent
+        continent = "Asia";
+        System.out.println("Population of " + continent + ": " + numberFormat.format(dbService.getContinentPopulation(continent)));
+
+        // 28. Display population of a specific region
+        region = "Western Europe";
+        System.out.println("Population of " + region + ": " + numberFormat.format(dbService.getRegionPopulation(region)));
+
+        // 29. Display population of a specific country
+        countryCode = "USA";
+        System.out.println("Population of " + countryCode + ": " + numberFormat.format(dbService.getCountryPopulation(countryCode)));
+
+        // 30. Display population of a specific district
+        district = "California";
+        System.out.println("Population of " + district + ": " + numberFormat.format(dbService.getDistrictPopulation(district)));
+
+        // 31. Display population of a specific city
+        String cityName = "Los Angeles";
+        System.out.println("Population of " + cityName + ": " + numberFormat.format(dbService.getCityPopulation(cityName)));
+
         // Disconnect from the database
         dbService.disconnect();
     }

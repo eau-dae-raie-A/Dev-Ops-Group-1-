@@ -390,6 +390,61 @@ public class DatabaseService {
         return populationDataList;
     }
 
+    // Method to retrieve the total population of the world
+    public long getWorldPopulation() {
+        String query = "SELECT SUM(Population) AS WorldPopulation FROM country";
+        return executeSinglePopulationQuery(query);
+    }
+
+    // Method to retrieve the total population of a specific continent
+    public long getContinentPopulation(String continent) {
+        String query = "SELECT SUM(Population) AS ContinentPopulation FROM country WHERE Continent = ?";
+        return executeSinglePopulationQuery(query, continent);
+    }
+
+    // Method to retrieve the total population of a specific region
+    public long getRegionPopulation(String region) {
+        String query = "SELECT SUM(Population) AS RegionPopulation FROM country WHERE Region = ?";
+        return executeSinglePopulationQuery(query, region);
+    }
+
+    // Method to retrieve the total population of a specific country
+    public long getCountryPopulation(String countryCode) {
+        String query = "SELECT Population AS CountryPopulation FROM country WHERE Code = ?";
+        return executeSinglePopulationQuery(query, countryCode);
+    }
+
+    // Method to retrieve the total population of a specific district
+    public long getDistrictPopulation(String district) {
+        String query = "SELECT SUM(Population) AS DistrictPopulation FROM city WHERE District = ?";
+        return executeSinglePopulationQuery(query, district);
+    }
+
+    // Method to retrieve the total population of a specific city
+    public long getCityPopulation(String cityName) {
+        String query = "SELECT Population AS CityPopulation FROM city WHERE Name = ?";
+        return executeSinglePopulationQuery(query, cityName);
+    }
+
+    private long executeSinglePopulationQuery(String query, Object... params) {
+        long population = 0;
+        try (PreparedStatement pstmt = con.prepareStatement(query)) {
+            for (int i = 0; i < params.length; i++) {
+                if (params[i] instanceof String) {
+                    pstmt.setString(i + 1, (String) params[i]);
+                }
+            }
+            try (ResultSet rset = pstmt.executeQuery()) {
+                if (rset.next()) {
+                    population = rset.getLong(1);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return population;
+    }
+
 
     // Display country results in a tabular format with clearer borders
     public void displayCountries(List<Country> countries) {
