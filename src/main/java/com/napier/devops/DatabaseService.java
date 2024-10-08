@@ -336,6 +336,38 @@ public class DatabaseService {
         return executeCityQuery(query, region, n);
     }
 
+    // Method to retrieve the population of people, people living in cities, and people not living in cities in each continent
+    public List<PopulationData> getPopulationByContinent() {
+        String query = "SELECT country.Continent, " +
+                "SUM(country.Population) AS TotalPopulation, " +
+                "SUM(city.Population) AS CityPopulation, " +
+                "(SUM(country.Population) - SUM(city.Population)) AS NonCityPopulation " +
+                "FROM country LEFT JOIN city ON country.Code = city.CountryCode " +
+                "GROUP BY country.Continent";
+        return executePopulationQuery(query, "Continent");
+    }
+
+    // Generic method to execute population-related queries
+    private List<PopulationData> executePopulationQuery(String query, String fieldName) {
+        List<PopulationData> populationDataList = new ArrayList<>();
+        try (PreparedStatement pstmt = con.prepareStatement(query);
+             ResultSet rset = pstmt.executeQuery()) {
+
+            while (rset.next()) {
+                PopulationData data = new PopulationData();
+                data.setName(rset.getString(fieldName));
+                data.setTotalPopulation(rset.getLong("TotalPopulation"));
+                data.setCityPopulation(rset.getLong("CityPopulation"));
+                data.setNonCityPopulation(rset.getLong("NonCityPopulation"));
+                populationDataList.add(data);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return populationDataList;
+    }
+
+
     // Display country results in a tabular format with clearer borders
     public void displayCountries(List<Country> countries) {
         if (countries != null && !countries.isEmpty()) {
@@ -391,4 +423,25 @@ public class DatabaseService {
             System.out.println("No cities found.");
         }
     }
+
+    public void displayPopulationData(List<PopulationData> dataList) {
+        if (dataList != null && !dataList.isEmpty()) {
+            System.out.println("----------------------------------------------------------------------------------------");
+            System.out.printf("%-20s | %-20s | %-20s | %-20s |%n", "Continent", "Total Population", "City Population", "Non-City Population");
+            System.out.println("----------------------------------------------------------------------------------------");
+
+            NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+            for (PopulationData data : dataList) {
+                System.out.printf("%-20s | %-20s | %-20s | %-20s |%n",
+                        data.getName(),
+                        numberFormat.format(data.getTotalPopulation()),
+                        numberFormat.format(data.getCityPopulation()),
+                        numberFormat.format(data.getNonCityPopulation()));
+            }
+            System.out.println("----------------------------------------------------------------------------------------");
+        } else {
+            System.out.println("No data found.");
+        }
+    }
+
 }

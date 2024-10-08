@@ -138,6 +138,12 @@ public class App {
         List<City> topCapitalCitiesRegion = dbService.getTopPopulatedCapitalCitiesByRegion(region, topN);
         dbService.displayCities(topCapitalCitiesRegion);
 
+        // 23. Retrieve and display population data by continent
+        System.out.println("\nPopulation Data by Continent:");
+        List<PopulationData> continentPopulationData = dbService.getPopulationByContinent();
+        dbService.displayPopulationData(continentPopulationData);
+
+
         // Disconnect from the database
         dbService.disconnect();
     }
