@@ -540,14 +540,14 @@ public class DatabaseService {
 
     public void displayPopulationData(List<PopulationReport> dataList) {
         if (dataList != null && !dataList.isEmpty()) {
-            System.out.println("---------------------------------------------------------------------------------------------------------------------");
-            System.out.printf("%-36s | %-20s | %-20s | %-10s | %-20s | %-10s%n",
+            System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.printf("%-40s | %-20s | %-20s | %-8s | %-20s | %-10s%n",
                     "Name", "Total Population", "City Population", "City %", "Non-City Population", "Non-City %");
-            System.out.println("---------------------------------------------------------------------------------------------------------------------");
+            System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------");
 
             NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
             for (PopulationReport report : dataList) {
-                System.out.printf("%-36s | %-20s | %-20s | %-6.2f%% | %-20s | %-6.2f%%%n",
+                System.out.printf("%-40s | %-20s | %-20s | %-6.2f%% | %-20s | %-6.2f%%%n",
                         report.getName(),
                         numberFormat.format(report.getTotalPopulation()),
                         numberFormat.format(report.getCityPopulation()),
@@ -555,7 +555,7 @@ public class DatabaseService {
                         numberFormat.format(report.getNonCityPopulation()),
                         report.getNonCityPopulationPercentage());
             }
-            System.out.println("---------------------------------------------------------------------------------------------------------------------");
+            System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------");
         } else {
             System.out.println("No data found.");
         }
