@@ -3,7 +3,7 @@ on:
   push:
     branches:
       - master
-
+      - lab8
 
 jobs:
   UnitTests:
