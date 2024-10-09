@@ -35,7 +35,7 @@ public class DatabaseService {
                 System.out.println("Successfully connected");
                 break;
             } catch (SQLException sqle) {
-                System.out.println("Failed to connect to database attempt " +                                  Integer.toString(i));
+                System.out.println("Failed to connect to database attempt " + i);
                 System.out.println(sqle.getMessage());
             } catch (InterruptedException ie) {
                 System.out.println("Thread interrupted? Should not happen.");
@@ -50,12 +50,19 @@ public class DatabaseService {
         if (con != null) {
             try {
                 con.close();
+                con = null;  // Set the connection to null after closing
             } catch (SQLException e) {
                 System.out.println("Error closing connection to database");
             }
         }
     }
 
+    /**
+     * Getter for the connection, used for testing purposes.
+     */
+    public Connection getConnection() {
+        return con;
+    }
     /**
      * General method to execute any country-related query.
      */
