@@ -20,6 +20,11 @@ jobs:
           distribution: 'adopt'
       - name: Unit Tests
         run: mvn -Dtest=com.napier.devops.AppTest test
+            : mvn -Dtest=com.napier.devops.CityTest test
+            : mvn -Dtest=com.napier.devops.CountryLanguageTest test
+            : mvn -Dtest=com.napier.devops.CountryTest test
+            : mvn -Dtest=com.napier.devops.PopulationReport test
+
 
   IntegrationTests:
     name: Integration Tests
