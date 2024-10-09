@@ -24,9 +24,7 @@ jobs:
             mvn -Dtest=com.napier.devops.CityTest test
             mvn -Dtest=com.napier.devops.CountryLanguageTest test
             mvn -Dtest=com.napier.devops.CountryTest test
-            mvn -Dtest=com.napier.devops.PopulationReport test
-
-
+            mvn -Dtest=com.napier.devops.PopulationReportTest test
   IntegrationTests:
     name: Integration Tests
     runs-on: ubuntu-20.04
