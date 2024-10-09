@@ -5,7 +5,7 @@ package com.napier.devops;
  */
 public class Country {
     /**
-     * Country code (Primary key)
+     * Country code
      */
     private String code;
 
@@ -41,17 +41,17 @@ public class Country {
     private int population;
 
     /**
-     * Country's life expectancy (nullable)
+     * Country's life expectancy
      */
     private Double lifeExpectancy;
 
     /**
-     * Country's Gross National Product (GNP) (nullable)
+     * Country's Gross National Product
      */
     private Double gnp;
 
     /**
-     * Country's old Gross National Product (GNPOld) (nullable)
+     * Country's old Gross National Product
      */
     private Double gnpOld;
 
@@ -66,17 +66,17 @@ public class Country {
     private String governmentForm;
 
     /**
-     * Head of state (nullable)
+     * Head of state
      */
     private String headOfState;
 
     /**
-     * Capital city ID (nullable)
+     * Capital city ID
      */
     private Integer capital;
 
     /**
-     * Country code (2-letter)
+     * Country code2
      */
     private String code2;
 

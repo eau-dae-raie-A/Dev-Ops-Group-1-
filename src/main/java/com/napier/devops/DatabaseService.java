@@ -13,28 +13,32 @@ public class DatabaseService {
     /**
      * Connect to the MySQL database.
      */
-    public void connect() {
+    public void connect(String location, int delay) {
         try {
+            // Load Database driver
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException("MySQL Driver not found", e);
+            System.out.println("Could not load SQL driver");
+            System.exit(-1);
         }
 
         int retries = 10;
         for (int i = 0; i < retries; ++i) {
+            System.out.println("Connecting to database...");
             try {
-                System.out.println("Connecting to database...");
-                Thread.sleep(30000);
-                con = DriverManager.getConnection(
-                        "jdbc:mysql://db:3306/world?allowPublicKeyRetrieval=True&useSSL=false",
+                // Wait a bit for db to start
+                Thread.sleep(delay);
+                // Connect to database
+                con = DriverManager.getConnection("jdbc:mysql://" + location
+                                + "/world?allowPublicKeyRetrieval=true&useSSL=false",
                         "root", "example");
                 System.out.println("Successfully connected");
                 break;
             } catch (SQLException sqle) {
-                System.out.println("Failed to connect to database, attempt " + i);
-                sqle.printStackTrace();
+                System.out.println("Failed to connect to database attempt " + i);
+                System.out.println(sqle.getMessage());
             } catch (InterruptedException ie) {
-                System.out.println("Thread interrupted. Exiting.");
+                System.out.println("Thread interrupted? Should not happen.");
             }
         }
     }
@@ -46,12 +50,19 @@ public class DatabaseService {
         if (con != null) {
             try {
                 con.close();
+                con = null;  // Set the connection to null after closing
             } catch (SQLException e) {
                 System.out.println("Error closing connection to database");
             }
         }
     }
 
+    /**
+     * Getter for the connection, used for testing purposes.
+     */
+    public Connection getConnection() {
+        return con;
+    }
     /**
      * General method to execute any country-related query.
      */
@@ -400,59 +411,6 @@ public class DatabaseService {
         return reportDataList;
     }
 
-    // Method to get the world population
-    public long getWorldPopulation() {
-        String query = "SELECT SUM(Population) AS WorldPopulation FROM country";
-        return executeSinglePopulationQuery(query);
-    }
-
-    // Method to get population by continent
-    public long getContinentPopulation(String continent) {
-        String query = "SELECT SUM(Population) AS ContinentPopulation FROM country WHERE Continent = ?";
-        return executeSinglePopulationQuery(query, continent);
-    }
-
-    // Method to get population by region
-    public long getRegionPopulation(String region) {
-        String query = "SELECT SUM(Population) AS RegionPopulation FROM country WHERE Region = ?";
-        return executeSinglePopulationQuery(query, region);
-    }
-
-    // Method to get population by country
-    public long getCountryPopulation(String countryCode) {
-        String query = "SELECT Population AS CountryPopulation FROM country WHERE Code = ?";
-        return executeSinglePopulationQuery(query, countryCode);
-    }
-
-    // Method to get population by district
-    public long getDistrictPopulation(String district) {
-        String query = "SELECT SUM(Population) AS DistrictPopulation FROM city WHERE District = ?";
-        return executeSinglePopulationQuery(query, district);
-    }
-
-    // Method to get population by city
-    public long getCityPopulation(String cityName) {
-        String query = "SELECT Population AS CityPopulation FROM city WHERE Name = ?";
-        return executeSinglePopulationQuery(query, cityName);
-    }
-
-    // Helper method to execute a single population query and return a long
-    private long executeSinglePopulationQuery(String query, Object... params) {
-        long population = 0;
-        try (PreparedStatement pstmt = con.prepareStatement(query)) {
-            for (int i = 0; i < params.length; i++) {
-                pstmt.setString(i + 1, (String) params[i]);
-            }
-            try (ResultSet rset = pstmt.executeQuery()) {
-                if (rset.next()) {
-                    population = rset.getLong(1);
-                }
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return population;
-    }
 
     // Display country results in a tabular format with clearer borders
     public void displayCountries(List<Country> countries) {
