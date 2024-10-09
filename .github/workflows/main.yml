@@ -3,8 +3,7 @@ on:
   push:
     branches:
       - master
-      - lab8
-
+      - lab08
 jobs:
   UnitTests:
     name: Unit Tests
@@ -20,12 +19,8 @@ jobs:
           java-version: '23'
           distribution: 'adopt'
       - name: Unit Tests
-        run: |
-            mvn -Dtest=com.napier.devops.AppTest test
-            mvn -Dtest=com.napier.devops.CityTest test
-            mvn -Dtest=com.napier.devops.CountryLanguageTest test
-            mvn -Dtest=com.napier.devops.CountryTest test
-            mvn -Dtest=com.napier.devops.PopulationReportTest test
+        run: mvn -Dtest=com.napier.devops.AppTest test
+
   IntegrationTests:
     name: Integration Tests
     runs-on: ubuntu-20.04
@@ -46,7 +41,7 @@ jobs:
           mvn -Dtest=com.napier.devops.AppIntegrationTest test          
           docker stop world
           docker rm world
-          docker image rm database
+          docker image rm world
       - name: CodeCov
         uses: codecov/codecov-action@v2
         with:
