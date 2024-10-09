@@ -25,6 +25,16 @@ jobs:
             mvn -Dtest=com.napier.devops.CountryLanguageTest test
             mvn -Dtest=com.napier.devops.CountryTest test
             mvn -Dtest=com.napier.devops.PopulationReportTest test
+      - name: Run Unit Tests and Generate Coverage
+        run: |
+              mvn test jacoco:report # Ensure you're generating the coverage report
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v2
+        with:
+            token: ${{ secrets.CODECOV_TOKEN }} # Not needed for public repos
+            files: ./target/site/jacoco/jacoco.xml # Correct path to JaCoCo coverage file
+            flags: unittests
+            verbose: true
   IntegrationTests:
     name: Integration Tests
     runs-on: ubuntu-20.04
