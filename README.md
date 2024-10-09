@@ -17,7 +17,21 @@ This project focuses on developing a Population Information Reporting System tha
 - **Top N Reports**: Retrieve the Top N populated countries or cities globally, by continent, or by region, as defined by the user.
 - **CI/CD Integration**: Set up CI pipelines for testing and building with Maven and Docker.
 
-## 📋 Product Backlog
+## 👥 Meet the Team
+
+We are **Group 1** and are working as a Scrum team to bring this project to life. Our roles are distributed as follows:
+
+| Name                    | Role                    |
+|-------------------------|-------------------------|
+| **Win Min Thaw**         | Project Manager         |
+| **Htet Myat Kyaw**       | Project Coordinator     |
+| **Shine Lin Ko**         | Project Analyst         |
+| **Nay Chi Myat Noe Aung**| Code Developer          |
+| **Wai Yan Lin**          | Code Developer          |
+
+Each team member brings their unique expertise to ensure that our project is executed smoothly, meets deadlines, and adheres to Scrum principles.
+
+## 📋 Product Backlog (Week - 1)
 
 | Feature                                                   | Priority   | Status        |
 |-----------------------------------------------------------|------------|---------------|
@@ -30,17 +44,30 @@ This project focuses on developing a Population Information Reporting System tha
 | First release created on GitHub                           | Medium     | Completed    |
 | Code of Conduct defined                                   | Medium     | Completed    |
 
+## 📋 Product Backlog (Week - 2)
+
+| Feature                                                   | Priority   | Status        |
+|-----------------------------------------------------------|------------|---------------|
+| Issues being used on GitHub                               | High       | Completed     |
+| Tasks defined as user stories                             | High       | Completed     |
+| Project integrated with Zube.io                           | Medium     | Completed 	 |
+| Kanban/Project Board being used                           | Medium     | Completed     |
+| Sprint Boards being used                                  | Medium     | Completed     |
+| Full use cases defined                                    | High       | Completed	 |
+| Use case diagram created                                  | High       | Completed     |
+
 	•	🛠️ Tech Stack: Show which languages, frameworks, and tools are being used.
 	•	🔄 Changelog: Track version releases and changes.
-	•	📚 Documentation: Link to detailed docs or API references.
 
-## 🛠️ Built With
-- Java version 23
-- Maven
-- Docker
-- Mongo DB
-- MySQL
+## 🛠️ Tech Stack
+- **Languages**: Java (Version 23)
+- **Build Tool**: Maven
+- **Containerization**: Docker
+- **Database**: MySQL
+
+## 🔄 Changelog
+Stay updated with our [version releases](https://github.com/eau-dae-raie-A/Dev-Ops-Group-1-/releases).
+
+---
 
 © 2024 Group1 DevOps - This project is licensed under the Apache 2.0 License.
-
-These additions will make your README.md more comprehension, user-friendly, and attractive.

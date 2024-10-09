@@ -1,68 +1,130 @@
 package com.napier.devops;
 
 /**
- * Represents a country
+ * Represents a city with various attributes such as name, country code, district, and population.
  */
 public class City {
-    // Attributes corresponding to the columns in the City table
 
-    // ID - Primary Key, Auto-incremented
+    /**
+     * The unique ID of the city (Primary Key, Auto-incremented).
+     */
     private int id;
 
-    // Name - City name, non-null, character field with max length 35
+    /**
+     * The name of the city.
+     */
     private String name;
 
-    // CountryCode - Index, non-null, character field with max length 3
+    /**
+     * The code of the country to which the city belongs.
+     */
     private String countryCode;
 
-    // District - Name of the district, non-null, character field with max length 20
+    /**
+     * The district or administrative division within the country where the city is located.
+     */
     private String district;
 
-    // Population - Non-null, integer field
+    /**
+     * The population of the city.
+     */
     private int population;
 
-    // Getters and Setters for all attributes
-
+    /**
+     * Gets the unique ID of the city.
+     *
+     * @return The city's ID.
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Sets the unique ID of the city.
+     *
+     * @param id The city's ID to set.
+     */
     public void setId(int id) {
         this.id = id;
     }
 
+    /**
+     * Gets the name of the city.
+     *
+     * @return The name of the city.
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Sets the name of the city.
+     *
+     * @param name The name of the city to set.
+     */
     public void setName(String name) {
         this.name = name;
     }
 
+    /**
+     * Gets the country code associated with the city.
+     *
+     * @return The country code of the city.
+     */
     public String getCountryCode() {
         return countryCode;
     }
 
+    /**
+     * Sets the country code associated with the city.
+     *
+     * @param countryCode The country code of the city to set.
+     */
     public void setCountryCode(String countryCode) {
         this.countryCode = countryCode;
     }
 
+    /**
+     * Gets the district or administrative division where the city is located.
+     *
+     * @return The district of the city.
+     */
     public String getDistrict() {
         return district;
     }
 
+    /**
+     * Sets the district or administrative division where the city is located.
+     *
+     * @param district The district of the city to set.
+     */
     public void setDistrict(String district) {
         this.district = district;
     }
 
+    /**
+     * Gets the population of the city.
+     *
+     * @return The population of the city.
+     */
     public int getPopulation() {
         return population;
     }
 
+    /**
+     * Sets the population of the city.
+     *
+     * @param population The population of the city to set.
+     */
     public void setPopulation(int population) {
         this.population = population;
     }
 
+    /**
+     * Returns a string representation of the City object.
+     *
+     * @return A string containing the city's details.
+     */
     @Override
     public String toString() {
         return "City{" +
@@ -74,4 +136,3 @@ public class City {
                 '}';
     }
 }
-

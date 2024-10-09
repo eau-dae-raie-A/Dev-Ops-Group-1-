@@ -4,16 +4,48 @@ import java.util.List;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-
 public class App {
 
+    private final DatabaseService dbService;
+
+    /**
+     * Constructor for dependency injection.
+     *
+     * @param dbService The DatabaseService instance to be used by this App.
+     */
+    public App(DatabaseService dbService) {
+        this.dbService = dbService;
+    }
+
+    /**
+     * Main method to initialize and run the application.
+     *
+     * @param args Command-line arguments for database connection.
+     */
     public static void main(String[] args) {
-        // Create a new instance of the DatabaseService class
+        // Initialize DatabaseService
         DatabaseService dbService = new DatabaseService();
 
         // Connect to the database
-        dbService.connect();
+        if (args.length < 1) {
+            dbService.connect("localhost:33060", 30000);
+        } else {
+            dbService.connect(args[0], Integer.parseInt(args[1]));
+        }
 
+        // Create App instance and run the program
+        App app = new App(dbService);
+        app.run();
+
+        // Disconnect from the database
+        dbService.disconnect();
+    }
+
+    /**
+     * Runs the application logic.
+     * Retrieves and displays various population reports and statistics.
+     */
+    public void run() {
         // Create a NumberFormat instance for formatting population numbers with commas
         NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
 
@@ -22,13 +54,13 @@ public class App {
         List<Country> countries = dbService.getCountriesByPopulation();
         dbService.displayCountries(countries);
 
-        // 2. Retrieve and display countries by continent (e.g., Asia)
+        // 2. Retrieve and display countries by continent
         String continent = "Asia";
         System.out.println("\nCountries in the " + continent + " by Population:");
         List<Country> asianCountries = dbService.getCountriesByContinent(continent);
         dbService.displayCountries(asianCountries);
 
-        // 3. Retrieve and display countries by region (e.g., Middle East)
+        // 3. Retrieve and display countries by region
         String region = "Middle East";
         System.out.println("\nCountries in the " + region + " by Population:");
         List<Country> middleEastCountries = dbService.getCountriesByRegion(region);
@@ -40,15 +72,15 @@ public class App {
         List<Country> topPopulatedCountries = dbService.getTopPopulatedCountries(topN);
         dbService.displayCountries(topPopulatedCountries);
 
-        // 5. Retrieve and display the top N populated countries in a specific continent (e.g., Asia)
-        continent="Europe";
-        System.out.println("\nTop " + topN + " Populated Countries in " +continent+ ":");
+        // 5. Retrieve and display the top N populated countries in a specific continent
+        continent = "Europe";
+        System.out.println("\nTop " + topN + " Populated Countries in " + continent + ":");
         List<Country> topCountriesInContinent = dbService.getTopPopulatedCountriesByContinent(continent, topN);
         dbService.displayCountries(topCountriesInContinent);
 
-        // 6. Retrieve and display the top N populated countries in a specific region (e.g., Western Europe)
-        region="Polynesia";
-        System.out.println("\nTop " + topN + " Populated Countries in " +region+ ":");
+        // 6. Retrieve and display the top N populated countries in a specific region
+        region = "Polynesia";
+        System.out.println("\nTop " + topN + " Populated Countries in " + region + ":");
         List<Country> topCountriesInRegion = dbService.getTopPopulatedCountriesByRegion(region, topN);
         dbService.displayCountries(topCountriesInRegion);
 
@@ -57,27 +89,27 @@ public class App {
         List<City> allCities = dbService.getAllCitiesByPopulation();
         dbService.displayCities(allCities);
 
-        // 8. Retrieve and display cities by continent (e.g., Asia)
-        continent="North America";
-        System.out.println("\nCities in "+continent+" by Population:");
+        // 8. Retrieve and display cities by continent
+        continent = "North America";
+        System.out.println("\nCities in " + continent + " by Population:");
         List<City> citiesInContinent = dbService.getCitiesByContinent(continent);
         dbService.displayCities(citiesInContinent);
 
-        // 9. Retrieve and display cities by region (e.g., Western Europe)
+        // 9. Retrieve and display cities by region
         region = "Polynesia";
-        System.out.println("\nCities in "+region+" by Population:");
+        System.out.println("\nCities in " + region + " by Population:");
         List<City> citiesInRegion = dbService.getCitiesByRegion(region);
         dbService.displayCities(citiesInRegion);
 
-        // 10. Retrieve and display cities by country (e.g., USA)
+        // 10. Retrieve and display cities by country
         String countryCode = "AFG";
-        System.out.println("\nCities in Country ("+ countryCode + ") by Population:");
+        System.out.println("\nCities in Country (" + countryCode + ") by Population:");
         List<City> citiesInCountry = dbService.getCitiesByCountry(countryCode);
         dbService.displayCities(citiesInCountry);
 
-        // 11. Retrieve and display cities by district (e.g., California)
+        // 11. Retrieve and display cities by district
         String district = "Noord-Holland";
-        System.out.println("\nCities in District ("+ district + ") by Population:");
+        System.out.println("\nCities in District (" + district + ") by Population:");
         List<City> citiesInDistrict = dbService.getCitiesByDistrict(district);
         dbService.displayCities(citiesInDistrict);
 
@@ -86,25 +118,25 @@ public class App {
         List<City> topPopulatedCities = dbService.getTopPopulatedCities(topN);
         dbService.displayCities(topPopulatedCities);
 
-        // 13. Top N Populated Cities in a Continent
+        // 13. Retrieve and display the top N populated cities in a continent
         continent = "Asia";
         System.out.println("\nTop " + topN + " Populated Cities in " + continent + ":");
         List<City> topCitiesInContinent = dbService.getTopPopulatedCitiesByContinent(continent, topN);
         dbService.displayCities(topCitiesInContinent);
 
-        // 14. Top N Populated Cities in a Region
+        // 14. Retrieve and display the top N populated cities in a region
         region = "Western Europe";
         System.out.println("\nTop " + topN + " Populated Cities in " + region + ":");
         List<City> topCitiesInRegion = dbService.getTopPopulatedCitiesByRegion(region, topN);
         dbService.displayCities(topCitiesInRegion);
 
-        // 15. Top N Populated Cities in a Country
+        // 15. Retrieve and display the top N populated cities in a country
         countryCode = "USA";
         System.out.println("\nTop " + topN + " Populated Cities in Country " + countryCode + ":");
         List<City> topCitiesInCountry = dbService.getTopPopulatedCitiesByCountry(countryCode, topN);
         dbService.displayCities(topCitiesInCountry);
 
-        // 16. Top N Populated Cities in a District
+        // 16. Retrieve and display the top N populated cities in a district
         district = "California";
         System.out.println("\nTop " + topN + " Populated Cities in District " + district + ":");
         List<City> topCitiesInDistrict = dbService.getTopPopulatedCitiesByDistrict(district, topN);
@@ -158,35 +190,5 @@ public class App {
         System.out.println("\nPopulation Data by Country:");
         List<PopulationReport> countryPopulationData = dbService.getPopulationByCountry();
         dbService.displayPopulationData(countryPopulationData);
-
-        // 26. Display world population
-        System.out.println("\nWorld Population: " + numberFormat.format(dbService.getWorldPopulation()));
-
-        // 27. Display population of a specific continent
-        continent = "Asia";
-        System.out.println("Population of " + continent + ": " + numberFormat.format(dbService.getContinentPopulation(continent)));
-
-        // 28. Display population of a specific region
-        region = "Western Europe";
-        System.out.println("Population of " + region + ": " + numberFormat.format(dbService.getRegionPopulation(region)));
-
-        // 29. Display population of a specific country
-        countryCode = "USA";
-        System.out.println("Population of " + countryCode + ": " + numberFormat.format(dbService.getCountryPopulation(countryCode)));
-
-        // 30. Display population of a specific district
-        district = "California";
-        System.out.println("Population of " + district + ": " + numberFormat.format(dbService.getDistrictPopulation(district)));
-
-        // 31. Display population of a specific city
-        String cityName = "Los Angeles";
-        System.out.println("Population of " + cityName + ": " + numberFormat.format(dbService.getCityPopulation(cityName)));
-
-        // 32. Display language report
-        List<LanguageReport> languageReports = dbService.getLanguageSpeakers();
-        dbService.displayLanguageReports(languageReports);
-
-        // Disconnect from the database
-        dbService.disconnect();
     }
 }
