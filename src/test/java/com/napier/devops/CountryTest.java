@@ -48,15 +48,14 @@ public class CountryTest {
     @Test
     public void testSetAndGetSurfaceArea() {
         country.setSurfaceArea(268838.0);
-        assertEquals(268838.0, country.getSurfaceArea(), "Surface area should be 268838.0");
+        assertEquals(268838.0, country.getSurfaceArea(), 0.001, "Surface area should be 268838.0");
     }
-
 
     // Test for setting and getting the country's population
     @Test
     public void testSetAndGetPopulation() {
         country.setPopulation(5000000);
-        assertEquals(5000000, country.getPopulation(), "Population should be 5,000,000");
+        assertEquals((Object) 5000000, country.getPopulation(), "Population should be 5,000,000");
     }
 
     // Test for setting and getting the country's local name
@@ -80,8 +79,6 @@ public class CountryTest {
         assertEquals("King Charles III", country.getHeadOfState(), "Head of state should be 'King Charles III'");
     }
 
-
-
     // Test for setting and getting the country's code2
     @Test
     public void testSetAndGetCode2() {
@@ -96,6 +93,41 @@ public class CountryTest {
         capitalCity.setName("Wellington");
         country.setCapitalCity(capitalCity);
         assertEquals("Wellington", country.getCapitalCity().getName(), "Capital city should be 'Wellington'");
+    }
+
+    // Test for setting and getting the country's independence year
+    @Test
+    public void testSetAndGetIndepYear() {
+        country.setIndepYear(1907);
+        assertEquals((Object) 1907, country.getIndepYear(), "Independence year should be 1907");
+    }
+
+    // Test for setting and getting the country's life expectancy
+    @Test
+    public void testSetAndGetLifeExpectancy() {
+        country.setLifeExpectancy(81.5);
+        assertEquals(81.5, country.getLifeExpectancy(), 0.001, "Life expectancy should be 81.5");
+    }
+
+    // Test for setting and getting the country's GNP
+    @Test
+    public void testSetAndGetGnp() {
+        country.setGnp(205300.0);
+        assertEquals(205300.0, country.getGnp(), 0.001, "GNP should be 205300.0");
+    }
+
+    // Test for setting and getting the country's old GNP
+    @Test
+    public void testSetAndGetGnpOld() {
+        country.setGnpOld(200000.0);
+        assertEquals(200000.0, country.getGnpOld(), 0.001, "Old GNP should be 200000.0");
+    }
+
+    // Test for setting and getting the country's capital ID
+    @Test
+    public void testSetAndGetCapital() {
+        country.setCapital(1);
+        assertEquals((Object) 1, country.getCapital(), "Capital ID should be 1");
     }
 
     // Test the toString method for proper string representation
