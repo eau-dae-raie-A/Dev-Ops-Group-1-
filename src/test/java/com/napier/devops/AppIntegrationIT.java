@@ -6,32 +6,52 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.List;
 
+/**
+ * Integration test class for the App and DatabaseService classes.
+ * This class tests the interaction between the application and the database.
+ */
 public class AppIntegrationIT {
 
+    // Instance variables for DatabaseService and App classes
     private DatabaseService databaseService;
     private App app;
 
+    /**
+     * Sets up the test environment before each test.
+     * Initializes DatabaseService and App instances and connects to the database.
+     */
     @BeforeEach
     public void setUp() {
         // Initialize DatabaseService and App instances
         databaseService = new DatabaseService();
         app = new App(databaseService);
 
-        // Connect to MySQL or other suitable test database (replace parameters as necessary)
+        // Connect to the database with specified host and delay settings
         databaseService.connect("localhost:33060", 30000);
     }
 
+    /**
+     * Cleans up the test environment after each test.
+     * Disconnects from the database to ensure clean state for each test.
+     */
     @AfterEach
     public void tearDown() {
-        // Disconnect from the test database
+        // Disconnect from the database
         databaseService.disconnect();
     }
 
+    /**
+     * Tests the database connection to ensure it is established.
+     */
     @Test
     public void testDatabaseConnection() {
         assertNotNull(databaseService.getConnection(), "The database connection should be established.");
     }
 
+    /**
+     * Tests retrieval of countries by population.
+     * Ensures that the list of countries is not null and contains entries.
+     */
     @Test
     public void testRetrieveCountriesByPopulation() {
         List<Country> countries = databaseService.getCountriesByPopulation();
@@ -39,6 +59,10 @@ public class AppIntegrationIT {
         assertTrue(countries.size() > 0, "The list of countries should contain at least one entry.");
     }
 
+    /**
+     * Tests retrieval of cities by continent.
+     * Ensures that the list of cities is not null and contains entries.
+     */
     @Test
     public void testRetrieveCitiesByContinent() {
         List<City> cities = databaseService.getCitiesByContinent("Asia");
@@ -46,6 +70,10 @@ public class AppIntegrationIT {
         assertTrue(cities.size() > 0, "The list of cities should contain at least one entry.");
     }
 
+    /**
+     * Tests retrieval of top populated countries globally.
+     * Ensures the list has exactly the requested number of entries.
+     */
     @Test
     public void testTopPopulatedCountries() {
         List<Country> topCountries = databaseService.getTopPopulatedCountries(5);
@@ -53,6 +81,10 @@ public class AppIntegrationIT {
         assertEquals(5, topCountries.size(), "The list should contain exactly 5 countries.");
     }
 
+    /**
+     * Tests population data retrieval by region.
+     * Ensures that the list of population reports is not null and contains entries.
+     */
     @Test
     public void testPopulationDataByRegion() {
         List<PopulationReport> populationReports = databaseService.getPopulationByRegion();
@@ -60,7 +92,11 @@ public class AppIntegrationIT {
         assertTrue(populationReports.size() > 0, "The population report list should contain entries.");
     }
 
-    // New tests below
+    // Additional integration tests for various database queries
+
+    /**
+     * Tests retrieval of countries by a specified continent.
+     */
     @Test
     public void testRetrieveCountriesByContinent() {
         List<Country> asianCountries = databaseService.getCountriesByContinent("Asia");
@@ -68,6 +104,9 @@ public class AppIntegrationIT {
         assertTrue(asianCountries.size() > 0, "The list of countries in Asia should contain at least one entry.");
     }
 
+    /**
+     * Tests retrieval of countries by a specified region.
+     */
     @Test
     public void testRetrieveCountriesByRegion() {
         List<Country> middleEastCountries = databaseService.getCountriesByRegion("Middle East");
@@ -75,6 +114,9 @@ public class AppIntegrationIT {
         assertTrue(middleEastCountries.size() > 0, "The list of countries in the Middle East should contain at least one entry.");
     }
 
+    /**
+     * Tests retrieval of top populated cities in a specified continent.
+     */
     @Test
     public void testRetrieveTopPopulatedCitiesByContinent() {
         List<City> topAsianCities = databaseService.getTopPopulatedCitiesByContinent("Asia", 5);
@@ -82,6 +124,9 @@ public class AppIntegrationIT {
         assertEquals(5, topAsianCities.size(), "The list should contain exactly 5 cities.");
     }
 
+    /**
+     * Tests retrieval of top populated cities in a specified country.
+     */
     @Test
     public void testRetrieveTopPopulatedCitiesByCountry() {
         List<City> topUSACities = databaseService.getTopPopulatedCitiesByCountry("USA", 5);
@@ -89,6 +134,9 @@ public class AppIntegrationIT {
         assertEquals(5, topUSACities.size(), "The list should contain exactly 5 cities.");
     }
 
+    /**
+     * Tests retrieval of top populated capital cities globally.
+     */
     @Test
     public void testRetrieveTopPopulatedCapitalCities() {
         List<City> topCapitalCities = databaseService.getTopPopulatedCapitalCities(3);
@@ -96,6 +144,9 @@ public class AppIntegrationIT {
         assertEquals(3, topCapitalCities.size(), "The list should contain exactly 3 capital cities.");
     }
 
+    /**
+     * Tests population data retrieval by country.
+     */
     @Test
     public void testPopulationDataByCountry() {
         List<PopulationReport> populationReports = databaseService.getPopulationByCountry();
@@ -103,6 +154,9 @@ public class AppIntegrationIT {
         assertTrue(populationReports.size() > 0, "The population report list should contain entries.");
     }
 
+    /**
+     * Tests retrieval of cities in a specified country.
+     */
     @Test
     public void testRetrieveCitiesByCountry() {
         List<City> citiesInCountry = databaseService.getCitiesByCountry("FRA");
@@ -110,6 +164,9 @@ public class AppIntegrationIT {
         assertTrue(citiesInCountry.size() > 0, "The list of cities in the country should contain at least one entry.");
     }
 
+    /**
+     * Tests retrieval of capital cities by a specified continent.
+     */
     @Test
     public void testRetrieveCapitalCitiesByContinent() {
         List<City> capitalCitiesInContinent = databaseService.getCapitalCitiesByContinent("Europe");
@@ -117,6 +174,9 @@ public class AppIntegrationIT {
         assertTrue(capitalCitiesInContinent.size() > 0, "The list of capital cities in the continent should contain at least one entry.");
     }
 
+    /**
+     * Tests population data retrieval by continent.
+     */
     @Test
     public void testPopulationDataByContinent() {
         List<PopulationReport> continentPopulationData = databaseService.getPopulationByContinent();

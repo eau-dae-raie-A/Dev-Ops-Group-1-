@@ -8,10 +8,14 @@ import java.util.Locale;
 
 public class DatabaseService {
 
+    // Connection object to connect to the database
     private Connection con = null;
 
     /**
-     * Connect to the MySQL database.
+     * Connect to the MySQL database with retry logic.
+     *
+     * @param location The database location (e.g., "localhost:33060").
+     * @param delay    The delay in milliseconds between retries.
      */
     public void connect(String location, int delay) {
         try {
@@ -63,9 +67,15 @@ public class DatabaseService {
     public Connection getConnection() {
         return con;
     }
+
     /**
-     * General method to execute any country-related query.
+     * Execute a query related to countries, with optional parameters.
+     *
+     * @param query  The SQL query to execute.
+     * @param params Optional query parameters.
+     * @return A list of Country objects from the query results.
      */
+
     private List<Country> executeCountryQuery(String query, Object... params) {
         List<Country> countries = new ArrayList<>();
         try (PreparedStatement pstmt = con.prepareStatement(query)) {
@@ -89,7 +99,11 @@ public class DatabaseService {
     }
 
     /**
-     * General method to execute any city-related query.
+     * Execute a query related to cities, with optional parameters.
+     *
+     * @param query  The SQL query to execute.
+     * @param params Optional query parameters.
+     * @return A list of City objects from the query results.
      */
     private List<City> executeCityQuery(String query, Object... params) {
         List<City> cities = new ArrayList<>();
@@ -113,6 +127,13 @@ public class DatabaseService {
         return cities;
     }
 
+    /**
+     * Map a ResultSet row to a Country object.
+     *
+     * @param rset The ResultSet containing country data.
+     * @return A Country object.
+     * @throws SQLException if there is an error accessing the ResultSet.
+     */
     private Country mapCountryResultSet(ResultSet rset) throws SQLException {
         Country country = new Country();
         country.setCode(rset.getString("Code"));
@@ -131,6 +152,13 @@ public class DatabaseService {
         return country;
     }
 
+    /**
+     * Map a ResultSet row to a City object.
+     *
+     * @param rset The ResultSet containing city data.
+     * @return A City object.
+     * @throws SQLException if there is an error accessing the ResultSet.
+     */
     private City mapCityResultSet(ResultSet rset) throws SQLException {
         City city = new City();
         city.setId(rset.getInt("ID"));
@@ -205,7 +233,6 @@ public class DatabaseService {
 
         return executeCountryQuery(query, region, N);
     }
-
 
     // Query to get all cities by the population
     public List<City> getAllCitiesByPopulation() {
@@ -412,7 +439,11 @@ public class DatabaseService {
     }
 
 
-    // Display country results in a tabular format with clearer borders
+    /**
+     * Display a list of Country objects in a formatted table.
+     *
+     * @param countries The list of countries to display.
+     */
     public void displayCountries(List<Country> countries) {
         if (countries != null && !countries.isEmpty()) {
             // Formatter for comma-separated numbers
@@ -442,7 +473,11 @@ public class DatabaseService {
         }
     }
 
-    // Display city results in a tabular format with clearer borders
+    /**
+     * Display a list of City objects in a formatted table.
+     *
+     * @param cities The list of cities to display.
+     */
     public void displayCities(List<City> cities) {
         if (cities != null && !cities.isEmpty()) {
             // Formatter for comma-separated numbers
@@ -468,6 +503,11 @@ public class DatabaseService {
         }
     }
 
+    /**
+     * Display a list of PopulationReport objects in a formatted table.
+     *
+     * @param dataList The list of population reports to display.
+     */
     public void displayPopulationData(List<PopulationReport> dataList) {    if (dataList != null && !dataList.isEmpty()) {
         System.out.println("---------------------------------------------------------------------------------------------------------------------------------------");        System.out.printf("%-40s | %-20s | %-20s | %-8s | %-20s | %-10s | %n",
                 "Name", "Total Population", "City Population", "City %", "Non-City Population", "Non-City %");        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------");
@@ -480,6 +520,5 @@ public class DatabaseService {
         System.out.println("---------------------------------------------------------------------------------------------------------------------------------------");    } else {
         System.out.println("No data found.");    }
     }
-
 
 }
