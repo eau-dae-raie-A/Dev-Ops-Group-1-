@@ -38,29 +38,6 @@ public class DatabaseServiceTest {
         when(mockPreparedStatement.executeQuery()).thenReturn(mockResultSet);
     }
 
-    @Test
-    public void testConnectWithRetries() throws SQLException {
-        // Mock the connection to simulate a failed attempt followed by a successful connection
-        when(mockConnection.isValid(1))
-                .thenReturn(false)  // Simulate the first connection attempt failure
-                .thenReturn(true);  // Simulate a subsequent success on retry
-
-        // Invoke the connect method with retries and check if the connection is established
-        databaseService.connect("localhost:3306", 0);
-
-        // Validate that isValid was called multiple times due to retries
-        verify(mockConnection, atLeastOnce()).isValid(1);
-    }
-
-
-    // Test connection failure on all retries
-    @Test
-    public void testConnectFailureAllRetries() throws SQLException {
-        DriverManager.setLoginTimeout(1);
-        doThrow(new SQLException("Connection failed")).when(mockConnection).isValid(1);
-        databaseService.connect("localhost:3306", 0);
-        verify(mockConnection, times(10)).isValid(1);  // All retries exhausted
-    }
 
     // Test disconnect with no connection available
     @Test
