@@ -31,6 +31,7 @@ public class DatabaseServiceTest {
     @InjectMocks
     private DatabaseService databaseService;
 
+
     @BeforeEach
     public void setUp() throws SQLException {
         MockitoAnnotations.openMocks(this);
@@ -277,4 +278,6 @@ public class DatabaseServiceTest {
         when(mockResultSet.getLong("NonCityPopulation")).thenReturn(2601375000L);
         when(mockResultSet.getDouble("NonCityPopulationPercentage")).thenReturn(56.5);
     }
+
+
 }
