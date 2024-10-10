@@ -7,7 +7,6 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,8 +16,14 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
+/**
+ * Unit test class for the DatabaseService class, using Mockito to mock database interactions.
+ * This test suite verifies the functionality of DatabaseService methods under various scenarios,
+ * including successful queries and exception handling.
+ */
 public class DatabaseServiceTest {
 
+    // Mock objects for simulating database components
     @Mock
     private Connection mockConnection;
 
@@ -28,10 +33,14 @@ public class DatabaseServiceTest {
     @Mock
     private ResultSet mockResultSet;
 
+    // Injecting the mocks into an instance of DatabaseService for testing
     @InjectMocks
     private DatabaseService databaseService;
 
-
+    /**
+     * Sets up the mock objects before each test case.
+     * Configures behavior for Connection, PreparedStatement, and ResultSet.
+     */
     @BeforeEach
     public void setUp() throws SQLException {
         MockitoAnnotations.openMocks(this);
@@ -39,15 +48,20 @@ public class DatabaseServiceTest {
         when(mockPreparedStatement.executeQuery()).thenReturn(mockResultSet);
     }
 
-
-    // Test disconnect with no connection available
+    /**
+     * Tests the disconnect method when no connection is available.
+     * Ensures that no exception occurs and the connection remains null.
+     */
     @Test
     public void testDisconnectWithoutConnection() {
         databaseService.disconnect();
         assertNull(databaseService.getConnection());
     }
 
-    // Test exception in executeCountryQuery
+    /**
+     * Tests exception handling in executeCountryQuery by throwing an SQLException.
+     * Verifies that an empty list is returned when an exception occurs.
+     */
     @Test
     public void testExecuteCountryQueryException() throws SQLException {
         when(mockPreparedStatement.executeQuery()).thenThrow(new SQLException("SQL Error"));
@@ -55,7 +69,10 @@ public class DatabaseServiceTest {
         assertTrue(countries.isEmpty(), "Expected empty list on SQLException");
     }
 
-    // Test exception in executeCityQuery
+    /**
+     * Tests exception handling in executeCityQuery by throwing an SQLException.
+     * Verifies that an empty list is returned when an exception occurs.
+     */
     @Test
     public void testExecuteCityQueryException() throws SQLException {
         when(mockPreparedStatement.executeQuery()).thenThrow(new SQLException("SQL Error"));
@@ -63,7 +80,10 @@ public class DatabaseServiceTest {
         assertTrue(cities.isEmpty(), "Expected empty list on SQLException");
     }
 
-    // Test population query exceptions
+    /**
+     * Tests exception handling in executePopulationReportQuery by throwing an SQLException.
+     * Verifies that an empty list is returned when an exception occurs.
+     */
     @Test
     public void testExecutePopulationReportQueryException() throws SQLException {
         when(mockPreparedStatement.executeQuery()).thenThrow(new SQLException("SQL Error"));
@@ -71,7 +91,9 @@ public class DatabaseServiceTest {
         assertTrue(reports.isEmpty(), "Expected empty list on SQLException");
     }
 
-    // Tests for normal cases with mock result sets for coverage
+    /**
+     * Tests normal execution of getCountriesByPopulation with mocked result set.
+     */
     @Test
     public void testGetCountriesByPopulation() throws SQLException {
         mockCountryResultSet();
@@ -79,6 +101,9 @@ public class DatabaseServiceTest {
         assertEquals(1, countries.size());
     }
 
+    /**
+     * Tests getCountriesByContinent with a mocked result set for a specific continent.
+     */
     @Test
     public void testGetCountriesByContinent() throws SQLException {
         mockCountryResultSet();
@@ -86,6 +111,9 @@ public class DatabaseServiceTest {
         assertEquals(1, countries.size());
     }
 
+    /**
+     * Tests getCountriesByRegion with a mocked result set for a specific region.
+     */
     @Test
     public void testGetCountriesByRegion() throws SQLException {
         mockCountryResultSet();
@@ -93,6 +121,9 @@ public class DatabaseServiceTest {
         assertEquals(1, countries.size());
     }
 
+    /**
+     * Tests getTopPopulatedCountries with a mocked result set for top N countries.
+     */
     @Test
     public void testGetTopPopulatedCountries() throws SQLException {
         mockCountryResultSet();
@@ -100,6 +131,9 @@ public class DatabaseServiceTest {
         assertEquals(1, countries.size());
     }
 
+    /**
+     * Tests getTopPopulatedCountriesByContinent with a mocked result set for top N countries in a continent.
+     */
     @Test
     public void testGetTopPopulatedCountriesByContinent() throws SQLException {
         mockCountryResultSet();
@@ -107,6 +141,9 @@ public class DatabaseServiceTest {
         assertEquals(1, countries.size());
     }
 
+    /**
+     * Tests getTopPopulatedCountriesByRegion with a mocked result set for top N countries in a region.
+     */
     @Test
     public void testGetTopPopulatedCountriesByRegion() throws SQLException {
         mockCountryResultSet();
@@ -114,6 +151,9 @@ public class DatabaseServiceTest {
         assertEquals(1, countries.size());
     }
 
+    /**
+     * Tests getAllCitiesByPopulation with a mocked result set.
+     */
     @Test
     public void testGetAllCitiesByPopulation() throws SQLException {
         mockCityResultSet();
@@ -121,6 +161,9 @@ public class DatabaseServiceTest {
         assertEquals(1, cities.size());
     }
 
+    /**
+     * Tests getCitiesByContinent with a mocked result set for a specific continent.
+     */
     @Test
     public void testGetCitiesByContinent() throws SQLException {
         mockCityResultSet();
@@ -128,6 +171,9 @@ public class DatabaseServiceTest {
         assertEquals(1, cities.size());
     }
 
+    /**
+     * Tests getCitiesByRegion with a mocked result set for a specific region.
+     */
     @Test
     public void testGetCitiesByRegion() throws SQLException {
         mockCityResultSet();
@@ -135,6 +181,9 @@ public class DatabaseServiceTest {
         assertEquals(1, cities.size());
     }
 
+    /**
+     * Tests getCitiesByCountry with a mocked result set for a specific country code.
+     */
     @Test
     public void testGetCitiesByCountry() throws SQLException {
         mockCityResultSet();
@@ -142,6 +191,9 @@ public class DatabaseServiceTest {
         assertEquals(1, cities.size());
     }
 
+    /**
+     * Tests getCitiesByDistrict with a mocked result set for a specific district.
+     */
     @Test
     public void testGetCitiesByDistrict() throws SQLException {
         mockCityResultSet();
@@ -149,6 +201,9 @@ public class DatabaseServiceTest {
         assertEquals(1, cities.size());
     }
 
+    /**
+     * Tests getTopPopulatedCities with a mocked result set for top N cities globally.
+     */
     @Test
     public void testGetTopPopulatedCities() throws SQLException {
         mockCityResultSet();
@@ -156,6 +211,9 @@ public class DatabaseServiceTest {
         assertEquals(1, cities.size());
     }
 
+    /**
+     * Tests getTopPopulatedCitiesByContinent with a mocked result set for top N cities in a continent.
+     */
     @Test
     public void testGetTopPopulatedCitiesByContinent() throws SQLException {
         mockCityResultSet();
@@ -163,6 +221,9 @@ public class DatabaseServiceTest {
         assertEquals(1, cities.size());
     }
 
+    /**
+     * Tests getTopPopulatedCitiesByRegion with a mocked result set for top N cities in a region.
+     */
     @Test
     public void testGetTopPopulatedCitiesByRegion() throws SQLException {
         mockCityResultSet();
@@ -170,6 +231,9 @@ public class DatabaseServiceTest {
         assertEquals(1, cities.size());
     }
 
+    /**
+     * Tests getTopPopulatedCitiesByCountry with a mocked result set for top N cities in a country.
+     */
     @Test
     public void testGetTopPopulatedCitiesByCountry() throws SQLException {
         mockCityResultSet();
@@ -177,6 +241,9 @@ public class DatabaseServiceTest {
         assertEquals(1, cities.size());
     }
 
+    /**
+     * Tests getTopPopulatedCitiesByDistrict with a mocked result set for top N cities in a district.
+     */
     @Test
     public void testGetTopPopulatedCitiesByDistrict() throws SQLException {
         mockCityResultSet();
@@ -184,6 +251,9 @@ public class DatabaseServiceTest {
         assertEquals(1, cities.size());
     }
 
+    /**
+     * Tests getCapitalCitiesByPopulation with a mocked result set.
+     */
     @Test
     public void testGetCapitalCitiesByPopulation() throws SQLException {
         mockCityResultSet();
@@ -191,6 +261,9 @@ public class DatabaseServiceTest {
         assertEquals(1, cities.size());
     }
 
+    /**
+     * Tests getCapitalCitiesByContinent with a mocked result set for a specific continent.
+     */
     @Test
     public void testGetCapitalCitiesByContinent() throws SQLException {
         mockCityResultSet();
@@ -198,6 +271,9 @@ public class DatabaseServiceTest {
         assertEquals(1, cities.size());
     }
 
+    /**
+     * Tests getCapitalCitiesByRegion with a mocked result set for a specific region.
+     */
     @Test
     public void testGetCapitalCitiesByRegion() throws SQLException {
         mockCityResultSet();
@@ -205,6 +281,9 @@ public class DatabaseServiceTest {
         assertEquals(1, cities.size());
     }
 
+    /**
+     * Tests getTopPopulatedCapitalCities with a mocked result set for top N capital cities globally.
+     */
     @Test
     public void testGetTopPopulatedCapitalCities() throws SQLException {
         mockCityResultSet();
@@ -212,6 +291,9 @@ public class DatabaseServiceTest {
         assertEquals(1, cities.size());
     }
 
+    /**
+     * Tests getTopPopulatedCapitalCitiesByContinent with a mocked result set for top N capital cities in a continent.
+     */
     @Test
     public void testGetTopPopulatedCapitalCitiesByContinent() throws SQLException {
         mockCityResultSet();
@@ -219,6 +301,9 @@ public class DatabaseServiceTest {
         assertEquals(1, cities.size());
     }
 
+    /**
+     * Tests getTopPopulatedCapitalCitiesByRegion with a mocked result set for top N capital cities in a region.
+     */
     @Test
     public void testGetTopPopulatedCapitalCitiesByRegion() throws SQLException {
         mockCityResultSet();
@@ -226,6 +311,9 @@ public class DatabaseServiceTest {
         assertEquals(1, cities.size());
     }
 
+    /**
+     * Tests getPopulationByContinent with a mocked result set for population data by continent.
+     */
     @Test
     public void testGetPopulationByContinent() throws SQLException {
         mockPopulationReportResultSet();
@@ -233,6 +321,9 @@ public class DatabaseServiceTest {
         assertEquals(1, reports.size());
     }
 
+    /**
+     * Tests getPopulationByRegion with a mocked result set for population data by region.
+     */
     @Test
     public void testGetPopulationByRegion() throws SQLException {
         mockPopulationReportResultSet();
@@ -240,6 +331,9 @@ public class DatabaseServiceTest {
         assertEquals(1, reports.size());
     }
 
+    /**
+     * Tests getPopulationByCountry with a mocked result set for population data by country.
+     */
     @Test
     public void testGetPopulationByCountry() throws SQLException {
         mockPopulationReportResultSet();
@@ -247,6 +341,9 @@ public class DatabaseServiceTest {
         assertEquals(1, reports.size());
     }
 
+    /**
+     * Mocks the ResultSet for country queries with predefined values.
+     */
     private void mockCountryResultSet() throws SQLException {
         when(mockResultSet.next()).thenReturn(true).thenReturn(false);
         when(mockResultSet.getString("Code")).thenReturn("USA");
@@ -260,6 +357,9 @@ public class DatabaseServiceTest {
         when(mockResultSet.getInt("CapitalPopulation")).thenReturn(692683);
     }
 
+    /**
+     * Mocks the ResultSet for city queries with predefined values.
+     */
     private void mockCityResultSet() throws SQLException {
         when(mockResultSet.next()).thenReturn(true).thenReturn(false);
         when(mockResultSet.getInt("ID")).thenReturn(1);
@@ -269,6 +369,9 @@ public class DatabaseServiceTest {
         when(mockResultSet.getInt("Population")).thenReturn(8419000);
     }
 
+    /**
+     * Mocks the ResultSet for population report queries with predefined values.
+     */
     private void mockPopulationReportResultSet() throws SQLException {
         when(mockResultSet.next()).thenReturn(true).thenReturn(false);
         when(mockResultSet.getString("Name")).thenReturn("Asia");
@@ -278,6 +381,4 @@ public class DatabaseServiceTest {
         when(mockResultSet.getLong("NonCityPopulation")).thenReturn(2601375000L);
         when(mockResultSet.getDouble("NonCityPopulationPercentage")).thenReturn(56.5);
     }
-
-
 }
