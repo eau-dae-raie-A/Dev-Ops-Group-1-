@@ -13,12 +13,20 @@ public class AppTest {
     private DatabaseService mockDbService;
     private App app;
 
+    /**
+     * Sets up the test environment before each test.
+     * Initializes mock DatabaseService and App instances.
+     */
     @BeforeEach
     public void setUp() {
         mockDbService = Mockito.mock(DatabaseService.class);
         app = new App(mockDbService); // Injecting mock DatabaseService into App
     }
 
+    /**
+     * Tests that the App correctly displays all countries by population.
+     * Verifies that displayCountries is called with the correct data.
+     */
     @Test
     public void testRunDisplaysAllCountriesByPopulation() {
         List<Country> mockCountries = Collections.singletonList(new Country());
@@ -29,6 +37,10 @@ public class AppTest {
         verify(mockDbService, times(1)).displayCountries(mockCountries);
     }
 
+    /**
+     * Tests that the App correctly displays countries by continent.
+     * Verifies that displayCountries is called with the correct continent data.
+     */
     @Test
     public void testRunDisplaysCountriesByContinent() {
         String continent = "Asia";
@@ -40,6 +52,10 @@ public class AppTest {
         verify(mockDbService, times(1)).displayCountries(mockAsianCountries);
     }
 
+    /**
+     * Tests that the App correctly displays countries by region.
+     * Verifies that displayCountries is called with the correct region data.
+     */
     @Test
     public void testRunDisplaysCountriesByRegion() {
         String region = "Middle East";
@@ -51,6 +67,10 @@ public class AppTest {
         verify(mockDbService, times(1)).displayCountries(mockCountries);
     }
 
+    /**
+     * Tests that the App correctly displays the top populated countries.
+     * Verifies that displayCountries is called with the correct top countries data.
+     */
     @Test
     public void testRunDisplaysTopPopulatedCountries() {
         int topN = 8;
@@ -62,6 +82,10 @@ public class AppTest {
         verify(mockDbService, times(1)).displayCountries(mockTopCountries);
     }
 
+    /**
+     * Tests that the App correctly displays the top populated countries by continent.
+     * Verifies that displayCountries is called with the correct data for the continent.
+     */
     @Test
     public void testRunDisplaysTopPopulatedCountriesByContinent() {
         String continent = "Europe";
@@ -74,6 +98,10 @@ public class AppTest {
         verify(mockDbService, times(1)).displayCountries(mockCountries);
     }
 
+    /**
+     * Tests that the App correctly displays all cities by population.
+     * Verifies that displayCities is called with the correct data.
+     */
     @Test
     public void testRunDisplaysAllCitiesByPopulation() {
         List<City> mockCities = Collections.singletonList(new City());
@@ -84,6 +112,10 @@ public class AppTest {
         verify(mockDbService, times(1)).displayCities(mockCities);
     }
 
+    /**
+     * Tests that the App correctly displays cities by continent.
+     * Verifies that displayCities is called with the correct continent data.
+     */
     @Test
     public void testRunDisplaysCitiesByContinent() {
         String continent = "North America";
@@ -95,6 +127,10 @@ public class AppTest {
         verify(mockDbService, times(1)).displayCities(mockCities);
     }
 
+    /**
+     * Tests that the App correctly displays cities by region.
+     * Verifies that displayCities is called with the correct region data.
+     */
     @Test
     public void testRunDisplaysCitiesByRegion() {
         String region = "Polynesia";
@@ -106,6 +142,10 @@ public class AppTest {
         verify(mockDbService, times(1)).displayCities(mockCities);
     }
 
+    /**
+     * Tests that the App correctly displays cities by country.
+     * Verifies that displayCities is called with the correct country data.
+     */
     @Test
     public void testRunDisplaysCitiesByCountry() {
         String countryCode = "AFG";
@@ -117,6 +157,10 @@ public class AppTest {
         verify(mockDbService, times(1)).displayCities(mockCities);
     }
 
+    /**
+     * Tests that the App correctly displays the top populated cities.
+     * Verifies that displayCities is called with the correct top cities data.
+     */
     @Test
     public void testRunDisplaysTopPopulatedCities() {
         int topN = 8;
@@ -128,6 +172,10 @@ public class AppTest {
         verify(mockDbService, times(1)).displayCities(mockCities);
     }
 
+    /**
+     * Tests that the App correctly displays population data by continent.
+     * Verifies that displayPopulationData is called with the correct data.
+     */
     @Test
     public void testRunDisplaysPopulationByContinent() {
         List<PopulationReport> mockPopulationData = Collections.singletonList(new PopulationReport());
@@ -138,6 +186,10 @@ public class AppTest {
         verify(mockDbService, times(1)).displayPopulationData(mockPopulationData);
     }
 
+    /**
+     * Tests that the App correctly displays population data by region.
+     * Verifies that displayPopulationData is called with the correct region data.
+     */
     @Test
     public void testRunDisplaysPopulationByRegion() {
         List<PopulationReport> mockPopulationData = Collections.singletonList(new PopulationReport());
@@ -148,6 +200,10 @@ public class AppTest {
         verify(mockDbService, times(1)).displayPopulationData(mockPopulationData);
     }
 
+    /**
+     * Tests that the App correctly displays population data by country.
+     * Verifies that displayPopulationData is called with the correct country data.
+     */
     @Test
     public void testRunDisplaysPopulationByCountry() {
         List<PopulationReport> mockPopulationData = Collections.singletonList(new PopulationReport());
