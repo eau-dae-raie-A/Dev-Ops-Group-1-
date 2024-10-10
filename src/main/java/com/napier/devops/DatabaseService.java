@@ -6,23 +6,16 @@ import java.util.List;
 import java.text.NumberFormat;
 import java.util.Locale;
 
-/**
- * Provides database services for interacting with country, city, and population data.
- */
 public class DatabaseService {
 
-    // Database connection
     private Connection con = null;
 
     /**
-     * Connects to the MySQL database with the specified location and delay.
-     *
-     * @param location The database location URL.
-     * @param delay    The delay time to wait before connecting.
+     * Connect to the MySQL database.
      */
     public void connect(String location, int delay) {
         try {
-            // Load MySQL database driver
+            // Load Database driver
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
             System.out.println("Could not load SQL driver");
@@ -33,8 +26,9 @@ public class DatabaseService {
         for (int i = 0; i < retries; ++i) {
             System.out.println("Connecting to database...");
             try {
+                // Wait a bit for db to start
                 Thread.sleep(delay);
-                // Attempt to connect to the database
+                // Connect to database
                 con = DriverManager.getConnection("jdbc:mysql://" + location
                                 + "/world?allowPublicKeyRetrieval=true&useSSL=false",
                         "root", "example");
@@ -50,13 +44,13 @@ public class DatabaseService {
     }
 
     /**
-     * Disconnects from the MySQL database.
+     * Disconnect from the MySQL database.
      */
     public void disconnect() {
         if (con != null) {
             try {
                 con.close();
-                con = null;
+                con = null;  // Set the connection to null after closing
             } catch (SQLException e) {
                 System.out.println("Error closing connection to database");
             }
@@ -64,20 +58,13 @@ public class DatabaseService {
     }
 
     /**
-     * Getter for the database connection, used primarily for testing purposes.
-     *
-     * @return The current database connection.
+     * Getter for the connection, used for testing purposes.
      */
     public Connection getConnection() {
         return con;
     }
-
     /**
-     * Executes a country-related SQL query with optional parameters.
-     *
-     * @param query  The SQL query to execute.
-     * @param params Parameters for the SQL query.
-     * @return A list of Country objects matching the query.
+     * General method to execute any country-related query.
      */
     private List<Country> executeCountryQuery(String query, Object... params) {
         List<Country> countries = new ArrayList<>();
@@ -102,11 +89,7 @@ public class DatabaseService {
     }
 
     /**
-     * Executes a city-related SQL query with optional parameters.
-     *
-     * @param query  The SQL query to execute.
-     * @param params Parameters for the SQL query.
-     * @return A list of City objects matching the query.
+     * General method to execute any city-related query.
      */
     private List<City> executeCityQuery(String query, Object... params) {
         List<City> cities = new ArrayList<>();
@@ -130,13 +113,6 @@ public class DatabaseService {
         return cities;
     }
 
-    /**
-     * Maps a ResultSet row to a Country object.
-     *
-     * @param rset The ResultSet containing the row data.
-     * @return A Country object populated with the row data.
-     * @throws SQLException If there is an error accessing the ResultSet.
-     */
     private Country mapCountryResultSet(ResultSet rset) throws SQLException {
         Country country = new Country();
         country.setCode(rset.getString("Code"));
@@ -155,28 +131,17 @@ public class DatabaseService {
         return country;
     }
 
-    /**
-     * Maps a ResultSet row to a City object.
-     *
-     * @param rset The ResultSet containing the row data.
-     * @return A City object populated with the row data.
-     * @throws SQLException If there is an error accessing the ResultSet.
-     */
     private City mapCityResultSet(ResultSet rset) throws SQLException {
         City city = new City();
         city.setId(rset.getInt("ID"));
         city.setName(rset.getString("Name"));
-        city.setCountryCode(rset.getString("CountryName"));
+        city.setCountryCode(rset.getString("CountryName"));  // Assuming you want the country name
         city.setDistrict(rset.getString("District"));
         city.setPopulation(rset.getInt("Population"));
         return city;
     }
 
-    /**
-     * Retrieves a list of all countries ordered by population, descending.
-     *
-     * @return A list of Country objects.
-     */
+    // Query to get all countries by population
     public List<Country> getCountriesByPopulation() {
         String query = "SELECT country.Code, country.Name AS CountryName, country.Continent, " +
                 "country.Region, country.Population, city.ID AS CityID, city.Name AS CapitalCityName, " +
@@ -186,12 +151,7 @@ public class DatabaseService {
         return executeCountryQuery(query);
     }
 
-    /**
-     * Retrieves countries in a specified continent ordered by population.
-     *
-     * @param continent The name of the continent.
-     * @return A list of Country objects in the specified continent.
-     */
+    // Query to get countries by continent
     public List<Country> getCountriesByContinent(String continent) {
         String query = "SELECT country.Code, country.Name AS CountryName, country.Continent, " +
                 "country.Region, country.Population, city.ID AS CityID, city.Name AS CapitalCityName, " +
@@ -202,12 +162,7 @@ public class DatabaseService {
         return executeCountryQuery(query, continent);
     }
 
-    /**
-     * Retrieves countries in a specified region ordered by population.
-     *
-     * @param region The name of the region.
-     * @return A list of Country objects in the specified region.
-     */
+    // Query to get countries by the region
     public List<Country> getCountriesByRegion(String region) {
         String query = "SELECT country.Code, country.Name AS CountryName, country.Continent, " +
                 "country.Region, country.Population, city.ID AS CityID, city.Name AS CapitalCityName, " +
@@ -218,12 +173,7 @@ public class DatabaseService {
         return executeCountryQuery(query, region);
     }
 
-    /**
-     * Retrieves the top N populated countries in the world.
-     *
-     * @param n The number of countries to retrieve.
-     * @return A list of the top N populated Country objects.
-     */
+    // Query to get top N populated countries
     public List<Country> getTopPopulatedCountries(int n) {
         String query = "SELECT country.Code, country.Name AS CountryName, country.Continent, " +
                 "country.Region, country.Population, city.ID AS CityID, city.Name AS CapitalCityName, " +
@@ -233,13 +183,7 @@ public class DatabaseService {
         return executeCountryQuery(query, n);
     }
 
-    /**
-     * Retrieves the top N populated countries in a specific continent.
-     *
-     * @param continent The name of the continent.
-     * @param N         The number of countries to retrieve.
-     * @return A list of the top N populated Country objects in the specified continent.
-     */
+    // Retrieves the top N populated countries in a specific continent
     public List<Country> getTopPopulatedCountriesByContinent(String continent, int N) {
         String query = "SELECT country.Code, country.Name AS CountryName, country.Continent, country.Region, " +
                 "country.Population, city.ID AS CityID, city.Name AS CapitalCityName, " +
@@ -250,13 +194,7 @@ public class DatabaseService {
         return executeCountryQuery(query, continent, N);
     }
 
-    /**
-     * Retrieves the top N populated countries in a specific region.
-     *
-     * @param region The name of the region.
-     * @param N      The number of countries to retrieve.
-     * @return A list of the top N populated Country objects in the specified region.
-     */
+    // Retrieves the top N populated countries in a specific region
     public List<Country> getTopPopulatedCountriesByRegion(String region, int N) {
         String query = "SELECT country.Code, country.Name AS CountryName, country.Continent, country.Region, " +
                 "country.Population, city.ID AS CityID, city.Name AS CapitalCityName, " +
@@ -268,11 +206,8 @@ public class DatabaseService {
         return executeCountryQuery(query, region, N);
     }
 
-    /**
-     * Retrieves a list of all cities ordered by population, descending.
-     *
-     * @return A list of City objects.
-     */
+
+    // Query to get all cities by the population
     public List<City> getAllCitiesByPopulation() {
         String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
                 "FROM city JOIN country ON city.CountryCode = country.Code " +
@@ -280,12 +215,7 @@ public class DatabaseService {
         return executeCityQuery(query);
     }
 
-    /**
-     * Retrieves cities in a specified continent ordered by population.
-     *
-     * @param continent The name of the continent.
-     * @return A list of City objects in the specified continent.
-     */
+    // Query to get cities by the continent
     public List<City> getCitiesByContinent(String continent) {
         String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
                 "FROM city JOIN country ON city.CountryCode = country.Code " +
@@ -294,12 +224,7 @@ public class DatabaseService {
         return executeCityQuery(query, continent);
     }
 
-    /**
-     * Retrieves cities in a specified region ordered by population.
-     *
-     * @param region The name of the region.
-     * @return A list of City objects in the specified region.
-     */
+    // Query to get cities by region
     public List<City> getCitiesByRegion(String region) {
         String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
                 "FROM city JOIN country ON city.CountryCode = country.Code " +
@@ -308,12 +233,7 @@ public class DatabaseService {
         return executeCityQuery(query, region);
     }
 
-    /**
-     * Retrieves cities in a specified country ordered by population.
-     *
-     * @param countryCode The code of the country.
-     * @return A list of City objects in the specified country.
-     */
+    // Query to get cities by country
     public List<City> getCitiesByCountry(String countryCode) {
         String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
                 "FROM city JOIN country ON city.CountryCode = country.Code " +
@@ -322,12 +242,7 @@ public class DatabaseService {
         return executeCityQuery(query, countryCode);
     }
 
-    /**
-     * Retrieves cities in a specified district ordered by population.
-     *
-     * @param district The name of the district.
-     * @return A list of City objects in the specified district.
-     */
+    // Query to get cities by district
     public List<City> getCitiesByDistrict(String district) {
         String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
                 "FROM city JOIN country ON city.CountryCode = country.Code " +
@@ -336,12 +251,7 @@ public class DatabaseService {
         return executeCityQuery(query, district);
     }
 
-    /**
-     * Retrieves the top N populated cities globally.
-     *
-     * @param n The number of cities to retrieve.
-     * @return A list of the top N populated City objects.
-     */
+    // Method to retrieve top N populated cities globally
     public List<City> getTopPopulatedCities(int n) {
         String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
                 "FROM city JOIN country ON city.CountryCode = country.Code " +
@@ -349,13 +259,7 @@ public class DatabaseService {
         return executeCityQuery(query, n);
     }
 
-    /**
-     * Retrieves the top N populated cities in a specified continent.
-     *
-     * @param continent The name of the continent.
-     * @param n         The number of cities to retrieve.
-     * @return A list of the top N populated City objects in the specified continent.
-     */
+    // Method to retrieve top N populated cities in a continent
     public List<City> getTopPopulatedCitiesByContinent(String continent, int n) {
         String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
                 "FROM city JOIN country ON city.CountryCode = country.Code " +
@@ -364,13 +268,7 @@ public class DatabaseService {
         return executeCityQuery(query, continent, n);
     }
 
-    /**
-     * Retrieves the top N populated cities in a specified region.
-     *
-     * @param region The name of the region.
-     * @param n      The number of cities to retrieve.
-     * @return A list of the top N populated City objects in the specified region.
-     */
+    // Method to retrieve top N populated cities in a region
     public List<City> getTopPopulatedCitiesByRegion(String region, int n) {
         String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
                 "FROM city JOIN country ON city.CountryCode = country.Code " +
@@ -379,13 +277,7 @@ public class DatabaseService {
         return executeCityQuery(query, region, n);
     }
 
-    /**
-     * Retrieves the top N populated cities in a specified country.
-     *
-     * @param countryCode The code of the country.
-     * @param n           The number of cities to retrieve.
-     * @return A list of the top N populated City objects in the specified country.
-     */
+    // Method to retrieve top N populated cities in a country
     public List<City> getTopPopulatedCitiesByCountry(String countryCode, int n) {
         String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
                 "FROM city JOIN country ON city.CountryCode = country.Code " +
@@ -394,13 +286,7 @@ public class DatabaseService {
         return executeCityQuery(query, countryCode, n);
     }
 
-    /**
-     * Retrieves the top N populated cities in a specified district.
-     *
-     * @param district The name of the district.
-     * @param n        The number of cities to retrieve.
-     * @return A list of the top N populated City objects in the specified district.
-     */
+    // Method to retrieve top N populated cities in a district
     public List<City> getTopPopulatedCitiesByDistrict(String district, int n) {
         String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
                 "FROM city JOIN country ON city.CountryCode = country.Code " +
@@ -409,11 +295,7 @@ public class DatabaseService {
         return executeCityQuery(query, district, n);
     }
 
-    /**
-     * Retrieves all capital cities globally ordered by population, descending.
-     *
-     * @return A list of capital City objects.
-     */
+    // Method to retrieve all capital cities in the world by population
     public List<City> getCapitalCitiesByPopulation() {
         String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
                 "FROM city JOIN country ON city.ID = country.Capital " +
@@ -421,12 +303,7 @@ public class DatabaseService {
         return executeCityQuery(query);
     }
 
-    /**
-     * Retrieves capital cities in a specified continent ordered by population.
-     *
-     * @param continent The name of the continent.
-     * @return A list of capital City objects in the specified continent.
-     */
+    // Method to retrieve capital cities in a continent by population
     public List<City> getCapitalCitiesByContinent(String continent) {
         String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
                 "FROM city JOIN country ON city.ID = country.Capital " +
@@ -435,12 +312,7 @@ public class DatabaseService {
         return executeCityQuery(query, continent);
     }
 
-    /**
-     * Retrieves capital cities in a specified region ordered by population.
-     *
-     * @param region The name of the region.
-     * @return A list of capital City objects in the specified region.
-     */
+    // Method to retrieve capital cities in a region by population
     public List<City> getCapitalCitiesByRegion(String region) {
         String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
                 "FROM city JOIN country ON city.ID = country.Capital " +
@@ -449,12 +321,7 @@ public class DatabaseService {
         return executeCityQuery(query, region);
     }
 
-    /**
-     * Retrieves the top N populated capital cities globally.
-     *
-     * @param n The number of capital cities to retrieve.
-     * @return A list of the top N populated capital City objects.
-     */
+    // Method to retrieve the top N populated capital cities in the world
     public List<City> getTopPopulatedCapitalCities(int n) {
         String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
                 "FROM city JOIN country ON city.ID = country.Capital " +
@@ -462,13 +329,7 @@ public class DatabaseService {
         return executeCityQuery(query, n);
     }
 
-    /**
-     * Retrieves the top N populated capital cities in a specified continent.
-     *
-     * @param continent The name of the continent.
-     * @param n         The number of capital cities to retrieve.
-     * @return A list of the top N populated capital City objects in the specified continent.
-     */
+    // Method to retrieve the top N populated capital cities in a continent
     public List<City> getTopPopulatedCapitalCitiesByContinent(String continent, int n) {
         String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
                 "FROM city JOIN country ON city.ID = country.Capital " +
@@ -477,13 +338,7 @@ public class DatabaseService {
         return executeCityQuery(query, continent, n);
     }
 
-    /**
-     * Retrieves the top N populated capital cities in a specified region.
-     *
-     * @param region The name of the region.
-     * @param n      The number of capital cities to retrieve.
-     * @return A list of the top N populated capital City objects in the specified region.
-     */
+    // Method to retrieve the top N populated capital cities in a region
     public List<City> getTopPopulatedCapitalCitiesByRegion(String region, int n) {
         String query = "SELECT city.ID, city.Name, country.Name AS CountryName, city.District, city.Population " +
                 "FROM city JOIN country ON city.ID = country.Capital " +
@@ -492,11 +347,7 @@ public class DatabaseService {
         return executeCityQuery(query, region, n);
     }
 
-    /**
-     * Retrieves population data for each continent including city and non-city populations and their percentages.
-     *
-     * @return A list of PopulationReport objects for each continent.
-     */
+    // Method to retrieve population by continent with percentages
     public List<PopulationReport> getPopulationByContinent() {
         String query = "SELECT country.Continent AS Name, " +
                 "SUM(country.Population) AS TotalPopulation, " +
@@ -510,11 +361,7 @@ public class DatabaseService {
         return executePopulationReportQuery(query);
     }
 
-    /**
-     * Retrieves population data for each region including city and non-city populations and their percentages.
-     *
-     * @return A list of PopulationReport objects for each region.
-     */
+    // Method to retrieve population by region with percentages
     public List<PopulationReport> getPopulationByRegion() {
         String query = "SELECT country.Region AS Name, " +
                 "SUM(country.Population) AS TotalPopulation, " +
@@ -528,11 +375,7 @@ public class DatabaseService {
         return executePopulationReportQuery(query);
     }
 
-    /**
-     * Retrieves population data for each country including city and non-city populations and their percentages.
-     *
-     * @return A list of PopulationReport objects for each country.
-     */
+    // Method to retrieve population by country with percentages
     public List<PopulationReport> getPopulationByCountry() {
         String query = "SELECT country.Name AS Name, " +
                 "SUM(country.Population) AS TotalPopulation, " +
@@ -546,12 +389,7 @@ public class DatabaseService {
         return executePopulationReportQuery(query);
     }
 
-    /**
-     * Executes a population report query and returns a list of PopulationReport objects.
-     *
-     * @param query The SQL query to execute.
-     * @return A list of PopulationReport objects containing population data.
-     */
+    // Generic method to execute population-related queries with percentage calculations
     private List<PopulationReport> executePopulationReportQuery(String query) {
         List<PopulationReport> reportDataList = new ArrayList<>();
         try (PreparedStatement pstmt = con.prepareStatement(query);
@@ -573,20 +411,22 @@ public class DatabaseService {
         return reportDataList;
     }
 
-    /**
-     * Displays a formatted table of country data with clearer borders.
-     *
-     * @param countries The list of Country objects to display.
-     */
+
+    // Display country results in a tabular format with clearer borders
     public void displayCountries(List<Country> countries) {
         if (countries != null && !countries.isEmpty()) {
+            // Formatter for comma-separated numbers
             NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+
+            // Column headers with clear formatting
             System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------");
             System.out.printf("%-15s | %-35s | %-20s | %-25s | %-30s | %-15s |%n",
                     "Country Code", "Country", "Continent", "Region", "Capital City", "Population");
+            // Separator line for clarity
             System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------------------");
 
             for (Country country : countries) {
+                // Print each country’s details with formatted population
                 System.out.printf("%-15s | %-35s | %-20s | %-25s | %-30s | %-15s |%n",
                         country.getCode(),
                         country.getName(),
@@ -602,19 +442,20 @@ public class DatabaseService {
         }
     }
 
-    /**
-     * Displays a formatted table of city data with clearer borders.
-     *
-     * @param cities The list of City objects to display.
-     */
+    // Display city results in a tabular format with clearer borders
     public void displayCities(List<City> cities) {
         if (cities != null && !cities.isEmpty()) {
+            // Formatter for comma-separated numbers
             NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+
             System.out.println("------------------------------------------------------------------------------------------------------");
+            // Column headers with clear formatting
             System.out.printf("%-30s | %-30s | %-20s | %-12s |%n", "City", "Country", "District", "Population");
+            // Separator line for clarity
             System.out.println("------------------------------------------------------------------------------------------------------");
 
             for (City city : cities) {
+                // Print each city’s details with formatted population
                 System.out.printf("%-30s | %-30s | %-20s | %-12s |%n",
                         city.getName(),
                         city.getCountryCode(),
@@ -627,31 +468,18 @@ public class DatabaseService {
         }
     }
 
-    /**
-     * Displays a formatted table of population data with percentages for city and non-city populations.
-     *
-     * @param dataList The list of PopulationReport objects to display.
-     */
-    public void displayPopulationData(List<PopulationReport> dataList) {
-        if (dataList != null && !dataList.isEmpty()) {
-            System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------");
-            System.out.printf("%-40s | %-20s | %-20s | %-8s | %-20s | %-10s%n",
-                    "Name", "Total Population", "City Population", "City %", "Non-City Population", "Non-City %");
-            System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------");
-
-            NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
-            for (PopulationReport report : dataList) {
-                System.out.printf("%-40s | %-20s | %-20s | %-6.2f%% | %-20s | %-6.2f%%%n",
-                        report.getName(),
-                        numberFormat.format(report.getTotalPopulation()),
-                        numberFormat.format(report.getCityPopulation()),
-                        report.getCityPopulationPercentage(),
-                        numberFormat.format(report.getNonCityPopulation()),
-                        report.getNonCityPopulationPercentage());
-            }
-            System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------");
-        } else {
-            System.out.println("No data found.");
-        }
+    public void displayPopulationData(List<PopulationReport> dataList) {    if (dataList != null && !dataList.isEmpty()) {
+        System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------");        System.out.printf("%-40s | %-20s | %-20s | %-8s | %-20s | %-10s%n",
+                "Name", "Total Population", "City Population", "City %", "Non-City Population", "Non-City %");        System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------");
+        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+        for (PopulationReport report : dataList) {            System.out.printf("%-40s | %-20s | %-20s | %-6.2f%% | %-20s | %-6.2f%%%n",
+                report.getName(),
+                numberFormat.format(report.getTotalPopulation()),                    numberFormat.format(report.getCityPopulation()),
+                report.getCityPopulationPercentage(),                    numberFormat.format(report.getNonCityPopulation()),
+                report.getNonCityPopulationPercentage());        }
+        System.out.println("------------------------------------------------------------------------------------------------------------------------------------------------");    } else {
+        System.out.println("No data found.");    }
     }
+
+
 }
