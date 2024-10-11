@@ -15,7 +15,7 @@
 	•       The database contains current and accurate population figures for all capital cities in the world.
 	
     •       Success End Condition:
-	•       A report listing all capital cities, organized by population from largest to smallest, is produced and delivered to the data analyst for analysis.
+	•       A report listing all capital cities, organized by population from largest to smallest, is produced and delivered to the researcher for analysis.
 	    
     •       Failed End Condition:
 	•       No report is generated.
@@ -24,19 +24,19 @@
 	•       Data Analyst.
 	
     •       Trigger:
-	•       A request is made to retrieve population data for all capital cities worldwide for analysis.
+	•       A request from data analyst is made to retrieve population data for all capital cities worldwide for analysis.
 
 🛠 Main Success Scenario
 
-	•	A request is made for population data for all capital cities globally.
-	•	The data analyst retrieves up-to-date population figures for all capital cities from the database.
-	•	The data analyst organizes the cities by population size, from largest to smallest.
-	•	The report is generated and delivered to the data analyst for analysis.
+	•	The system receives a request for population data for all capital cities globally.
+	•	The system retrieves up-to-date population figures for all capital cities from the database.
+	•	The system organizes the capital cities by population size, sorting them from largest to smallest.
+	•	The system generates the report and delivers it to the researcher for analysis.
 
 🚨 Extensions
 
 	•	If population data for some capital cities is missing:
-	•	The data analyst proceeds with available data and informs the requesting party of any missing entries in the final report.
+	•	The system proceeds with the available data.
 
 🔀 Sub-Variations
 

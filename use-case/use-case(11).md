@@ -16,7 +16,7 @@
 	•       The database contains current and accurate population figures for all cities in that district.
 	
     •       Success End Condition:
-	•       A report with all cities in the specified district, organized by population from largest to smallest, is produced and delivered to the data analyst for analysis.
+	•       A report with all cities in the specified district, organized by population from largest to smallest, is produced and delivered to the researcher for analysis.
 	
     •       Failed End Condition:
 	•       No report is generated.
@@ -25,19 +25,19 @@
 	•       Data Analyst.
 	
     •       Trigger:
-	•       A request for city population data by district is made for analysis.
+	•       A request to data analyst for city population data by district is made for analysis.
 
 🛠 Main Success Scenario
 
-	•	A request is made for population data for cities in a specific district.
-	•	The data analyst retrieves up-to-date population figures for all cities within the specified district.
-	•	The data analyst organizes the cities by population size, from largest to smallest.
-	•	The report is generated and delivered to the data analyst for analysis.
+	•	The system receives a request for population data for cities in a specific district.
+	•	The system retrieves up-to-date population figures for all cities within the specified district from the database.
+	•	The system organizes the cities by population size, sorting them from largest to smallest.
+	•	The system generates the report and delivers it to the researcher for analysis.
 
 🚨 Extensions
 
 	•	If population data for some cities within the district is missing:
-	•	The data analyst proceeds with available data and informs the requesting party of any missing entries in the final report.
+	•	The system proceeds with the available data.
 
 🔀 Sub-Variations
 

@@ -16,7 +16,7 @@
 	•       The database contains current and accurate population figures for the country.
 	
     •       Success End Condition:
-	•       A report showing the total population of the specified country is produced and delivered to the data analyst for analysis.
+	•       A report showing the total population of the specified country is produced and delivered to the researcher for analysis.
 	
     •       Failed End Condition:
 	•       No report is generated.
@@ -25,19 +25,19 @@
 	•       Data Analyst.
 	
     •       Trigger:
-	•       A request is made to retrieve the total population of a specific country for analysis.
+	•       A request from data analyst is made to retrieve the total population of a specific country for analysis.
 
 🛠 Main Success Scenario
 
-	•	A request is made for population data of a specific country.
-	•	The system retrieves up-to-date population figures for the specified country.
-	•	The data analyst organizes the data into a report showing the total population of the country.
-	•	The report is generated and delivered to the data analyst for analysis.
+	•	The system receives a request for population data of a specific country.
+	•	The system retrieves up-to-date population figures for the specified country from the database.
+	•	The system organizes the data into a report showing the total population of the country.
+	•	The system generates the report and delivers it to the researcher for analysis.
 
 🚨 Extensions
 
 	•	If population data for the country is incomplete or missing:
-	•	The data analyst proceeds with available data and informs the requesting party of any missing entries in the final report.
+	•	The system proceeds with the available data.
 
 🔀 Sub-Variations
 
