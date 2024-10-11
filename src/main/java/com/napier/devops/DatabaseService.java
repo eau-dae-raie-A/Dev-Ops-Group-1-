@@ -508,17 +508,28 @@ public class DatabaseService {
      *
      * @param dataList The list of population reports to display.
      */
-    public void displayPopulationData(List<PopulationReport> dataList) {    if (dataList != null && !dataList.isEmpty()) {
-        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------");        System.out.printf("%-40s | %-20s | %-20s | %-8s | %-20s | %-10s | %n",
-                "Name", "Total Population", "City Population", "City %", "Non-City Population", "Non-City %");        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------");
-        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
-        for (PopulationReport report : dataList) {            System.out.printf("%-40s | %-20s | %-20s | %-8s | %-20s | %-10s | %n",
-                report.getName(),
-                numberFormat.format(report.getTotalPopulation()),                    numberFormat.format(report.getCityPopulation()),
-                report.getCityPopulationPercentage(),                    numberFormat.format(report.getNonCityPopulation()),
-                report.getNonCityPopulationPercentage());        }
-        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------");    } else {
-        System.out.println("No data found.");    }
+    public void displayPopulationData(List<PopulationReport> dataList) {
+        if (dataList != null && !dataList.isEmpty()) {
+            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.printf("%-40s | %-20s | %-20s | %-10s | %-20s | %-10s | %n",
+                    "Name", "Total Population", "City Population", "City %", "Non-City Population", "Non-City %");
+            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------");
+            NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+
+            for (PopulationReport report : dataList) {
+                System.out.printf("%-40s | %-20s | %-20s | %-10s | %-20s | %-10s | %n",
+                        report.getName(),
+                        numberFormat.format(report.getTotalPopulation()),
+                        numberFormat.format(report.getCityPopulation()),
+                        report.getCityPopulationPercentageString(), // Display formatted city % with symbol
+                        numberFormat.format(report.getNonCityPopulation()),
+                        report.getNonCityPopulationPercentageString()); // Display formatted non-city % with symbol
+            }
+            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------");
+        } else {
+            System.out.println("No data found.");
+        }
     }
+
 
 }
