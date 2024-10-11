@@ -2,11 +2,13 @@ package com.napier.devops;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Test class for the Country class, ensuring that all getter and setter methods
- * function as expected and that the Country object's fields can be correctly set and retrieved.
+ * Unit tests for the Country class.
+ * This class verifies the functionality of the Country class, including setting and getting
+ * various attributes such as code, name, continent, region, and more.
  */
 public class CountryTest {
 
@@ -14,16 +16,17 @@ public class CountryTest {
     private Country country;
 
     /**
-     * Sets up a new Country object before each test.
+     * Initializes a new Country object before each test.
+     * This ensures that each test has a fresh instance of the Country class to work with.
      */
     @BeforeEach
     public void setUp() {
-        // Initialize a new Country object before each test
         country = new Country();
     }
 
     /**
-     * Tests setting and getting the country code.
+     * Test for setting and getting the country code.
+     * Verifies that the country code is correctly stored and retrieved.
      */
     @Test
     public void testSetAndGetCode() {
@@ -32,7 +35,8 @@ public class CountryTest {
     }
 
     /**
-     * Tests setting and getting the country's name.
+     * Test for setting and getting the country's name.
+     * Confirms that the country name is accurately stored and retrieved.
      */
     @Test
     public void testSetAndGetName() {
@@ -41,7 +45,8 @@ public class CountryTest {
     }
 
     /**
-     * Tests setting and getting the country's continent.
+     * Test for setting and getting the country's continent.
+     * Ensures that the continent is properly stored and can be retrieved.
      */
     @Test
     public void testSetAndGetContinent() {
@@ -50,7 +55,8 @@ public class CountryTest {
     }
 
     /**
-     * Tests setting and getting the country's region.
+     * Test for setting and getting the country's region.
+     * Verifies that the region is correctly stored and retrieved.
      */
     @Test
     public void testSetAndGetRegion() {
@@ -59,7 +65,8 @@ public class CountryTest {
     }
 
     /**
-     * Tests setting and getting the country's surface area.
+     * Test for setting and getting the country's surface area.
+     * Confirms that the surface area is stored and retrieved accurately with a tolerance for floating-point comparisons.
      */
     @Test
     public void testSetAndGetSurfaceArea() {
@@ -68,7 +75,8 @@ public class CountryTest {
     }
 
     /**
-     * Tests setting and getting the country's population.
+     * Test for setting and getting the country's population.
+     * Verifies that the population is correctly stored and retrieved.
      */
     @Test
     public void testSetAndGetPopulation() {
@@ -77,7 +85,8 @@ public class CountryTest {
     }
 
     /**
-     * Tests setting and getting the country's local name.
+     * Test for setting and getting the country's local name.
+     * Ensures that the local name is accurately stored and retrieved.
      */
     @Test
     public void testSetAndGetLocalName() {
@@ -86,7 +95,8 @@ public class CountryTest {
     }
 
     /**
-     * Tests setting and getting the country's form of government.
+     * Test for setting and getting the country's form of government.
+     * Verifies that the government form is correctly stored and retrieved.
      */
     @Test
     public void testSetAndGetGovernmentForm() {
@@ -95,7 +105,8 @@ public class CountryTest {
     }
 
     /**
-     * Tests setting and getting the country's head of state.
+     * Test for setting and getting the country's head of state.
+     * Confirms that the head of state is accurately stored and retrieved.
      */
     @Test
     public void testSetAndGetHeadOfState() {
@@ -104,7 +115,8 @@ public class CountryTest {
     }
 
     /**
-     * Tests setting and getting the country's alternate code (code2).
+     * Test for setting and getting the country's secondary code.
+     * Ensures that the secondary code is correctly stored and retrieved.
      */
     @Test
     public void testSetAndGetCode2() {
@@ -113,7 +125,8 @@ public class CountryTest {
     }
 
     /**
-     * Tests setting and getting the capital city object.
+     * Test for setting and getting the capital city object.
+     * Verifies that the capital city is correctly stored and retrieved by comparing city names.
      */
     @Test
     public void testSetAndGetCapitalCity() {
@@ -124,7 +137,8 @@ public class CountryTest {
     }
 
     /**
-     * Tests setting and getting the country's year of independence.
+     * Test for setting and getting the country's independence year.
+     * Confirms that the independence year is stored and retrieved correctly.
      */
     @Test
     public void testSetAndGetIndepYear() {
@@ -133,7 +147,8 @@ public class CountryTest {
     }
 
     /**
-     * Tests setting and getting the country's life expectancy.
+     * Test for setting and getting the country's life expectancy.
+     * Verifies that the life expectancy is stored and retrieved accurately with a tolerance for floating-point comparisons.
      */
     @Test
     public void testSetAndGetLifeExpectancy() {
@@ -142,7 +157,8 @@ public class CountryTest {
     }
 
     /**
-     * Tests setting and getting the country's Gross National Product (GNP).
+     * Test for setting and getting the country's Gross National Product (GNP).
+     * Ensures that the GNP is correctly stored and retrieved.
      */
     @Test
     public void testSetAndGetGnp() {
@@ -151,7 +167,8 @@ public class CountryTest {
     }
 
     /**
-     * Tests setting and getting the country's previous GNP.
+     * Test for setting and getting the country's old Gross National Product (GNP).
+     * Confirms that the old GNP is correctly stored and retrieved.
      */
     @Test
     public void testSetAndGetGnpOld() {
@@ -160,7 +177,8 @@ public class CountryTest {
     }
 
     /**
-     * Tests setting and getting the capital city's ID.
+     * Test for setting and getting the country's capital ID.
+     * Verifies that the capital ID is correctly stored and retrieved.
      */
     @Test
     public void testSetAndGetCapital() {
@@ -169,7 +187,8 @@ public class CountryTest {
     }
 
     /**
-     * Tests the toString method for correct string representation of a Country object.
+     * Test for the toString method to ensure correct string representation.
+     * Assembles expected output and compares it to the actual string output from toString.
      */
     @Test
     public void testToString() {

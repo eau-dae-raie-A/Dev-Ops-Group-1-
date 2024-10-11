@@ -5,25 +5,27 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 /**
- * Test class for PopulationReport, ensuring that the getter and setter methods
- * function correctly and that the fields can be accurately set and retrieved.
+ * Unit tests for the PopulationReport class.
+ * Tests the functionality of setting and getting values for various attributes
+ * such as name, total population, city population, and non-city population.
  */
 public class PopulationReportTest {
 
-    // Instance of PopulationReport for testing
+    // Instance of PopulationReport used for testing
     private PopulationReport populationReport;
 
     /**
-     * Sets up a new PopulationReport object before each test.
+     * Initializes a new PopulationReport object before each test.
+     * This ensures that each test has a fresh instance of PopulationReport to work with.
      */
     @BeforeEach
     public void setUp() {
-        // Initialize a new PopulationReport object
         populationReport = new PopulationReport();
     }
 
     /**
-     * Tests setting and getting the name of the region or continent.
+     * Tests the setName and getName methods.
+     * Sets the name of the geographical area and checks if the name is correctly retrieved.
      */
     @Test
     public void testSetAndGetName() {
@@ -32,7 +34,8 @@ public class PopulationReportTest {
     }
 
     /**
-     * Tests setting and getting the total population.
+     * Tests the setTotalPopulation and getTotalPopulation methods.
+     * Sets the total population and verifies if it matches the expected value.
      */
     @Test
     public void testSetAndGetTotalPopulation() {
@@ -41,7 +44,8 @@ public class PopulationReportTest {
     }
 
     /**
-     * Tests setting and getting the city population.
+     * Tests the setCityPopulation and getCityPopulation methods.
+     * Sets the city population and checks if the returned value is as expected.
      */
     @Test
     public void testSetAndGetCityPopulation() {
@@ -50,29 +54,12 @@ public class PopulationReportTest {
     }
 
     /**
-     * Tests setting and getting the percentage of the population that lives in cities.
-     */
-    @Test
-    public void testSetAndGetCityPopulationPercentage() {
-        populationReport.setCityPopulationPercentage(47.1);
-        assertEquals(47.1, populationReport.getCityPopulationPercentage(), 0.001, "City population percentage should be 47.1");
-    }
-
-    /**
-     * Tests setting and getting the non-city population.
+     * Tests the setNonCityPopulation and getNonCityPopulation methods.
+     * Sets the non-city population and verifies if it retrieves the expected value.
      */
     @Test
     public void testSetAndGetNonCityPopulation() {
         populationReport.setNonCityPopulation(2358000000L);
         assertEquals(2358000000L, populationReport.getNonCityPopulation(), "Non-city population should be 2,358,000,000");
-    }
-
-    /**
-     * Tests setting and getting the percentage of the population that lives outside of cities.
-     */
-    @Test
-    public void testSetAndGetNonCityPopulationPercentage() {
-        populationReport.setNonCityPopulationPercentage(52.9);
-        assertEquals(52.9, populationReport.getNonCityPopulationPercentage(), 0.001, "Non-city population percentage should be 52.9");
     }
 }

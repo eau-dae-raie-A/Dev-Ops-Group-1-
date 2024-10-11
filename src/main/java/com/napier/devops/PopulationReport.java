@@ -1,46 +1,26 @@
 package com.napier.devops;
 
+import java.text.DecimalFormat;
+
 /**
  * Represents a report on the population distribution in a specific geographical area,
  * including the total population, city population, non-city population, and their percentages.
  */
 public class PopulationReport {
+    // Fields to store population data and percentage strings for a geographical area
 
-    /**
-     * The name of the geographical area (e.g., continent, region, country).
-     */
-    private String name;
+    private String name; // Name of the geographical area (e.g., continent, region, or country)
+    private long totalPopulation; // Total population of the area
+    private long cityPopulation; // Population living in cities within the area
+    private long nonCityPopulation; // Population not living in cities (non-city or rural population)
 
-    /**
-     * The total population of the area.
-     */
-    private long totalPopulation;
+    private String cityPopulationPercentageString; // City population as a formatted percentage string
+    private String nonCityPopulationPercentageString; // Non-city population as a formatted percentage string
 
-    /**
-     * The population living in cities within the area.
-     */
-    private long cityPopulation;
-
-    /**
-     * The percentage of the total population living in cities.
-     */
-    private double cityPopulationPercentage;
-
-    /**
-     * The population not living in cities (rural population) within the area.
-     */
-    private long nonCityPopulation;
-
-    /**
-     * The percentage of the total population not living in cities.
-     */
-    private double nonCityPopulationPercentage;
-
-    // Getters and Setters for all attributes
+    // Getter and setter methods for each attribute
 
     /**
      * Gets the name of the geographical area.
-     *
      * @return The name of the area.
      */
     public String getName() {
@@ -49,7 +29,6 @@ public class PopulationReport {
 
     /**
      * Sets the name of the geographical area.
-     *
      * @param name The name to set.
      */
     public void setName(String name) {
@@ -58,7 +37,6 @@ public class PopulationReport {
 
     /**
      * Gets the total population of the area.
-     *
      * @return The total population.
      */
     public long getTotalPopulation() {
@@ -67,7 +45,6 @@ public class PopulationReport {
 
     /**
      * Sets the total population of the area.
-     *
      * @param totalPopulation The total population to set.
      */
     public void setTotalPopulation(long totalPopulation) {
@@ -76,7 +53,6 @@ public class PopulationReport {
 
     /**
      * Gets the population living in cities within the area.
-     *
      * @return The city population.
      */
     public long getCityPopulation() {
@@ -85,7 +61,6 @@ public class PopulationReport {
 
     /**
      * Sets the population living in cities within the area.
-     *
      * @param cityPopulation The city population to set.
      */
     public void setCityPopulation(long cityPopulation) {
@@ -93,26 +68,26 @@ public class PopulationReport {
     }
 
     /**
-     * Gets the percentage of the total population living in cities.
-     *
-     * @return The percentage of the city population.
+     * Gets the city population percentage as a formatted string (e.g., "46.05%").
+     * @return The city population percentage string.
      */
-    public double getCityPopulationPercentage() {
-        return cityPopulationPercentage;
+    public String getCityPopulationPercentageString() {
+        return cityPopulationPercentageString;
     }
 
     /**
-     * Sets the percentage of the total population living in cities.
-     *
-     * @param cityPopulationPercentage The percentage of the city population to set.
+     * Sets the city population percentage as a formatted string.
+     * Accepts a double value and formats it as a percentage string.
+     * @param cityPopulationPercentage The city population percentage to format and set.
      */
     public void setCityPopulationPercentage(double cityPopulationPercentage) {
-        this.cityPopulationPercentage = cityPopulationPercentage;
+        // Format the percentage value to a string with two decimal places and a '%' symbol
+        DecimalFormat df = new DecimalFormat("#.##%");
+        this.cityPopulationPercentageString = df.format(cityPopulationPercentage / 100); // Dividing by 100 to convert to percentage format
     }
 
     /**
-     * Gets the population not living in cities (rural population) within the area.
-     *
+     * Gets the population not living in cities (non-city or rural population).
      * @return The non-city population.
      */
     public long getNonCityPopulation() {
@@ -120,8 +95,7 @@ public class PopulationReport {
     }
 
     /**
-     * Sets the population not living in cities within the area.
-     *
+     * Sets the non-city population (population not living in cities).
      * @param nonCityPopulation The non-city population to set.
      */
     public void setNonCityPopulation(long nonCityPopulation) {
@@ -129,20 +103,21 @@ public class PopulationReport {
     }
 
     /**
-     * Gets the percentage of the total population not living in cities.
-     *
-     * @return The percentage of the non-city population.
+     * Gets the non-city population percentage as a formatted string (e.g., "53.95%").
+     * @return The non-city population percentage string.
      */
-    public double getNonCityPopulationPercentage() {
-        return nonCityPopulationPercentage;
+    public String getNonCityPopulationPercentageString() {
+        return nonCityPopulationPercentageString;
     }
 
     /**
-     * Sets the percentage of the total population not living in cities.
-     *
-     * @param nonCityPopulationPercentage The percentage of the non-city population to set.
+     * Sets the non-city population percentage as a formatted string.
+     * Accepts a double value and formats it as a percentage string.
+     * @param nonCityPopulationPercentage The non-city population percentage to format and set.
      */
     public void setNonCityPopulationPercentage(double nonCityPopulationPercentage) {
-        this.nonCityPopulationPercentage = nonCityPopulationPercentage;
+        // Format the percentage value to a string with two decimal places and a '%' symbol
+        DecimalFormat df = new DecimalFormat("#.##%");
+        this.nonCityPopulationPercentageString = df.format(nonCityPopulationPercentage / 100); // Dividing by 100 to convert to percentage format
     }
 }

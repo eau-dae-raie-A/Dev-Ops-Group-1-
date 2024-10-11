@@ -8,24 +8,33 @@ import java.util.List;
 
 import static org.mockito.Mockito.*;
 
+/**
+ * Unit tests for the App class.
+ * This class verifies that the App class interacts correctly with the DatabaseService
+ * to retrieve and display various data sets (e.g., countries, cities, population reports).
+ * It uses Mockito to mock DatabaseService, allowing isolated tests of the App class.
+ */
 public class AppTest {
 
+    // Mock instance of DatabaseService for testing
     private DatabaseService mockDbService;
+
+    // Instance of App with injected mock DatabaseService
     private App app;
 
     /**
-     * Sets up the test environment before each test.
-     * Initializes mock DatabaseService and App instances.
+     * Sets up the mock DatabaseService and initializes the App with the mock.
+     * This method runs before each test to ensure a fresh instance of the mock and App.
      */
     @BeforeEach
     public void setUp() {
         mockDbService = Mockito.mock(DatabaseService.class);
-        app = new App(mockDbService); // Injecting mock DatabaseService into App
+        app = new App(mockDbService); // Injects the mock DatabaseService into App
     }
 
     /**
-     * Tests that the App correctly displays all countries by population.
-     * Verifies that displayCountries is called with the correct data.
+     * Test for displaying all countries by population.
+     * Verifies that the App calls DatabaseService to retrieve and display the countries.
      */
     @Test
     public void testRunDisplaysAllCountriesByPopulation() {
@@ -38,8 +47,8 @@ public class AppTest {
     }
 
     /**
-     * Tests that the App correctly displays countries by continent.
-     * Verifies that displayCountries is called with the correct continent data.
+     * Test for displaying countries by continent.
+     * Checks that the App retrieves and displays countries by continent from DatabaseService.
      */
     @Test
     public void testRunDisplaysCountriesByContinent() {
@@ -53,8 +62,8 @@ public class AppTest {
     }
 
     /**
-     * Tests that the App correctly displays countries by region.
-     * Verifies that displayCountries is called with the correct region data.
+     * Test for displaying countries by region.
+     * Ensures that the App calls DatabaseService to retrieve and display countries by region.
      */
     @Test
     public void testRunDisplaysCountriesByRegion() {
@@ -68,8 +77,8 @@ public class AppTest {
     }
 
     /**
-     * Tests that the App correctly displays the top populated countries.
-     * Verifies that displayCountries is called with the correct top countries data.
+     * Test for displaying top populated countries.
+     * Verifies that the App calls DatabaseService to retrieve and display the top populated countries.
      */
     @Test
     public void testRunDisplaysTopPopulatedCountries() {
@@ -83,8 +92,8 @@ public class AppTest {
     }
 
     /**
-     * Tests that the App correctly displays the top populated countries by continent.
-     * Verifies that displayCountries is called with the correct data for the continent.
+     * Test for displaying top populated countries by continent.
+     * Ensures that the App retrieves and displays top populated countries by continent.
      */
     @Test
     public void testRunDisplaysTopPopulatedCountriesByContinent() {
@@ -99,8 +108,8 @@ public class AppTest {
     }
 
     /**
-     * Tests that the App correctly displays all cities by population.
-     * Verifies that displayCities is called with the correct data.
+     * Test for displaying all cities by population.
+     * Confirms that the App calls DatabaseService to retrieve and display cities.
      */
     @Test
     public void testRunDisplaysAllCitiesByPopulation() {
@@ -113,8 +122,8 @@ public class AppTest {
     }
 
     /**
-     * Tests that the App correctly displays cities by continent.
-     * Verifies that displayCities is called with the correct continent data.
+     * Test for displaying cities by continent.
+     * Verifies that the App retrieves and displays cities by continent.
      */
     @Test
     public void testRunDisplaysCitiesByContinent() {
@@ -128,8 +137,8 @@ public class AppTest {
     }
 
     /**
-     * Tests that the App correctly displays cities by region.
-     * Verifies that displayCities is called with the correct region data.
+     * Test for displaying cities by region.
+     * Ensures that the App calls DatabaseService to retrieve and display cities by region.
      */
     @Test
     public void testRunDisplaysCitiesByRegion() {
@@ -143,8 +152,8 @@ public class AppTest {
     }
 
     /**
-     * Tests that the App correctly displays cities by country.
-     * Verifies that displayCities is called with the correct country data.
+     * Test for displaying cities by country code.
+     * Verifies that the App retrieves and displays cities by country code.
      */
     @Test
     public void testRunDisplaysCitiesByCountry() {
@@ -158,8 +167,8 @@ public class AppTest {
     }
 
     /**
-     * Tests that the App correctly displays the top populated cities.
-     * Verifies that displayCities is called with the correct top cities data.
+     * Test for displaying top populated cities.
+     * Confirms that the App calls DatabaseService to retrieve and display the top populated cities.
      */
     @Test
     public void testRunDisplaysTopPopulatedCities() {
@@ -173,8 +182,8 @@ public class AppTest {
     }
 
     /**
-     * Tests that the App correctly displays population data by continent.
-     * Verifies that displayPopulationData is called with the correct data.
+     * Test for displaying population data by continent.
+     * Verifies that the App retrieves and displays population data grouped by continent.
      */
     @Test
     public void testRunDisplaysPopulationByContinent() {
@@ -187,8 +196,8 @@ public class AppTest {
     }
 
     /**
-     * Tests that the App correctly displays population data by region.
-     * Verifies that displayPopulationData is called with the correct region data.
+     * Test for displaying population data by region.
+     * Ensures that the App calls DatabaseService to retrieve and display population data by region.
      */
     @Test
     public void testRunDisplaysPopulationByRegion() {
@@ -201,8 +210,8 @@ public class AppTest {
     }
 
     /**
-     * Tests that the App correctly displays population data by country.
-     * Verifies that displayPopulationData is called with the correct country data.
+     * Test for displaying population data by country.
+     * Verifies that the App retrieves and displays population data grouped by country.
      */
     @Test
     public void testRunDisplaysPopulationByCountry() {
