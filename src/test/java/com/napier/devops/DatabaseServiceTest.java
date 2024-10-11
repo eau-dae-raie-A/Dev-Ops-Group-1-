@@ -17,6 +17,11 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
+/**
+ * Unit tests for the DatabaseService class.
+ * This class uses Mockito to mock database operations, allowing testing of SQL-related methods
+ * without needing a real database connection. It verifies data retrieval and exception handling.
+ */
 public class DatabaseServiceTest {
 
     @Mock
