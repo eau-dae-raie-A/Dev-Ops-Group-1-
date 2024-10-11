@@ -57,7 +57,7 @@ public class Country {
     private Double gnp;
 
     /**
-     * The old Gross National Product (GNP) of the country,
+     * The old Gross National Product (GNP) of the country, representing a previous value.
      */
     private Double gnpOld;
 
