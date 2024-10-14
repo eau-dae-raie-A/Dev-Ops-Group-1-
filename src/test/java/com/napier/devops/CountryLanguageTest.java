@@ -52,7 +52,7 @@ public class CountryLanguageTest {
     @Test
     public void testSetAndGetIsOfficial() {
         countryLanguage.setIsOfficial("T");
-        assertEquals("T", countryLanguage.getIsOfficial(), "is Official should be 'T'");
+        assertEquals("T", countryLanguage.getIsOfficial(), "isOfficial should be 'T'");
     }
 
     /**
