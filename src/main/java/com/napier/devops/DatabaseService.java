@@ -2,6 +2,7 @@ package com.napier.devops;
 
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
@@ -540,6 +541,22 @@ public class DatabaseService {
      * @param fileName The name of the file to save the Markdown report.
      */
     public void generatePopulationReportMarkdown(List<PopulationReport> dataList, String fileName) {
+        // Ensure the report directory exists
+        String directoryName = "report";
+        Path directoryPath = Paths.get(directoryName);
+        try {
+            if (!Files.exists(directoryPath)) {
+                Files.createDirectory(directoryPath);
+            }
+        } catch (IOException e) {
+            System.out.println("Error creating directory " + directoryName);
+            e.printStackTrace();
+            return;
+        }
+
+        // Path to the file within the report directory
+        String filePath = directoryName + "/" + fileName;
+
         if (dataList != null && !dataList.isEmpty()) {
             StringBuilder markdown = new StringBuilder();
             markdown.append("| Name | Total Population | City Population | City % | Non-City Population | Non-City % |\n");
@@ -558,8 +575,8 @@ public class DatabaseService {
             }
 
             try {
-                Files.write(Paths.get(fileName), markdown.toString().getBytes());
-                System.out.println("Markdown report saved to " + fileName);
+                Files.write(Paths.get(filePath), markdown.toString().getBytes());
+                System.out.println("Markdown report saved to " + filePath);
             } catch (IOException e) {
                 System.out.println("Error saving Markdown report.");
                 e.printStackTrace();
