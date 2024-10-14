@@ -438,6 +438,94 @@ public class DatabaseService {
         return reportDataList;
     }
 
+    // Method to get the population of the world
+    public long getWorldPopulation() {
+        String query = "SELECT SUM(Population) AS Population FROM country";
+        return executePopulationQuery(query);
+    }
+
+    // Method to get the population of a continent
+    public long getContinentPopulation(String continent) {
+        String query = "SELECT SUM(Population) AS Population FROM country WHERE Continent = ?";
+        return executePopulationQuery(query, continent);
+    }
+
+    // Method to get the population of a region
+    public long getRegionPopulation(String region) {
+        String query = "SELECT SUM(Population) AS Population FROM country WHERE Region = ?";
+        return executePopulationQuery(query, region);
+    }
+
+    // Method to get the population of a country
+    public long getCountryPopulation(String country) {
+        String query = "SELECT Population FROM country WHERE Name = ?";
+        return executePopulationQuery(query, country);
+    }
+
+    // Method to get the population of a district
+    public long getDistrictPopulation(String district) {
+        String query = "SELECT SUM(Population) AS Population FROM city WHERE District = ?";
+        return executePopulationQuery(query, district);
+    }
+
+    // Method to get the population of a city
+    public long getCityPopulation(String cityName) {
+        String query = "SELECT Population FROM city WHERE Name = ?";
+        return executePopulationQuery(query, cityName);
+    }
+
+    // Helper method to execute population queries and return a long value
+    private long executePopulationQuery(String query, Object... params) {
+        long population = 0;
+        try (PreparedStatement pstmt = con.prepareStatement(query)) {
+            for (int i = 0; i < params.length; i++) {
+                pstmt.setObject(i + 1, params[i]);
+            }
+
+            try (ResultSet rset = pstmt.executeQuery()) {
+                if (rset.next()) {
+                    population = rset.getLong("Population");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return population;
+    }
+
+    // Method to get the number of speakers for specific languages and their percentage of the world population
+    public List<LanguageReport> getLanguageStatistics() {
+        String query = "SELECT language.Language, " +
+                "SUM(country.Population * (language.Percentage / 100)) AS SpeakerCount, " +
+                "(SUM(country.Population * (language.Percentage / 100)) / " +
+                " (SELECT SUM(Population) FROM country)) * 100 AS WorldPercentage " +
+                "FROM countrylanguage language " +
+                "JOIN country ON language.CountryCode = country.Code " +
+                "WHERE language.Language IN ('Chinese', 'English', 'Hindi', 'Spanish', 'Arabic') " +
+                "GROUP BY language.Language " +
+                "ORDER BY SpeakerCount DESC";
+        return executeLanguageReportQuery(query);
+    }
+
+    // Helper method to execute the language statistics query and return results
+    private List<LanguageReport> executeLanguageReportQuery(String query) {
+        List<LanguageReport> languageReports = new ArrayList<>();
+        try (PreparedStatement pstmt = con.prepareStatement(query);
+             ResultSet rset = pstmt.executeQuery()) {
+
+            while (rset.next()) {
+                LanguageReport report = new LanguageReport();
+                report.setLanguage(rset.getString("Language"));
+                report.setSpeakerCount(rset.getLong("SpeakerCount"));
+                report.setWorldPercentage(rset.getDouble("WorldPercentage"));
+                languageReports.add(report);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return languageReports;
+    }
+
 
     /**
      * Display a list of Country objects in a formatted table.
@@ -508,17 +596,50 @@ public class DatabaseService {
      *
      * @param dataList The list of population reports to display.
      */
-    public void displayPopulationData(List<PopulationReport> dataList) {    if (dataList != null && !dataList.isEmpty()) {
-        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------");        System.out.printf("%-40s | %-20s | %-20s | %-8s | %-20s | %-10s | %n",
-                "Name", "Total Population", "City Population", "City %", "Non-City Population", "Non-City %");        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------");
-        NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
-        for (PopulationReport report : dataList) {            System.out.printf("%-40s | %-20s | %-20s | %-8s | %-20s | %-10s | %n",
-                report.getName(),
-                numberFormat.format(report.getTotalPopulation()),                    numberFormat.format(report.getCityPopulation()),
-                report.getCityPopulationPercentage(),                    numberFormat.format(report.getNonCityPopulation()),
-                report.getNonCityPopulationPercentage());        }
-        System.out.println("---------------------------------------------------------------------------------------------------------------------------------------");    } else {
-        System.out.println("No data found.");    }
+    public void displayPopulationData(List<PopulationReport> dataList) {
+        if (dataList != null && !dataList.isEmpty()) {
+            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------");
+            System.out.printf("%-40s | %-20s | %-20s | %-10s | %-20s | %-10s | %n",
+                    "Name", "Total Population", "City Population", "City %", "Non-City Population", "Non-City %");
+            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------");
+            NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+
+            for (PopulationReport report : dataList) {
+                System.out.printf("%-40s | %-20s | %-20s | %-10s | %-20s | %-10s | %n",
+                        report.getName(),
+                        numberFormat.format(report.getTotalPopulation()),
+                        numberFormat.format(report.getCityPopulation()),
+                        report.getCityPopulationPercentageString(), // Display formatted city % with symbol
+                        numberFormat.format(report.getNonCityPopulation()),
+                        report.getNonCityPopulationPercentageString()); // Display formatted non-city % with symbol
+            }
+            System.out.println("---------------------------------------------------------------------------------------------------------------------------------------");
+        } else {
+            System.out.println("No data found.");
+        }
     }
+
+    // Method to display a list of LanguageReport objects in a formatted table
+    public void displayLanguageStatistics(List<LanguageReport> languageReports) {
+        if (languageReports != null && !languageReports.isEmpty()) {
+            System.out.println("\nLanguage Statistics");
+            System.out.println("================================================================================");
+            System.out.printf("| %-15s | %-25s | %-30s |\n", "Language", "Speaker Count", "Percentage of World Population");
+            System.out.println("================================================================================");
+
+            NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+
+            for (LanguageReport report : languageReports) {
+                System.out.printf("| %-15s | %-25s | %-30s |\n",
+                        report.getLanguage(),
+                        numberFormat.format(report.getSpeakerCount()),
+                        report.getWorldPercentageString());
+            }
+            System.out.println("================================================================================");
+        } else {
+            System.out.println("No language statistics found.");
+        }
+    }
+
 
 }
