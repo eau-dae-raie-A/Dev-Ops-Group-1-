@@ -364,6 +364,8 @@ public class DatabaseServiceTest {
         assertEquals(1, reports.size());
     }
 
+
+
     // Mocks a result set for country-related queries.
     private void mockCountryResultSet() throws SQLException {
         when(mockResultSet.next()).thenReturn(true).thenReturn(false);
@@ -398,4 +400,87 @@ public class DatabaseServiceTest {
         when(mockResultSet.getLong("NonCityPopulation")).thenReturn(2601375000L);
         when(mockResultSet.getDouble("NonCityPopulationPercentage")).thenReturn(56.5);
     }
+
+    @Test
+    public void testGetWorldPopulation() throws SQLException {
+        when(mockResultSet.next()).thenReturn(true);
+        when(mockResultSet.getLong("Population")).thenReturn(7800000000L);
+        long worldPopulation = databaseService.getWorldPopulation();
+        assertEquals(7800000000L, worldPopulation);
+    }
+
+    // Method to test continent population retrieval.
+    @Test
+    public void testGetContinentPopulation() throws SQLException {
+        when(mockResultSet.next()).thenReturn(true);
+        when(mockResultSet.getLong("Population")).thenReturn(4600000000L);
+        long continentPopulation = databaseService.getContinentPopulation("Asia");
+        assertEquals(4600000000L, continentPopulation);
+    }
+
+    // Method to test region population retrieval.
+    @Test
+    public void testGetRegionPopulation() throws SQLException {
+        when(mockResultSet.next()).thenReturn(true);
+        when(mockResultSet.getLong("Population")).thenReturn(123456789L);
+        long regionPopulation = databaseService.getRegionPopulation("Southeast Asia");
+        assertEquals(123456789L, regionPopulation);
+    }
+
+    // Method to test country population retrieval.
+    @Test
+    public void testGetCountryPopulation() throws SQLException {
+        when(mockResultSet.next()).thenReturn(true);
+        when(mockResultSet.getLong("Population")).thenReturn(331002651L);
+        long countryPopulation = databaseService.getCountryPopulation("United States");
+        assertEquals(331002651L, countryPopulation);
+    }
+
+    // Method to test district population retrieval.
+    @Test
+    public void testGetDistrictPopulation() throws SQLException {
+        when(mockResultSet.next()).thenReturn(true);
+        when(mockResultSet.getLong("Population")).thenReturn(8419000L);
+        long districtPopulation = databaseService.getDistrictPopulation("New York");
+        assertEquals(8419000L, districtPopulation);
+    }
+
+    // Method to test city population retrieval.
+    @Test
+    public void testGetCityPopulation() throws SQLException {
+        when(mockResultSet.next()).thenReturn(true);
+        when(mockResultSet.getLong("Population")).thenReturn(8336817L);
+        long cityPopulation = databaseService.getCityPopulation("New York");
+        assertEquals(8336817L, cityPopulation);
+    }
+
+    // Method to test language statistics retrieval.
+    @Test
+    public void testGetLanguageStatistics() throws SQLException {
+        when(mockResultSet.next()).thenReturn(true).thenReturn(false);
+        when(mockResultSet.getString("Language")).thenReturn("English");
+        when(mockResultSet.getLong("SpeakerCount")).thenReturn(1500000000L);
+        when(mockResultSet.getDouble("WorldPercentage")).thenReturn(20.0);
+
+        List<LanguageReport> languageReports = databaseService.getLanguageStatistics();
+        assertEquals(1, languageReports.size());
+        assertEquals("English", languageReports.get(0).getLanguage());
+        assertEquals(1500000000L, languageReports.get(0).getSpeakerCount());
+        assertEquals(20.0, languageReports.get(0).getWorldPercentage());
+    }
+
+    // Method to test language statistics display.
+    @Test
+    public void testDisplayLanguageStatistics() {
+        LanguageReport report = new LanguageReport();
+        report.setLanguage("English");
+        report.setSpeakerCount(1500000000L);
+        report.setWorldPercentage(20.0);
+
+        List<LanguageReport> languageReports = List.of(report);
+
+        // Capture the output of the display method
+        databaseService.displayLanguageStatistics(languageReports);
+    }
 }
+
