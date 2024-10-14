@@ -1,5 +1,8 @@
 name: A workflow for my Hello World App
-on: push
+on:
+  push:
+    branches:
+      - feature/NayChi
 
 jobs:
   UnitTests:
@@ -23,6 +26,13 @@ jobs:
           mvn -Dtest=com.napier.devops.CountryTest test
           mvn -Dtest=com.napier.devops.DatabaseServiceTest test
           mvn -Dtest=com.napier.devops.PopulationReportTest test
+      - name: CodeCov
+        uses: codecov/codecov-action@v2
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
+          directory: ./target/site/jacoco/jacoco.xml
+          flags: Unit Tests # optional
+          verbose: true # optional (default = false)
           
 
   IntegrationTests:
@@ -70,3 +80,17 @@ jobs:
         run: |
           mvn package -DskipTests
           docker compose up --abort-on-container-exit
+      - uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+            repo_token: "${{ secrets.GITHUB_TOKEN }}"
+            prerelease: false
+            automatic_release_tag: "latest"
+            files: |
+              ./target/*.jar
+      - name: Copy Output
+        run: docker container cp dev-ops-group1-app-1:./tmp/reports ./
+            - name: Deploy
+              uses: JamesIves/github-pages-deploy-action@v4.6.8
+              with:
+                branch: reports # The branch the action should deploy to.
+                folder: reports # The folder we are copying

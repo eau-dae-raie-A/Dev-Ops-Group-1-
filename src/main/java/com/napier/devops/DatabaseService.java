@@ -1,5 +1,8 @@
 package com.napier.devops;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -530,6 +533,40 @@ public class DatabaseService {
             System.out.println("No data found.");
         }
     }
+    /**
+     * Generates a population report in Markdown format.
+     *
+     * @param dataList The list of population reports to display.
+     * @param fileName The name of the file to save the Markdown report.
+     */
+    public void generatePopulationReportMarkdown(List<PopulationReport> dataList, String fileName) {
+        if (dataList != null && !dataList.isEmpty()) {
+            StringBuilder markdown = new StringBuilder();
+            markdown.append("| Name | Total Population | City Population | City % | Non-City Population | Non-City % |\n");
+            markdown.append("| --- | --- | --- | --- | --- | --- |\n");
 
+            NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
+
+            for (PopulationReport report : dataList) {
+                markdown.append("| ")
+                        .append(report.getName()).append(" | ")
+                        .append(numberFormat.format(report.getTotalPopulation())).append(" | ")
+                        .append(numberFormat.format(report.getCityPopulation())).append(" | ")
+                        .append(report.getCityPopulationPercentageString()).append(" | ")
+                        .append(numberFormat.format(report.getNonCityPopulation())).append(" | ")
+                        .append(report.getNonCityPopulationPercentageString()).append(" |\n");
+            }
+
+            try {
+                Files.write(Paths.get(fileName), markdown.toString().getBytes());
+                System.out.println("Markdown report saved to " + fileName);
+            } catch (IOException e) {
+                System.out.println("Error saving Markdown report.");
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("No data found.");
+        }
+    }
 
 }
