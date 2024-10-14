@@ -619,27 +619,40 @@ public class DatabaseService {
         }
     }
 
-    // Method to display a list of LanguageReport objects in a formatted table
+    /**
+     * Displays a list of LanguageReport objects in a formatted table.
+     *
+     * @param languageReports a list of LanguageReport objects to display.
+     * If the list is null or empty, a message will be printed instead.
+     */
     public void displayLanguageStatistics(List<LanguageReport> languageReports) {
+        // Check if the list of language reports is not null and contains elements
         if (languageReports != null && !languageReports.isEmpty()) {
+            // Print the table header
             System.out.println("\nLanguage Statistics");
             System.out.println("================================================================================");
             System.out.printf("| %-15s | %-25s | %-30s |\n", "Language", "Speaker Count", "Percentage of World Population");
             System.out.println("================================================================================");
 
+            // Create a NumberFormat instance to format the speaker count with commas
             NumberFormat numberFormat = NumberFormat.getNumberInstance(Locale.US);
 
+            // Iterate through each LanguageReport object in the list
             for (LanguageReport report : languageReports) {
+                // Print each report's details in a formatted row
                 System.out.printf("| %-15s | %-25s | %-30s |\n",
                         report.getLanguage(),
-                        numberFormat.format(report.getSpeakerCount()),
-                        report.getWorldPercentageString());
+                        numberFormat.format(report.getSpeakerCount()),  // Format speaker count with commas for readability
+                        report.getWorldPercentageString());             // Format percentage as a string with two decimals and a percent sign
             }
+            // Print the table footer
             System.out.println("================================================================================");
         } else {
+            // Print a message if no language statistics are available
             System.out.println("No language statistics found.");
         }
     }
+
 
 
 }
