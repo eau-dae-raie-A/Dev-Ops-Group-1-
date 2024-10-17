@@ -1,3 +1,4 @@
+//Testing
 package com.napier.devops;
 
 import java.util.List;
@@ -187,8 +188,10 @@ public class App {
 
         // 23. Retrieve and display population data by continent
         System.out.println("\nPopulation Data by Continent:");
+        String fileName = "PopulationByContinent.md";
         List<PopulationReport> continentPopulationData = dbService.getPopulationByContinent();
         dbService.displayPopulationData(continentPopulationData);
+        dbService.generatePopulationReportMarkdown(continentPopulationData, fileName);
 
         // 24. Retrieve and display population data by region
         System.out.println("\nPopulation Data by Region:");
@@ -199,5 +202,48 @@ public class App {
         System.out.println("\nPopulation Data by Country:");
         List<PopulationReport> countryPopulationData = dbService.getPopulationByCountry();
         dbService.displayPopulationData(countryPopulationData);
+
+        // 26. Retrieve and display the population of the world
+        System.out.println("\nWorld Population:");
+        long worldPopulation = dbService.getWorldPopulation();
+        System.out.println("Population: " + numberFormat.format(worldPopulation));
+
+        // 27. Retrieve and display the population of a specific continent (example: Asia)
+        continent = "Asia";
+        System.out.println("\nPopulation of " + continent + ":");
+        long continentPopulation = dbService.getContinentPopulation(continent);
+        System.out.println("Population: " + numberFormat.format(continentPopulation));
+
+        // 28. Retrieve and display the population of a specific region (example: Middle East)
+        region = "Middle East";
+        System.out.println("\nPopulation of " + region + ":");
+        long regionPopulation = dbService.getRegionPopulation(region);
+        System.out.println("Population: " + numberFormat.format(regionPopulation));
+
+        // 29. Retrieve and display the population of a specific country (example: Afghanistan)
+        String countryName = "Afghanistan";
+        System.out.println("\nPopulation of " + countryName + ":");
+        long countryPopulation = dbService.getCountryPopulation(countryName);
+        System.out.println("Population: " + numberFormat.format(countryPopulation));
+
+        // 30. Retrieve and display the population of a specific district (example: California)
+        district = "California";
+        System.out.println("\nPopulation of District " + district + ":");
+        long districtPopulation = dbService.getDistrictPopulation(district);
+        System.out.println("Population: " + numberFormat.format(districtPopulation));
+
+        // 31. Retrieve and display the population of a specific city (example: Kabul)
+        String cityName = "Kabul";
+        System.out.println("\nPopulation of City " + cityName + ":");
+        long cityPopulation = dbService.getCityPopulation(cityName);
+        System.out.println("Population: " + numberFormat.format(cityPopulation));
+
+        // 32. Retrieve the language statistics
+        List<LanguageReport> languageReports = dbService.getLanguageStatistics();
+
+        // Display the language statistics
+        dbService.displayLanguageStatistics(languageReports);
+
+
     }
 }
