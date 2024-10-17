@@ -23,6 +23,8 @@ jobs:
           mvn -Dtest=com.napier.devops.CountryTest test
           mvn -Dtest=com.napier.devops.DatabaseServiceTest test
           mvn -Dtest=com.napier.devops.PopulationReportTest test
+          mvn -Dtest=com.napier.devops.LanguageReportTest test
+
       - name: CodeCov
         uses: codecov/codecov-action@v2
         with:
