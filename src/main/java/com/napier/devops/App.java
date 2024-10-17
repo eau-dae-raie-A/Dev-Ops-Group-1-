@@ -1,3 +1,4 @@
+//Testing
 package com.napier.devops;
 
 import java.util.List;
@@ -187,8 +188,10 @@ public class App {
 
         // 23. Retrieve and display population data by continent
         System.out.println("\nPopulation Data by Continent:");
+        String fileName = "PopulationByContinent.md";
         List<PopulationReport> continentPopulationData = dbService.getPopulationByContinent();
         dbService.displayPopulationData(continentPopulationData);
+        dbService.generatePopulationReportMarkdown(continentPopulationData, fileName);
 
         // 24. Retrieve and display population data by region
         System.out.println("\nPopulation Data by Region:");

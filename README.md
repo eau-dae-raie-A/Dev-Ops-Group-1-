@@ -1,7 +1,6 @@
 # 🗂️ Population Information Reporting System
 
 ![A workflow for Population Reporting System](https://img.shields.io/badge/A%20workflow%20for%20Population%20Reporting%20System-passing-brightgreen?logo=github&logoColor=white)
-
 ![Master build status](https://img.shields.io/badge/Master%20build-passing-brightgreen)
 ![Develop build status](https://img.shields.io/badge/Develop%20build-passing-brightgreen)
 ![Feature status](https://img.shields.io/badge/Feature-passing-brightgreen)
@@ -10,10 +9,10 @@
 
 ## 📝 Project Overview
 
-This project focuses on developing a Population Information Reporting System that provides various reports based on population data. The system will allow the organization to generate reports on population statistics at different levels, including by country, region, or globally.
+This project focuses on developing a **Population Information Reporting System** that provides various reports based on population data. It enables users to generate population statistics reports at different levels, including by country, region, or globally.
 
 ### ⭐ Key features include:
-- **Population Reports**: Generate reports based on SQL database on various population statistics.
+- **Population Reports**: Generate reports based on SQL database for various population statistics.
 - **Top N Reports**: Retrieve the Top N populated countries or cities globally, by continent, or by region, as defined by the user.
 - **CI/CD Integration**: Set up CI pipelines for testing and building with Maven and Docker.
 
@@ -25,11 +24,9 @@ We are **Group 1** and are working as a Scrum team to bring this project to life
 |-------------------------|-------------------------|
 | **Win Min Thaw**         | Project Manager         |
 | **Htet Myat Kyaw**       | Project Coordinator     |
-| **Shine Lin Ko**         | Project Analyst         |
-| **Nay Chi Myat Noe Aung**| Code Developer          |
-| **Wai Yan Lin**          | Code Developer          |
-
-Each team member brings their unique expertise to ensure that our project is executed smoothly, meets deadlines, and adheres to Scrum principles.
+| **Shine Lin Ko**         | Project Owner           |
+| **Nay Chi Myat Noe Aung**| Code Conductor          |
+| **Wai Yan Lin**          | Scrum Master            |
 
 ## 📋 Product Backlog (Week - 1)
 
@@ -56,18 +53,33 @@ Each team member brings their unique expertise to ensure that our project is exe
 | Full use cases defined                                    | High       | Completed	 |
 | Use case diagram created                                  | High       | Completed     |
 
-	•	🛠️ Tech Stack: Show which languages, frameworks, and tools are being used.
-	•	🔄 Changelog: Track version releases and changes.
+## 📋 Product Backlog (Week - 3)
+
+| Feature                                                   | Priority   | Status        |
+|-----------------------------------------------------------|------------|---------------|
+| Suitable unit tests defined                               | High       | Completed     |
+| Suitable integration tests defined                        | High       | Completed     |
+| Tests running on GitHub Actions                           | High       | Completed     |
+
+## 📋 Product Backlog (Week - 4)
+
+| Feature                                                   | Priority   | Status        |
+|-----------------------------------------------------------|------------|---------------|
+| Deployment working                                        | High       | Not Started   |
+| Bug reporting system set-up                               | High       | Not Started   |
 
 ## 🛠️ Tech Stack
 - **Languages**: Java (Version 23)
 - **Build Tool**: Maven
 - **Containerization**: Docker
-- **Database**: MySQL
+- **Database**: MongoDB, MySQL
 
 ## 🔄 Changelog
 Stay updated with our [version releases](https://github.com/eau-dae-raie-A/Dev-Ops-Group-1-/releases).
 
+## 📚 Documentation
+For detailed documentation, check out our [Wiki](https://github.com/eau-dae-raie-A/Dev-Ops-Group-1-/wiki).
+
 ---
 
-© 2024 Group1 DevOps - This project is licensed under the Apache 2.0 License.
+© 2024 Group1 DevOps - This project is licensed under the [Apache 2.0 License](https://opensource.org/licenses/Apache-2.0).
