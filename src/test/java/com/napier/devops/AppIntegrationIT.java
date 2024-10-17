@@ -92,7 +92,6 @@ public class AppIntegrationIT {
         assertTrue(populationReports.size() > 0, "The population report list should contain entries.");
     }
 
-    // Additional integration tests for various database queries
 
     /**
      * Tests retrieval of countries by a specified continent.
