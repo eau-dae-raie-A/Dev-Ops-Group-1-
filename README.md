@@ -72,13 +72,13 @@ We are **Group 1** and are working as a Scrum team to bring this project to life
 
 | Feature                                                   | Priority   | Status        |
 |-----------------------------------------------------------|------------|---------------|
-| Metrics from GitHub utilized for individual contribution assessment | Medium     | In Progress   |
-| Code quality ensured, including comprehensive comments    | High       | In Progress   |
-| Branching strategies correctly implemented                | High       | In Progress   |
-| Continuous integration (CI) processes verified            | High       | In Progress   |
-| Kanban/Project Board fully utilized                       | Medium     | In Progress   |
-| Unit tests quality and coverage evaluated                 | High       | In Progress   |
-| All project requirements thoroughly reviewed and met      | High       | In Progress   |
+| Metrics from GitHub utilized for individual contribution assessment | Medium     | Completed   |
+| Code quality ensured, including comprehensive comments    | High       | Completed   |
+| Branching strategies correctly implemented                | High       | Completed   |
+| Continuous integration (CI) processes verified            | High       | Completed   |
+| Kanban/Project Board fully utilized                       | Medium     | Completed   |
+| Unit tests quality and coverage evaluated                 | High       | Completed   |
+| All project requirements thoroughly reviewed and met      | High       | Completed   |
 
 ## 🛠️ Tech Stack
 - **Languages**: Java (Version 23)
